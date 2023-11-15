@@ -7,12 +7,14 @@
   </head>
   <body>
     <h1>Care Bot</h1>
-    <form id="feelings-form" method="post">
-      <legend>How are you feeling right now?</legend>
-      <textarea name="feelings" id="feelings" cols="30" rows="10"></textarea>
-      <br />
-      <button type="submit">Submit</button>
-    </form>
+    <fieldset>
+      <form id="feelings-form" method="post">
+        <legend>How are you feeling right now?</legend>
+        <textarea name="feelings" id="feelings" cols="30" rows="10"></textarea>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    </fieldset>
     <section id="program-container"></section>
     <script src="./index.ts" type="module"></script>
   </body>

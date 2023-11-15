@@ -16,8 +16,18 @@ if (!feelingsForm) {
   throw new Error("Could not find feelings form");
 }
 
+const fieldset = feelingsForm.querySelector(
+  "fieldset"
+) as HTMLFieldSetElement | null;
+
+if (!fieldset) {
+  throw new Error("Could not find fieldset");
+}
+
 feelingsForm.addEventListener("submit", function (event) {
   event.preventDefault();
+
+  fieldset.disabled = true;
 
   const formData = new FormData(feelingsForm);
 
@@ -39,7 +49,7 @@ feelingsForm.addEventListener("submit", function (event) {
         programContainer.appendChild(dayCard);
       });
 
-      feelingsForm.removeAttribute("disabled");
+      fieldset.disabled = false;
     })
     .catch((error) => console.error("Error:", error));
 });
