@@ -1,0 +1,1 @@
+const CREATE_PROGRAM_RESPONSE = {};
