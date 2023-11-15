@@ -64,9 +64,6 @@ type Day =
   | CareProgramResponse["program"]["sunday"];
 
 function createDayCard(day: Day) {
-  // create a card for each day
-  // the container is an article element
-  // then render all data inside the article element
   const dayCard = document.createElement("article");
   dayCard.classList.add("day-container");
 
