@@ -23,8 +23,6 @@ feelingsForm.addEventListener("submit", function (event) {
 
   const feelings = formData.get("feelings") as string | null;
 
-  feelingsForm.setAttribute("disabled", "true");
-
   fetch("http://localhost:8080/create-program", {
     method: "POST",
     headers: {
