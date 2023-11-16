@@ -10,9 +10,8 @@ type CreateCareProgramBody = {
 export async function createCareProgram({
   userInput,
 }: CreateCareProgramBody): Promise<CareProgramResponse> {
-  console.log(userInput, "userInput createCareProgram");
-
   const model = createLanguageModel(process.env);
+
   const schema = fs.readFileSync(
     path.join(__dirname, "careProgramSchema.ts"),
     "utf8"
@@ -24,16 +23,16 @@ export async function createCareProgram({
     "CareProgramResponse"
   );
 
-  console.log(translator, "translator");
-
   const response = await translator.translate(userInput);
-
-  console.log(response, "response");
 
   if (!response.success) {
     console.log(response.message);
     throw new Error("Failed to translate user input");
   }
+
+  const stringifiedProgram = JSON.stringify(response.data, null, 2);
+
+  console.log(stringifiedProgram);
 
   return response.data;
 }

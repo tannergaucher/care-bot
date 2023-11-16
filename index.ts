@@ -5,36 +5,34 @@ import {
 
 import { SERVER_BASE_URL } from "./utils";
 
-const programContainer = document.getElementById(
-  "program-container"
-) as HTMLDivElement | null;
-
-const fieldset = document.querySelector(
-  "fieldset"
-) as HTMLFieldSetElement | null;
-
 const form = document.querySelector("form") as HTMLFormElement | null;
-
-if (!programContainer) {
-  throw new Error("Could not find program container");
-}
-
-if (!fieldset) {
-  throw new Error("Could not find fieldset");
-}
 
 if (!form) {
   throw new Error("Could not find form");
 }
 
+const fieldset = form.querySelector("fieldset") as HTMLFieldSetElement | null;
+
+if (!fieldset) {
+  throw new Error("Could not find fieldset");
+}
+
+const programContainer = document.getElementById(
+  "program-container"
+) as HTMLDivElement | null;
+
+if (!programContainer) {
+  throw new Error("Could not find program container");
+}
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
-
-  fieldset.disabled = true;
 
   const formData = new FormData(form);
 
   const feelings = formData.get("feelings") as string | null;
+
+  fieldset.disabled = true;
 
   fetch(`${SERVER_BASE_URL}/create-program`, {
     method: "POST",

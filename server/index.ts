@@ -4,7 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import { createCareProgram } from "./create-program";
-import { SERVER_BASE_URL } from "../utils";
+import { CLIENT_BASE_URL } from "../utils";
 
 dotenv.config();
 
@@ -14,14 +14,12 @@ app.use(json());
 
 app.use(
   cors({
-    origin: SERVER_BASE_URL,
+    origin: CLIENT_BASE_URL,
   })
 );
 
-app.get("/hello-world", (req: Request, res) => {
-  res.json({
-    message: "hello world",
-  });
+app.get("/example-program", (req: Request, res) => {
+  // send a mocked response of a care program
 });
 
 app.post("/create-program", async (req: Request, res) => {
@@ -29,10 +27,11 @@ app.post("/create-program", async (req: Request, res) => {
   const { feelings } = req.body;
 
   if (!feelings) {
-    res.status(400).json({
+    console.log("missing user input!");
+
+    return res.status(400).json({
       message: "missing user input",
     });
-    return;
   }
 
   const response = await createCareProgram({
