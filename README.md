@@ -16,6 +16,8 @@ You must have an OpenAI account and API key to run this app. Additionally, reque
 
 ## Get Started
 
+### Run Application Locally
+
 1. Clone this repo
 2. Update `.env.sample` to `.env` and add the following variables:
 
