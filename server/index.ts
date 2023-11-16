@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import { createCareProgram } from "./create-program";
+import { MOCK_CARE_PROGRAM_RESPONSE } from "./mocks";
 import { CLIENT_BASE_URL } from "../utils";
 
 dotenv.config();
@@ -19,7 +20,7 @@ app.use(
 );
 
 app.get("/example-program", (req: Request, res) => {
-  // send a mocked response of a care program
+  return res.json(MOCK_CARE_PROGRAM_RESPONSE);
 });
 
 app.post("/create-program", async (req: Request, res) => {

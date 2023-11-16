@@ -1,4 +1,4 @@
-import { CareProgramResponse } from "./server/create-program/careProgramSchema";
+import { CareProgramResponse } from "./create-program/careProgramSchema";
 
 export const MOCK_CARE_PROGRAM_RESPONSE: CareProgramResponse = {
   currentUserSentiment: "positive",
