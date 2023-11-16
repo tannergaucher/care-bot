@@ -20,6 +20,15 @@ type CareProgram = {
   night: CareStep;
 };
 
+export type Day =
+  | Monday
+  | Tuesday
+  | Wednesday
+  | Thursday
+  | Friday
+  | Saturday
+  | Sunday;
+
 type Monday = CareProgram & {
   day: "Monday";
   theme: "Mindful Monday" | "Meditation Monday" | "Motivation Monday";

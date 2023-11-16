@@ -1,4 +1,7 @@
-import { CareProgramResponse } from "./server/create-program/careProgramSchema";
+import {
+  CareProgramResponse,
+  Day,
+} from "./server/create-program/careProgramSchema";
 
 const programContainer = document.getElementById(
   "program-container"
@@ -51,15 +54,6 @@ form.addEventListener("submit", function (event) {
     })
     .catch((error) => console.error("Error:", error));
 });
-
-type Day =
-  | CareProgramResponse["program"]["monday"]
-  | CareProgramResponse["program"]["tuesday"]
-  | CareProgramResponse["program"]["wednesday"]
-  | CareProgramResponse["program"]["thursday"]
-  | CareProgramResponse["program"]["friday"]
-  | CareProgramResponse["program"]["saturday"]
-  | CareProgramResponse["program"]["sunday"];
 
 function createDayCard(day: Day) {
   const dayCard = document.createElement("article");
