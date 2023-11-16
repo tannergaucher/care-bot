@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import { createCareProgram } from "./create-program";
+import { SERVER_BASE_URL } from "../utils";
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ app.use(json());
 
 app.use(
   cors({
-    origin: "*",
+    origin: SERVER_BASE_URL,
   })
 );
 

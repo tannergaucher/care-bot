@@ -3,6 +3,8 @@ import {
   Day,
 } from "./server/create-program/careProgramSchema";
 
+import { SERVER_BASE_URL } from "./utils";
+
 const programContainer = document.getElementById(
   "program-container"
 ) as HTMLDivElement | null;
@@ -34,7 +36,7 @@ form.addEventListener("submit", function (event) {
 
   const feelings = formData.get("feelings") as string | null;
 
-  fetch("http://localhost:8080/create-program", {
+  fetch(`${SERVER_BASE_URL}/create-program`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
