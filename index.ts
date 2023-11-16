@@ -26,6 +26,20 @@ if (!programContainer) {
   throw new Error("Could not find program container");
 }
 
+// add an event listener to fetch the example program from the server after the document has loaded
+window.addEventListener("load", function () {
+  fetch(`${SERVER_BASE_URL}/example-program`)
+    .then((response) => response.json())
+    .then((data: CareProgramResponse) => {
+      Object.values(data.program).forEach((day) => {
+        const dayCard = createDayCard(day);
+        programContainer.appendChild(dayCard);
+      });
+    })
+    .catch((error) => console.error("Error:", error));
+});
+
+// add an event listener to the form to fetch the user's program from the server
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
