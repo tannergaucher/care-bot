@@ -2,6 +2,7 @@ import {
   CareProgramResponse,
   Day,
 } from "./server/create-program/careProgramSchema";
+import { CreateCareProgramBody } from "./server/create-program";
 
 import { SERVER_BASE_URL } from "./utils";
 
@@ -40,8 +41,8 @@ form.addEventListener("submit", function (event) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      feelings,
-    }),
+      userInput: feelings,
+    } as CreateCareProgramBody),
   })
     .then((response) => response.json())
     .then((data: CareProgramResponse) => {

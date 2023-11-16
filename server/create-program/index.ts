@@ -3,7 +3,7 @@ import path from "path";
 import { createLanguageModel, createJsonTranslator } from "typechat";
 import { CareProgramResponse } from "./careProgramSchema";
 
-type CreateCareProgramBody = {
+export type CreateCareProgramBody = {
   userInput: string;
 };
 
