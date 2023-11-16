@@ -9,19 +9,19 @@ const programContainer = document.getElementById(
   "program-container"
 ) as HTMLDivElement | null;
 
-if (!programContainer) {
-  throw new Error("Could not find program container");
-}
-
 const fieldset = document.querySelector(
   "fieldset"
 ) as HTMLFieldSetElement | null;
 
+const form = document.querySelector("form") as HTMLFormElement | null;
+
+if (!programContainer) {
+  throw new Error("Could not find program container");
+}
+
 if (!fieldset) {
   throw new Error("Could not find fieldset");
 }
-
-const form = fieldset.querySelector("form") as HTMLFormElement | null;
 
 if (!form) {
   throw new Error("Could not find form");
