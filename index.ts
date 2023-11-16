@@ -82,13 +82,25 @@ function createDayCard(day: Day) {
   themeHeader.innerText = day.theme;
   dayCard.appendChild(themeHeader);
 
+  const morningCareHeader = document.createElement("h4");
+  morningCareHeader.innerText = "Morning";
+  dayCard.appendChild(morningCareHeader);
+
   const morningCareStep = document.createElement("p");
   morningCareStep.innerText = day.morning.text;
   dayCard.appendChild(morningCareStep);
 
+  const afternoonCareHeader = document.createElement("h4");
+  afternoonCareHeader.innerText = "Afternoon/Evening";
+  dayCard.appendChild(afternoonCareHeader);
+
   const afternoonCareStep = document.createElement("p");
   afternoonCareStep.innerText = day.afternoonEvening.text;
   dayCard.appendChild(afternoonCareStep);
+
+  const nightCareHeader = document.createElement("h4");
+  nightCareHeader.innerText = "Night";
+  dayCard.appendChild(nightCareHeader);
 
   const nightCareStep = document.createElement("p");
   nightCareStep.innerText = day.night.text;
