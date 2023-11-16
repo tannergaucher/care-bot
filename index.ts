@@ -8,15 +8,7 @@ if (!programContainer) {
   throw new Error("Could not find program container");
 }
 
-const feelingsForm = document.getElementById(
-  "feelings-form"
-) as HTMLFormElement | null;
-
-if (!feelingsForm) {
-  throw new Error("Could not find feelings form");
-}
-
-const fieldset = feelingsForm.querySelector(
+const fieldset = document.querySelector(
   "fieldset"
 ) as HTMLFieldSetElement | null;
 
@@ -24,12 +16,18 @@ if (!fieldset) {
   throw new Error("Could not find fieldset");
 }
 
-feelingsForm.addEventListener("submit", function (event) {
+const form = fieldset.querySelector("form") as HTMLFormElement | null;
+
+if (!form) {
+  throw new Error("Could not find form");
+}
+
+form.addEventListener("submit", function (event) {
   event.preventDefault();
 
   fieldset.disabled = true;
 
-  const formData = new FormData(feelingsForm);
+  const formData = new FormData(form);
 
   const feelings = formData.get("feelings") as string | null;
 
