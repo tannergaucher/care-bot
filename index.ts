@@ -1,8 +1,7 @@
-import {
-  CareProgramResponse,
-  Day,
-} from "./server/create-program/careProgramSchema";
-import { CreateCareProgramBody } from "./server/create-program";
+import { ProgramResponse } from "./server/create-program/programSchema";
+import { CreateProgramBody } from "./server/create-program";
+
+import "./index.css";
 
 import { SERVER_BASE_URL } from "./utils";
 
@@ -26,26 +25,40 @@ if (!programContainer) {
   throw new Error("Could not find program container");
 }
 
-// add an event listener to fetch the example program from the server after the document has loaded
 window.addEventListener("load", function () {
   fetch(`${SERVER_BASE_URL}/example-program`)
     .then((response) => response.json())
-    .then((data: CareProgramResponse) => {
-      Object.values(data.program).forEach((day) => {
-        const dayCard = createDayCard(day);
-        programContainer.appendChild(dayCard);
-      });
+    .then((data: ProgramResponse) => {
+      console.log(data);
+      renderProgram(data);
+      if (form) {
+        form.style.display = "block";
+      }
     })
     .catch((error) => console.error("Error:", error));
 });
 
-// add an event listener to the form to fetch the user's program from the server
+let selectedMood: string | null = null;
+
+const buttons = document.querySelectorAll('button[name="mood"]');
+
+buttons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    selectedMood = (event.target as HTMLButtonElement)
+      .value as ProgramResponse["currentUserMood"];
+  });
+});
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  const formData = new FormData(form);
+  if (!event.target) {
+    throw new Error("Could not find event target");
+  }
 
-  const feelings = formData.get("feelings") as string | null;
+  if (!selectedMood) {
+    throw new Error("No mood selected");
+  }
 
   fieldset.disabled = true;
 
@@ -55,56 +68,61 @@ form.addEventListener("submit", function (event) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      userInput: feelings,
-    } as CreateCareProgramBody),
+      mood: selectedMood,
+    } as CreateProgramBody),
   })
     .then((response) => response.json())
-    .then((data: CareProgramResponse) => {
-      Object.values(data.program).forEach((day) => {
-        const dayCard = createDayCard(day);
-        programContainer.appendChild(dayCard);
-      });
-
+    .then((data: ProgramResponse) => {
+      console.log(data);
+      renderProgram(data);
       fieldset.disabled = false;
     })
     .catch((error) => console.error("Error:", error));
 });
 
-function createDayCard(day: Day) {
-  const dayCard = document.createElement("article");
-  dayCard.classList.add("day-container");
+function renderProgram(data: ProgramResponse) {
+  const programContainer = document.getElementById("program-container");
 
-  const dayHeader = document.createElement("h2");
-  dayHeader.innerText = day.day;
-  dayCard.appendChild(dayHeader);
+  if (!programContainer) {
+    throw new Error("Could not find program container");
+  }
 
-  const themeHeader = document.createElement("h3");
-  themeHeader.innerText = day.theme;
-  dayCard.appendChild(themeHeader);
+  // Clear any existing content
+  programContainer.innerHTML = "";
 
-  const morningCareHeader = document.createElement("h4");
-  morningCareHeader.innerText = "Morning";
-  dayCard.appendChild(morningCareHeader);
+  if (form) {
+    form.style.display = "none";
+  }
 
-  const morningCareStep = document.createElement("p");
-  morningCareStep.innerText = day.morning.text;
-  dayCard.appendChild(morningCareStep);
+  const programIntro = document.createElement("p");
+  programIntro.textContent = data.intro;
+  programContainer.appendChild(programIntro);
 
-  const afternoonCareHeader = document.createElement("h4");
-  afternoonCareHeader.innerText = "Afternoon/Evening";
-  dayCard.appendChild(afternoonCareHeader);
+  const morningTitle = document.createElement("h2");
+  morningTitle.textContent = data.morningTitle;
+  programContainer.appendChild(morningTitle);
 
-  const afternoonCareStep = document.createElement("p");
-  afternoonCareStep.innerText = day.afternoonEvening.text;
-  dayCard.appendChild(afternoonCareStep);
+  const morningText = document.createElement("p");
+  morningText.textContent = data.morningText;
+  programContainer.appendChild(morningText);
 
-  const nightCareHeader = document.createElement("h4");
-  nightCareHeader.innerText = "Night";
-  dayCard.appendChild(nightCareHeader);
+  const afternoonEveningTitle = document.createElement("h2");
+  afternoonEveningTitle.textContent = data.afternoonEveningTitle;
+  programContainer.appendChild(afternoonEveningTitle);
 
-  const nightCareStep = document.createElement("p");
-  nightCareStep.innerText = day.night.text;
-  dayCard.appendChild(nightCareStep);
+  const afternoonEveningText = document.createElement("p");
+  afternoonEveningText.textContent = data.afternoonEveningText;
+  programContainer.appendChild(afternoonEveningText);
 
-  return dayCard;
+  const nightTitle = document.createElement("h2");
+  nightTitle.textContent = data.nightTitle;
+  programContainer.appendChild(nightTitle);
+
+  const nightText = document.createElement("p");
+  nightText.textContent = data.nightText;
+  programContainer.appendChild(nightText);
+
+  const programOutro = document.createElement("p");
+  programOutro.textContent = data.outro;
+  programContainer.appendChild(programOutro);
 }

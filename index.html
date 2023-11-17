@@ -7,15 +7,24 @@
   </head>
   <body>
     <h1>Care Bot</h1>
-    <form method="post">
-      <fieldset>
-        <legend>How are you feeling right now?</legend>
-        <textarea name="feelings" id="feelings" cols="30" rows="10"></textarea>
-        <br />
-        <button type="submit">Submit</button>
-      </fieldset>
-    </form>
+    <section id="user-prompt-section">
+      <h2 id="user-prompt">How are you feeling today?</h2>
+      <form id="user-prompt-form" method="post">
+        <fieldset>
+          <legend id="user-prompt-legend">I'm feeling</legend>
+          <button aria-label="Happy" name="mood" value="happy">
+            <h2>🙂 Positive</h2>
+          </button>
+          <button aria-label="Sad" type="submit" name="mood" value="sad">
+            <h2>🙁 Negative</h2>
+          </button>
+        </fieldset>
+      </form>
+    </section>
     <section id="program-container"></section>
+    <section id="page-views">
+      <marquee>Page views: 0, Last Visited: Never</marquee>
+    </section>
     <script src="./index.ts" type="module"></script>
   </body>
 </html>
