@@ -1,3 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+@keyframes loadingShuffle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+body[loading] {
+  animation: loadingShuffle 2s infinite;
+}
+
+body {
+  font-family: "Press Start 2P", cursive;
+  background-color: #ff6600; /* Update to bright orange */
+  color: #ffffff; /* Update to white */
+  background-image: url("./bg.png");
+  background-repeat: repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 2rem;
+}
+
+h1 {
+  text-shadow: 2px 2px #ff0000;
+  font-size: 5vw;
+  margin: 2rem;
+}
+
+h2 {
+  text-shadow: 2px 2px #ff0000;
+  font-size: 3vw;
+  margin: rem;
+}
+
+fieldset {
+  border: 5px solid #ffffff; /* White border */
+}
+
+button {
+  width: 100%;
+  font-size: 3vw;
+  min-height: 27vh;
+  color: #ff00ff; /* Bright purple text */
+  text-shadow: 0px 0px 5px #ff00ff; /* Text shadow for neon effect */
+  background: url("./bg.png");
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+  border: 5px solid #ffffff; /* White border */
+}
+
+button:hover,
+button:focus {
+  background-color: #222222; /* Update to darker black/gray */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+button h2 {
+  margin: 0;
+}
+
+textarea {
+  width: 100%;
+  margin: 2rem;
+  box-sizing: border-box;
+  border: 5px solid #ffffff; /* White border */
+  background: url("./bg.png"); /* Dark background */
+  color: #ffffff; /* White text */
+  font-size: 3rem;
+  min-height: 27vh;
+}
+
+textarea {
+  border-color: #ff00ff; /* Bright purple border when focused */
   outline: none;
 }
 
