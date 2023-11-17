@@ -25,7 +25,6 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  margin: 2rem;
 }
 
 h1 {
@@ -48,9 +47,8 @@ button {
   width: 100%;
   font-size: 3vw;
   min-height: 27vh;
-  color: #ff00ff; /* Bright purple text */
+  color: dodgerblue;
   text-shadow: 0px 0px 5px #ff00ff; /* Text shadow for neon effect */
-  background: url("./bg.png");
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease-in-out;
   display: flex;
@@ -59,6 +57,7 @@ button {
   justify-content: center;
   margin: 2rem;
   border: 5px solid #ffffff; /* White border */
+  font-family: monospace;
 }
 
 button:hover,
@@ -96,11 +95,10 @@ textarea {
 
 #program-container {
   background: url("./bg.png");
-  filter: invert(100%);
+  filter: invert();
   color: #ffffff;
-  font-family: Arial, sans-serif;
+  font-family: Press Start 2P, cursive;
   padding: 1em;
-
   border-radius: 5px;
   margin: 1em 0;
 }
@@ -108,10 +106,10 @@ textarea {
 #page-views,
 #last-visited {
   position: sticky;
-  bottom: 0;
   width: 100%;
   overflow: auto;
   white-space: nowrap;
+  margin-top: 3rem;
 }
 
 #page-views marquee,
