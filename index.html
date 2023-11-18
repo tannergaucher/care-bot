@@ -59,20 +59,15 @@
         recognition.onresult = function (event) {
           const transcript = event.results[0][0].transcript;
           console.log("You said: " + transcript);
-          // TODO: Use the transcript to determine the user's mood and update the UI
 
-          // add that the the textarea value
           const spokenMood = document.getElementById("spoken-mood");
-          // display the spokenMood
           spokenMood.style.display = "block";
 
-          // and hide the happy and sad buttons
           const happyButton = document.getElementById("happy-button");
           const sadButton = document.getElementById("sad-button");
           happyButton.style.display = "none";
           sadButton.style.display = "none";
 
-          // and display the submit button
           const spokenMoodSubmit =
             document.getElementById("spoken-mood-submit");
 
