@@ -105,6 +105,7 @@ textarea {
   overflow: scroll;
   max-width: 60%;
   margin: 0 auto;
+  margin-block: 3rem;
 }
 
 #page-views,

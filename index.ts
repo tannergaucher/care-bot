@@ -26,6 +26,22 @@ if (audioElement) {
   audioElement.style.display = "none";
 }
 
+const spokenMood = document.getElementById(
+  "spoken-mood"
+) as HTMLTextAreaElement | null;
+
+if (spokenMood) {
+  spokenMood.style.display = "none";
+}
+
+const spokenMoodSubmit = document.getElementById(
+  "spoken-mood-submit"
+) as HTMLButtonElement | null;
+
+if (spokenMoodSubmit) {
+  spokenMoodSubmit.style.display = "none";
+}
+
 const programContainer = document.getElementById(
   "program-container"
 ) as HTMLDivElement | null;

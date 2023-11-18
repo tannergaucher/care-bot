@@ -11,12 +11,32 @@
       <form id="user-prompt-form" method="post">
         <fieldset>
           <legend id="user-prompt-legend">How are you feeling today?</legend>
-          <button aria-label="Happy" name="mood" value="happy">
+          <button
+            id="happy-button"
+            aria-label="Happy"
+            name="mood"
+            value="happy"
+          >
             🙂 I'm Feeling Positive
           </button>
-          <button aria-label="Sad" type="submit" name="mood" value="sad">
+          <button
+            id="sad-button"
+            aria-label="Sad"
+            type="submit"
+            name="mood"
+            value="sad"
+          >
             🙁 I'm Feeling Negative
           </button>
+          <textarea
+            id="spoken-mood"
+            name="mood"
+            id=""
+            cols="30"
+            rows="10"
+          ></textarea>
+          <button id="spoken-mood-submit" type="submit">Submit</button>
+          <button id="speak-mood" type="button">🎤 I'll Speak My Mood</button>
         </fieldset>
       </form>
     </section>
@@ -26,5 +46,60 @@
       Your browser does not support the audio element.
     </audio>
     <script src="./index.ts" type="module"></script>
+
+    <script>
+      // Check if the browser supports the SpeechRecognition API
+      if (
+        "SpeechRecognition" in window ||
+        "webkitSpeechRecognition" in window
+      ) {
+        const recognition = new (window.SpeechRecognition ||
+          window.webkitSpeechRecognition)();
+
+        recognition.onresult = function (event) {
+          const transcript = event.results[0][0].transcript;
+          console.log("You said: " + transcript);
+          // TODO: Use the transcript to determine the user's mood and update the UI
+
+          // add that the the textarea value
+          const spokenMood = document.getElementById("spoken-mood");
+          // display the spokenMood
+          spokenMood.style.display = "block";
+
+          // and hide the happy and sad buttons
+          const happyButton = document.getElementById("happy-button");
+          const sadButton = document.getElementById("sad-button");
+          happyButton.style.display = "none";
+          sadButton.style.display = "none";
+
+          // and display the submit button
+          const spokenMoodSubmit =
+            document.getElementById("spoken-mood-submit");
+
+          spokenMoodSubmit.style.display = "block";
+
+          if (spokenMood) {
+            spokenMood.value = transcript;
+          } else {
+            console.log("Could not find the spoken-mood textarea");
+          }
+        };
+
+        recognition.onerror = function (event) {
+          console.log("Error occurred in recognition: " + event.error);
+        };
+
+        const speakMoodButton = document.getElementById("speak-mood");
+        if (speakMoodButton) {
+          speakMoodButton.addEventListener("click", function () {
+            recognition.start();
+          });
+        } else {
+          console.log('Could not find the "Speak Mood" button');
+        }
+      } else {
+        console.log("Your browser does not support the SpeechRecognition API");
+      }
+    </script>
   </body>
 </html>
