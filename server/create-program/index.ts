@@ -4,7 +4,7 @@ import { createLanguageModel, createJsonTranslator } from "typechat";
 import { ProgramResponse } from "./programSchema";
 
 export type CreateProgramBody = {
-  mood: "positive" | "neutral" | "negative";
+  mood: "positive" | "negative" | string;
 };
 
 export async function createProgram({
