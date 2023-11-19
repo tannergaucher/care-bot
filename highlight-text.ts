@@ -1,7 +1,6 @@
-import { PREPROCESSED_TRANSCRIPTION_RESPONSE } from "./server/transcribe/utils";
+import { CLOUD_TRANSCRIPTION_RESPONSE } from "./server/transcribe/utils";
 
-const words =
-  PREPROCESSED_TRANSCRIPTION_RESPONSE.results[0].alternatives[0].words;
+const words = CLOUD_TRANSCRIPTION_RESPONSE.results[0].alternatives[0].words;
 
 let currentWordIndex = 0;
 
@@ -54,7 +53,6 @@ audioSource.addEventListener("play", () => {
     }
 
     wordSpan?.setAttribute("current", "true");
-    // and lets scroll into view
     wordSpan?.scrollIntoView({
       behavior: "smooth",
       block: "center",
