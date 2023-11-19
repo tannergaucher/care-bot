@@ -8,23 +8,23 @@
   <body>
     <h1>Care Bot</h1>
     <section id="user-prompt-section">
-      <h2 id="user-prompt">How are you feeling today?</h2>
       <form id="user-prompt-form" method="post">
         <fieldset>
-          <legend id="user-prompt-legend">I'm feeling</legend>
+          <legend id="user-prompt-legend">How are you feeling today?</legend>
           <button aria-label="Happy" name="mood" value="happy">
-            <h2>🙂 Positive</h2>
+            🙂 I'm Feeling Positive
           </button>
           <button aria-label="Sad" type="submit" name="mood" value="sad">
-            <h2>🙁 Negative</h2>
+            🙁 I'm Feeling Negative
           </button>
         </fieldset>
       </form>
     </section>
     <section id="program-container"></section>
-    <section id="page-views">
-      <marquee>Page views: 0, Last Visited: Never</marquee>
-    </section>
+    <audio controls id="audio-source">
+      <source src="./synthesis.wav" type="audio/mp3" />
+      Your browser does not support the audio element.
+    </audio>
     <script src="./index.ts" type="module"></script>
   </body>
 </html>

@@ -16,8 +16,8 @@ body[loading] {
 
 body {
   font-family: "Press Start 2P", cursive;
-  background-color: #ff6600; /* Update to bright orange */
-  color: #ffffff; /* Update to white */
+  background-color: #ff6600;
+  color: #ffffff;
   background-image: url("./bg.png");
   background-repeat: repeat;
   display: flex;
@@ -25,7 +25,6 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  margin: 2rem;
 }
 
 h1 {
@@ -41,16 +40,15 @@ h2 {
 }
 
 fieldset {
-  border: 5px solid #ffffff; /* White border */
+  border: 5px solid #ffffff;
 }
 
 button {
   width: 100%;
   font-size: 3vw;
   min-height: 27vh;
-  color: #ff00ff; /* Bright purple text */
-  text-shadow: 0px 0px 5px #ff00ff; /* Text shadow for neon effect */
-  background: url("./bg.png");
+  color: dodgerblue;
+  text-shadow: 0px 0px 5px #ff00ff;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease-in-out;
   display: flex;
@@ -58,12 +56,13 @@ button {
   align-items: center;
   justify-content: center;
   margin: 2rem;
-  border: 5px solid #ffffff; /* White border */
+  border: 5px solid #ffffff;
+  font-family: monospace;
 }
 
 button:hover,
 button:focus {
-  background-color: #222222; /* Update to darker black/gray */
+  background-color: #222222;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
   transform: translateY(-2px);
 }
@@ -76,15 +75,15 @@ textarea {
   width: 100%;
   margin: 2rem;
   box-sizing: border-box;
-  border: 5px solid #ffffff; /* White border */
-  background: url("./bg.png"); /* Dark background */
-  color: #ffffff; /* White text */
+  border: 5px solid #ffffff;
+  background: url("./bg.png");
+  color: #ffffff;
   font-size: 3rem;
   min-height: 27vh;
 }
 
 textarea {
-  border-color: #ff00ff; /* Bright purple border when focused */
+  border-color: #ff00ff;
   outline: none;
 }
 
@@ -96,22 +95,25 @@ textarea {
 
 #program-container {
   background: url("./bg.png");
-  filter: invert(100%);
+  filter: invert();
   color: #ffffff;
-  font-family: Arial, sans-serif;
+  font-family: Press Start 2P, cursive;
   padding: 1em;
-
   border-radius: 5px;
   margin: 1em 0;
+  height: 30vh;
+  overflow: scroll;
+  max-width: 60%;
+  margin: 0 auto;
 }
 
 #page-views,
 #last-visited {
   position: sticky;
-  bottom: 0;
   width: 100%;
   overflow: auto;
   white-space: nowrap;
+  margin-top: 3rem;
 }
 
 #page-views marquee,
@@ -131,4 +133,20 @@ textarea {
   --button-background-color: #4caf50;
   --button-text-color: white;
   --button-hover-background-color: #3e8e41;
+}
+
+span[current="true"] {
+  background-color: #ff0;
+  color: lime;
+  border-radius: 3px;
+  padding: 2px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+span[spoken] {
+  opacity: 1;
+}
+
+span:not([spoken]) {
+  opacity: 0;
 }
