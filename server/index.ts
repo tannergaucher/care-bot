@@ -29,8 +29,6 @@ app.get("/example-program", (req: Request, res) => {
 app.post(
   "/create-program",
   async (req: Request<{}, {}, CreateProgramBody>, res: Response) => {
-    console.log("create-program");
-
     const { mood } = req.body;
 
     if (!mood) {

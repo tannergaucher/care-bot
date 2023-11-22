@@ -4,7 +4,7 @@ import { createLanguageModel, createJsonTranslator } from "typechat";
 import { ProgramResponse } from "./programSchema";
 
 export type CreateProgramBody = {
-  mood: "positive" | "neutral" | "negative";
+  mood: "positive" | "negative" | string;
 };
 
 export async function createProgram({
@@ -30,9 +30,7 @@ export async function createProgram({
     throw new Error("Failed to translate user input");
   }
 
-  const stringifiedProgram = JSON.stringify(response.data, null, 2);
-
-  console.log(stringifiedProgram);
+  console.log(JSON.stringify(response.data, null, 2));
 
   return response.data;
 }

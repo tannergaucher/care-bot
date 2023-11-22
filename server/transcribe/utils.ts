@@ -21,7 +21,7 @@ type Word = {
   endTime: string;
 };
 
-export const PREPROCESSED_TRANSCRIPTION_RESPONSE = {
+export const CLOUD_TRANSCRIPTION_RESPONSE: CloudTranscriptionResponse = {
   results: [
     {
       alternatives: [
