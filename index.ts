@@ -27,6 +27,22 @@ if (audioElement) {
   audioElement.style.display = "none";
 }
 
+const spokenMood = document.getElementById(
+  "spoken-mood"
+) as HTMLTextAreaElement | null;
+
+if (spokenMood) {
+  spokenMood.style.display = "none";
+}
+
+const spokenMoodSubmit = document.getElementById(
+  "spoken-mood-submit"
+) as HTMLButtonElement | null;
+
+if (spokenMoodSubmit) {
+  spokenMoodSubmit.style.display = "none";
+}
+
 const programContainer = document.getElementById(
   "program-container"
 ) as HTMLDivElement | null;
@@ -37,9 +53,20 @@ if (!programContainer) {
 
 let selectedMood: string | null = null;
 
+const loadingElement = document.getElementById(
+  "loading"
+) as HTMLDivElement | null;
+
+if (!loadingElement) {
+  throw new Error("Could not find loading element");
+}
+
 if (selectedMood === null) {
   programContainer.style.display = "none";
+  loadingElement.style.display = "none";
 }
+
+// and handle the textarea input for spoken mood
 
 const buttons = document.querySelectorAll('button[name="mood"]');
 
@@ -53,15 +80,29 @@ buttons.forEach((button) => {
 form.addEventListener("submit", async function (event) {
   event.preventDefault();
 
+  fieldset.disabled = true;
+  document.body.setAttribute("loading", "true");
+  form.style.display = "none";
+  loadingElement.style.display = "block";
+
   if (!event.target) {
     throw new Error("Could not find event target");
+  }
+
+  // get the value from the textarea spoken mood
+  const spokenMood = document.getElementById(
+    "spoken-mood"
+  ) as HTMLTextAreaElement | null;
+
+  const spokenMoodValue = spokenMood?.value;
+
+  if (spokenMoodValue) {
+    selectedMood = spokenMoodValue;
   }
 
   if (!selectedMood) {
     throw new Error("No mood selected");
   }
-
-  fieldset.disabled = true;
 
   fetch(`${SERVER_BASE_URL}/create-program`, {
     method: "POST",
@@ -76,9 +117,13 @@ form.addEventListener("submit", async function (event) {
     .then((data: ProgramResponse) => {
       console.log(data);
       renderProgram(data);
-      fieldset.disabled = false;
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => console.error("Error:", error))
+    .finally(() => {
+      fieldset.disabled = false;
+      document.body.removeAttribute("loading");
+      loadingElement.style.display = "none";
+    });
 });
 
 let wordId = 0;

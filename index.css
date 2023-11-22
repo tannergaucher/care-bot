@@ -78,10 +78,11 @@ textarea {
   margin: 2rem;
   box-sizing: border-box;
   border: 5px solid #ffffff;
-  background: url("./bg.png");
-  color: #ffffff;
+  color: black;
   font-size: 3rem;
   min-height: 27vh;
+  font-family: "Press Start 2P", cursive;
+  padding: 3rem;
 }
 
 textarea {
@@ -107,6 +108,7 @@ textarea {
   overflow: scroll;
   max-width: 60%;
   margin: 0 auto;
+  margin-block: 3rem;
 }
 
 #page-views,
@@ -128,13 +130,6 @@ textarea {
   position: sticky;
   top: 7rem;
   z-index: 2;
-}
-
-:root {
-  --background-color: #f2f2f2;
-  --button-background-color: #4caf50;
-  --button-text-color: white;
-  --button-hover-background-color: #3e8e41;
 }
 
 span[current="true"] {
