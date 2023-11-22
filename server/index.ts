@@ -4,7 +4,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import { createProgram } from "./create-program";
-import { MOCK_PROGRAM_RESPONSE } from "./mocks";
 
 import { CLIENT_BASE_URL } from "../utils";
 
@@ -21,10 +20,6 @@ app.use(
     origin: CLIENT_BASE_URL,
   })
 );
-
-app.get("/example-program", (req: Request, res) => {
-  return res.json(MOCK_PROGRAM_RESPONSE);
-});
 
 app.post(
   "/create-program",

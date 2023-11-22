@@ -1,85 +1,213 @@
-/* 
-
-Hello, I need you help! Pretend you are a therapist. You are going to help me. It's best if you respond in a very structured way. I need you to respond with a plan for today that will help me based on how I am currently feeling, like the examples below.
-
-/* 
-
-{
-  currentUserMood: "negative",
-  theme: "Confidence",
-  intro:
-    "I'm sorry to hear that you're feeling this way. It's not uncommon for people to struggle with confidence and a sense of direction at times. Let's break down these feelings.",
-  morningTitle: "Morning Action: Self-Reflection",
-  morningText:
-    "Take some time in the morning to reflect on your strengths and past achievements. Identify the skills and qualities that make you proud. Acknowledge the positive aspects of yourself.",
-  afternoonEveningTitle: "Afternoon/Evening Action: Goal Setting",
-  afternoonEveningText:
-    "Set achievable goals for the day or week. Break them into smaller tasks to make progress more manageable. Celebrate small victories, and use them as building blocks for your confidence.",
-  nightTitle: "Night Action: Positive Affirmations",
-  nightText:
-    "Before bedtime, affirm your worth and capabilities. Challenge negative thoughts by focusing on positive aspects of your day. Remind yourself that personal growth is a gradual process.",
-  outro:
-    "Remember, gaining confidence is a journey, and it's okay to seek support from friends, family, or a professional if needed. You're not alone in this, and small steps can lead to significant progress.",
+export type CareResponse = {
+  currentUserMood: "positive" | "negative" | "neutral";
+  // set current user sentiment based on user input
+  // create a self care program for each day of the week, based on the current user sentiment
+  day:
+    | "Monday"
+    | "Tuesday"
+    | "Wednesday"
+    | "Thursday"
+    | "Friday"
+    | "Saturday"
+    | "Sunday";
+  intro: string;
+  // Intro is a therapist like response to the user's current mood and ends with a motivational quote and a positive affirmation about starting the day. If the user is in a bad mood, tell a funny joke instead. And with "Here's your self care program for today:"
+  morning: {
+    period: "Morning";
+    step: CareStep;
+  };
+  afternoonEvening: {
+    period: "Afternoon or Evening";
+    step: CareStep;
+  };
+  night: {
+    period: "Before Bed";
+    step: CareStep;
+  };
+  outro: string;
+  // Outro: "I hope you enjoy the self care program I made for you for today. I'll see you tomorrow for another one. Have a great day!"
 };
 
-{
-  currentUserMood: "positive",
-  theme: "Empowerment",
-  intro:
-    "I'm glad to hear that you're in a positive mood, but I understand that gaining confidence and a sense of direction can still be challenging. Let's explore ways to build on this positive momentum.",
-  morningTitle: "Morning Boost: Gratitude Practice",
-  morningText:
-    "Start your day by acknowledging the things you're grateful for. Reflect on positive aspects of your life, fostering a mindset of appreciation and setting a positive tone for the day.",
-  afternoonEveningTitle: "Afternoon/Evening Growth: Learning",
-  afternoonEveningText:
-    "Engage in activities that promote personal growth. Whether it's learning a new skill, pursuing a hobby, or gaining knowledge, continuous learning can contribute to a sense of achievement and confidence.",
-  nightTitle: "Night Reflection: Success Acknowledgment",
-  nightText:
-    "Before bedtime, reflect on the successes of your day. Recognize the positive steps you took, no matter how small. This practice reinforces your achievements and reinforces a positive self-image.",
-  outro:
-    "Remember, building confidence is a continuous journey. Embrace your successes, no matter how minor, and continue to nurture the positive aspects of yourself. If you ever need support, don't hesitate to reach out to those around you."
-}
+type CareStep =
+  | BreathWorkStep
+  | GratitudeStep
+  | MeditationStep
+  | JournalingStep
+  | YogaStep
+  | ReadingStep
+  | AffirmationsStep
+  | ExerciseStep
+  | BeUnpluggedStep
+  | TakeAWalkStep
+  | HobbyStep
+  | OrganizeStep
+  | PositivityStep
+  | MindNourishmentStep
+  | BodyNourishmentStep
+  | GoalStep
+  | BePresentStep
+  | SelfLoveStep;
 
+type BreathWorkStep = {
+  careType: "Breathwork";
+  text: string;
+  /* example text:
+  Do 10 minutes of guided breathwork
+  Do 10 minutes of box breathing
+  */
+};
 
-{
-  currentUserMood: "negative",
-  theme: "Resilience",
-  intro:
-    "I'm sorry to hear that you're feeling this way. It's completely normal to face challenges that impact our mood negatively. Let's explore strategies to enhance resilience during tough times.",
-  morningTitle: "Morning Reset: Mindfulness",
-  morningText:
-    "Begin your day with mindfulness exercises to center yourself. Focus on the present moment, acknowledge your emotions without judgment, and cultivate a sense of inner calm to face the day.",
-  afternoonEveningTitle: "Afternoon/Evening Renewal: Physical Activity",
-  afternoonEveningText:
-    "Incorporate physical activity into your day. Whether it's a walk, jog, or a workout, exercise has the potential to elevate mood, reduce stress, and enhance overall well-being.",
-  nightTitle: "Night Reflection: Journaling",
-  nightText:
-    "Take some time before bed to journal your thoughts and feelings. Writing can provide a therapeutic outlet, helping you gain clarity, process negative emotions, and set intentions for the next day.",
-  outro:
-    "Remember, resilience is about navigating challenges and bouncing back. It's okay to seek support from others or professional help when needed. By incorporating these practices, you're actively building resilience and strength."
-}
+type GratitudeStep = {
+  careType: "Gratitude";
+  text: string;
+  /* example text: 
+  Write down 3 things you are grateful for 
+  */
+};
 
+type MeditationStep = {
+  careType: "Meditation";
+  text: string;
+  /* text examples: 
+  Do 10 minutes of mindfulness meditation 
+  Do 10 minutes of guided meditation
+  */
+};
 
-*/
+type JournalingStep = {
+  careType: "Journaling";
+  text: string;
+  /* text examples: 
+  Journal about positive experiences from the day
+  Journal about your dreams and aspirations
+  */
+};
 
-export type ProgramResponse = {
-  currentUserMood: "positive" | "negative" | "neutral";
-  // theme: Exploration | Confidence | Direction
-  theme: string;
-  //intro:I'm sorry to hear that you're feeling this way. It's not uncommon for people to struggle with confidence and a sense of direction at times. Let's break down these feelings.
-  intro: string;
-  // morningTitle: Morning Action: Self-Reflection
-  morningTitle: string;
-  // morningText: Take some time in the morning to reflect on your strengths and past achievements. Identify the skills and qualities that make you proud. Acknowledge the positive aspects of yourself.
-  morningText: string;
-  // afternoonEveningTitle: Afternoon/Evening Action: Goal Setting
-  afternoonEveningTitle: string;
-  // afternoonEveningText: Set achievable goals for the day or week. Break them into smaller tasks to make progress more manageable. Celebrate small victories, and use them as building blocks for your confidence.
-  afternoonEveningText: string;
-  // nightTitle: Night Action: Positive Affirmations
-  nightTitle: string;
-  // nightText: Before bedtime, affirm your worth and capabilities. Challenge negative thoughts by focusing on positive aspects of your day. Remind yourself that personal growth is a gradual process.
-  nightText: string;
-  // outro: Remember, gaining confidence is a journey, and it's okay to seek support from friends, family, or a professional if needed. You're not alone in this, and small steps can lead to significant progress.
-  outro: string;
+type YogaStep = {
+  careType: "Yoga";
+  text: string;
+  /* text examples:
+  Do 10 minutes of yoga
+  Do 10 minutes of stretching
+  */
+};
+
+type ReadingStep = {
+  careType: "Reading";
+  text: string;
+  /* text examples:
+  Read a book for 10 minutes
+  Read an article about one of your current interests
+  */
+};
+
+type AffirmationsStep = {
+  careType: "Affirmations";
+  text: string;
+  /* text examples:
+  Repeat the following positive affirmations to yourself: 
+  I am strong and resilient.
+  I am capable of achieving my goals.
+  I am worthy of love and success.
+  */
+};
+
+type ExerciseStep = {
+  careType: "Exercise";
+  /*
+  example:
+  Do 20 pushups
+  Do 30 jumping jacks
+  */
+  text: string;
+};
+
+type BeUnpluggedStep = {
+  careType: "Be Unplugged";
+  /* 
+  Unplug from screens an hour before bedtime
+  Take a walk in nature without your phone
+  Spend some time in nature or a quiet outdoor space
+  Unplug from electronics at least 30 minutes before bed
+  */
+  text: string;
+};
+
+type TakeAWalkStep = {
+  careType: "Take A Walk";
+  text: string;
+  /*
+  Take a short walk during your lunch break
+  */
+};
+
+type HobbyStep = {
+  careType: "Hobby";
+  text: string;
+  /*
+  Engage in a hobby you enjoy for 30 minutes
+  */
+};
+
+type OrganizeStep = {
+  careType: "Organize";
+  text: string;
+  /* text example:
+  Take a moment to organize your workspace.
+  */
+};
+
+type PositivityStep = {
+  careType: "Positivity";
+  text: string;
+  /* text example:
+  Set a positive affirmation for the day.
+  Reflect on the positive choices you made today.
+  */
+};
+
+type MindNourishmentStep = {
+  careType: "Mind Nourishment";
+  text: string;
+  /* text example:
+  Listen to an inspirational podcast or audiobook.
+  Read a calming book or listen to soothing music.
+  */
+};
+
+type BodyNourishmentStep = {
+  careType: "Body Nourishment";
+  text: string;
+  /* text example:
+  Drink a kombucha
+  Drink a mushroom coffee.
+  Wind down with a cup of herbal tea.
+  Make a nutritious and colorful breakfast.
+  */
+};
+
+type GoalStep = {
+  careType: "Goal";
+  text: string;
+  /* text example:
+  Set a goal for the day.
+  Plan one small goal for tomorrow.
+  */
+};
+
+type BePresentStep = {
+  careType: "Be Present";
+  text: string;
+  /* text example:
+  Enjoy a peaceful breakfast without distractions.
+  */
+};
+
+type SelfLoveStep = {
+  careType: "Self Love";
+  text: string;
+  /* text example:
+  Do something nice for yourself.
+  Write down three things you love about yourself.
+  */
 };

@@ -144,6 +144,6 @@ span[spoken] {
   opacity: 1;
 }
 
-span:not([spoken]) {
+/* span:not([spoken]) {
   opacity: 0;
-}
+} */

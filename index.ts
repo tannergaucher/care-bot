@@ -1,4 +1,4 @@
-import { ProgramResponse } from "./server/create-program/programSchema";
+import { CareResponse } from "./server/create-program/programSchema";
 import { CreateProgramBody } from "./server/create-program";
 
 import "./highlight-text";
@@ -66,14 +66,17 @@ if (selectedMood === null) {
   loadingElement.style.display = "none";
 }
 
-// and handle the textarea input for spoken mood
+const dayOfWeek = `It's ${new Date().toLocaleString("en-us", {
+  weekday: "long",
+})} and I feel: `;
 
 const buttons = document.querySelectorAll('button[name="mood"]');
 
 buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
-    selectedMood = (event.target as HTMLButtonElement)
-      .value as ProgramResponse["currentUserMood"];
+    selectedMood = (dayOfWeek +
+      (event.target as HTMLButtonElement)
+        .value) as CareResponse["currentUserMood"];
   });
 });
 
@@ -97,7 +100,7 @@ form.addEventListener("submit", async function (event) {
   const spokenMoodValue = spokenMood?.value;
 
   if (spokenMoodValue) {
-    selectedMood = spokenMoodValue;
+    selectedMood = dayOfWeek + spokenMoodValue;
   }
 
   if (!selectedMood) {
@@ -114,7 +117,7 @@ form.addEventListener("submit", async function (event) {
     } as CreateProgramBody),
   })
     .then((response) => response.json())
-    .then((data: ProgramResponse) => {
+    .then((data: CareResponse) => {
       console.log(data);
       renderProgram(data);
     })
@@ -128,7 +131,7 @@ form.addEventListener("submit", async function (event) {
 
 let wordId = 0;
 
-function renderProgram(data: ProgramResponse) {
+function renderProgram(data: CareResponse) {
   const programContainer = document.getElementById("program-container");
 
   if (!programContainer) {
@@ -173,11 +176,14 @@ function renderProgram(data: ProgramResponse) {
   programContainer.appendChild(document.createElement("hr"));
 
   const morningTitle = document.createElement("h2");
-  appendSpansToContainer(morningTitle, wrapWordsInSpans(data.morningTitle));
+  appendSpansToContainer(
+    morningTitle,
+    wrapWordsInSpans(`${data.morning.period} ${data.morning.step.careType}`)
+  );
   programContainer.appendChild(morningTitle);
 
   const morningText = document.createElement("p");
-  appendSpansToContainer(morningText, wrapWordsInSpans(data.morningText));
+  appendSpansToContainer(morningText, wrapWordsInSpans(data.morning.step.text));
   programContainer.appendChild(morningText);
 
   programContainer.appendChild(document.createElement("hr"));
@@ -185,25 +191,30 @@ function renderProgram(data: ProgramResponse) {
   const afternoonEveningTitle = document.createElement("h2");
   appendSpansToContainer(
     afternoonEveningTitle,
-    wrapWordsInSpans(data.afternoonEveningTitle)
+    wrapWordsInSpans(
+      `${data.afternoonEvening.period} ${data.afternoonEvening.step.careType}`
+    )
   );
   programContainer.appendChild(afternoonEveningTitle);
 
   const afternoonEveningText = document.createElement("p");
   appendSpansToContainer(
     afternoonEveningText,
-    wrapWordsInSpans(data.afternoonEveningText)
+    wrapWordsInSpans(data.afternoonEvening.step.text)
   );
   programContainer.appendChild(afternoonEveningText);
 
   programContainer.appendChild(document.createElement("hr"));
 
   const nightTitle = document.createElement("h2");
-  appendSpansToContainer(nightTitle, wrapWordsInSpans(data.nightTitle));
+  appendSpansToContainer(
+    nightTitle,
+    wrapWordsInSpans(`${data.night.period} ${data.night.step.careType}`)
+  );
   programContainer.appendChild(nightTitle);
 
   const nightText = document.createElement("p");
-  appendSpansToContainer(nightText, wrapWordsInSpans(data.nightText));
+  appendSpansToContainer(nightText, wrapWordsInSpans(data.night.step.text));
   programContainer.appendChild(nightText);
 
   programContainer.appendChild(document.createElement("hr"));
