@@ -30,9 +30,7 @@ export async function createProgram({
     throw new Error("Failed to translate user input");
   }
 
-  const stringifiedProgram = JSON.stringify(response.data, null, 2);
-
-  console.log(stringifiedProgram);
+  console.log(JSON.stringify(response.data, null, 2));
 
   return response.data;
 }

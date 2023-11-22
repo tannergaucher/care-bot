@@ -1,4 +1,5 @@
 import { ProgramResponse } from "./server/create-program/programSchema";
+import { CreateProgramBody } from "./server/create-program";
 
 import "./highlight-text";
 
@@ -62,28 +63,22 @@ form.addEventListener("submit", async function (event) {
 
   fieldset.disabled = true;
 
-  // fetching the example program for the first time as a demo, because the actual generation takes a long time.
-  const res = await fetch(`${SERVER_BASE_URL}/example-program`);
-
-  const data = (await res.json()) as ProgramResponse;
-  renderProgram(data);
-
-  // fetch(`${SERVER_BASE_URL}/create-program`, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     mood: selectedMood,
-  //   } as CreateProgramBody),
-  // })
-  //   .then((response) => response.json())
-  //   .then((data: ProgramResponse) => {
-  //     console.log(data);
-  //     renderProgram(data);
-  //     fieldset.disabled = false;
-  //   })
-  //   .catch((error) => console.error("Error:", error));
+  fetch(`${SERVER_BASE_URL}/create-program`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      mood: selectedMood,
+    } as CreateProgramBody),
+  })
+    .then((response) => response.json())
+    .then((data: ProgramResponse) => {
+      console.log(data);
+      renderProgram(data);
+      fieldset.disabled = false;
+    })
+    .catch((error) => console.error("Error:", error));
 });
 
 let wordId = 0;
