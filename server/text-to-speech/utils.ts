@@ -1,3 +1,5 @@
+import { CareResponse } from "../create-program/programSchema";
+
 export type CloudTranscriptionResponse = {
   results: Result[];
 };
@@ -1004,3 +1006,87 @@ export const CLOUD_TRANSCRIPTION_RESPONSE: CloudTranscriptionResponse = {
     },
   ],
 };
+
+export function getPlainTextResponse(response: CareResponse) {
+  let text = "";
+
+  // iterare through response
+  // and create a text file as shown below
+
+  text += response.intro;
+  text += "\n\n";
+
+  text += `${response.morning.period} ${response.morning.step.careType}`;
+  text += "\n\n";
+  text += response.morning.step.text;
+
+  text += "\n\n";
+
+  text += `${response.afternoonEvening.period} ${response.afternoonEvening.step.careType}`;
+  text += "\n\n";
+  text += response.afternoonEvening.step.text;
+
+  text += "\n\n";
+
+  text += `${response.night.period} ${response.night.step.careType}`;
+  text += "\n\n";
+  text += response.night.step.text;
+
+  text += "\n\n";
+
+  text += response.outro;
+
+  return text;
+}
+
+/* 
+
+input: 
+
+{
+  "currentUserMood": "positive",
+  "day": "Wednesday",
+  "intro": "It's great to hear that you're feeling happy today! Here's your self care program for today:",
+  "morning": {
+    "period": "Morning",
+    "step": {
+      "careType": "Gratitude",
+      "text": "Write down 3 things you are grateful for"
+    }
+  },
+  "afternoonEvening": {
+    "period": "Afternoon or Evening",
+    "step": {
+      "careType": "Exercise",
+      "text": "Do 20 minutes of exercise"
+    }
+  },
+  "night": {
+    "period": "Before Bed",
+    "step": {
+      "careType": "Meditation",
+      "text": "Do 10 minutes of mindfulness meditation"
+    }
+  },
+  "outro": "I hope you enjoy the self care program I made for you for today. I'll see you tomorrow for another one. Have a great day!"
+}
+
+output:
+
+It's great to hear that you're feeling happy today! Here's your self care program for today:
+
+Morning Gratitude
+
+Write down 3 things you are grateful for
+
+Afternoon or Evening Exercise
+
+Do 20 minutes of exercise
+
+Before Bed Meditation
+
+Do 10 minutes of mindfulness meditation
+
+I hope you enjoy the self care program I made for you for today. I'll see you tomorrow for another one. Have a great day!
+
+*/

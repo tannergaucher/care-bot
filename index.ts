@@ -127,6 +127,7 @@ form.addEventListener("submit", async function (event) {
       document.body.removeAttribute("loading");
       loadingElement.style.display = "none";
     });
+  ``;
 });
 
 let wordId = 0;
