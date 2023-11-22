@@ -1,4 +1,5 @@
 import { ProgramResponse } from "./server/create-program/programSchema";
+import { CreateProgramBody } from "./server/create-program";
 
 import "./highlight-text";
 
@@ -52,9 +53,20 @@ if (!programContainer) {
 
 let selectedMood: string | null = null;
 
+const loadingElement = document.getElementById(
+  "loading"
+) as HTMLDivElement | null;
+
+if (!loadingElement) {
+  throw new Error("Could not find loading element");
+}
+
 if (selectedMood === null) {
   programContainer.style.display = "none";
+  loadingElement.style.display = "none";
 }
+
+// and handle the textarea input for spoken mood
 
 const buttons = document.querySelectorAll('button[name="mood"]');
 
@@ -68,38 +80,50 @@ buttons.forEach((button) => {
 form.addEventListener("submit", async function (event) {
   event.preventDefault();
 
+  fieldset.disabled = true;
+  document.body.setAttribute("loading", "true");
+  form.style.display = "none";
+  loadingElement.style.display = "block";
+
   if (!event.target) {
     throw new Error("Could not find event target");
+  }
+
+  // get the value from the textarea spoken mood
+  const spokenMood = document.getElementById(
+    "spoken-mood"
+  ) as HTMLTextAreaElement | null;
+
+  const spokenMoodValue = spokenMood?.value;
+
+  if (spokenMoodValue) {
+    selectedMood = spokenMoodValue;
   }
 
   if (!selectedMood) {
     throw new Error("No mood selected");
   }
 
-  fieldset.disabled = true;
-
-  // fetching the example program for the first time as a demo, because the actual generation takes a long time.
-  const res = await fetch(`${SERVER_BASE_URL}/example-program`);
-
-  const data = (await res.json()) as ProgramResponse;
-  renderProgram(data);
-
-  // fetch(`${SERVER_BASE_URL}/create-program`, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({
-  //     mood: selectedMood,
-  //   } as CreateProgramBody),
-  // })
-  //   .then((response) => response.json())
-  //   .then((data: ProgramResponse) => {
-  //     console.log(data);
-  //     renderProgram(data);
-  //     fieldset.disabled = false;
-  //   })
-  //   .catch((error) => console.error("Error:", error));
+  fetch(`${SERVER_BASE_URL}/create-program`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      mood: selectedMood,
+    } as CreateProgramBody),
+  })
+    .then((response) => response.json())
+    .then((data: ProgramResponse) => {
+      console.log(data);
+      renderProgram(data);
+    })
+    .catch((error) => console.error("Error:", error))
+    .finally(() => {
+      fieldset.disabled = false;
+      document.body.removeAttribute("loading");
+      loadingElement.style.display = "none";
+    });
 });
 
 let wordId = 0;

@@ -28,18 +28,14 @@
           >
             🙁 I'm Feeling Negative
           </button>
-          <textarea
-            id="spoken-mood"
-            name="mood"
-            id=""
-            cols="30"
-            rows="10"
-          ></textarea>
-          <button id="spoken-mood-submit" type="submit">Submit</button>
+          <textarea id="spoken-mood" name="mood" id=""></textarea>
+          <button id="spoken-mood-submit" type="submit">📨 Submit Mood</button>
           <button id="speak-mood" type="button">🎤 I'll Speak My Mood</button>
         </fieldset>
       </form>
     </section>
+    <div id="loading">Loading...</div>
+    <div id="im-listening">I'm listening...</div>
     <section id="program-container"></section>
     <audio controls id="audio-source">
       <source src="./synthesis.wav" type="audio/mp3" />
@@ -48,53 +44,54 @@
     <script src="./index.ts" type="module"></script>
 
     <script>
-      // Check if the browser supports the SpeechRecognition API
       if (
-        "SpeechRecognition" in window ||
-        "webkitSpeechRecognition" in window
+        !("SpeechRecognition" in window || "webkitSpeechRecognition" in window)
       ) {
-        const recognition = new (window.SpeechRecognition ||
-          window.webkitSpeechRecognition)();
-
-        recognition.onresult = function (event) {
-          const transcript = event.results[0][0].transcript;
-          console.log("You said: " + transcript);
-
-          const spokenMood = document.getElementById("spoken-mood");
-          spokenMood.style.display = "block";
-
-          const happyButton = document.getElementById("happy-button");
-          const sadButton = document.getElementById("sad-button");
-          happyButton.style.display = "none";
-          sadButton.style.display = "none";
-
-          const spokenMoodSubmit =
-            document.getElementById("spoken-mood-submit");
-
-          spokenMoodSubmit.style.display = "block";
-
-          if (spokenMood) {
-            spokenMood.value = transcript;
-          } else {
-            console.log("Could not find the spoken-mood textarea");
-          }
-        };
-
-        recognition.onerror = function (event) {
-          console.log("Error occurred in recognition: " + event.error);
-        };
-
-        const speakMoodButton = document.getElementById("speak-mood");
-        if (speakMoodButton) {
-          speakMoodButton.addEventListener("click", function () {
-            recognition.start();
-          });
-        } else {
-          console.log('Could not find the "Speak Mood" button');
-        }
-      } else {
         console.log("Your browser does not support the SpeechRecognition API");
       }
+
+      const userPromptSection = document.getElementById("user-prompt-section");
+      const listeningSection = document.getElementById("im-listening");
+
+      listeningSection.style.display = "none";
+
+      const recognition = new (window.SpeechRecognition ||
+        window.webkitSpeechRecognition)();
+
+      recognition.onresult = function (event) {
+        userPromptSection.style.display = "block";
+        listeningSection.style.display = "none";
+        const transcript = event.results[0][0].transcript;
+        console.log("You said: " + transcript);
+
+        const spokenMood = document.getElementById("spoken-mood");
+        const happyButton = document.getElementById("happy-button");
+        const sadButton = document.getElementById("sad-button");
+        const spokenMoodSubmit = document.getElementById("spoken-mood-submit");
+
+        happyButton.style.display = "none";
+        sadButton.style.display = "none";
+        spokenMood.style.display = "block";
+        spokenMoodSubmit.style.display = "flex";
+        spokenMood.value = transcript;
+      };
+
+      recognition.onerror = function (event) {
+        console.log("Error occurred in recognition: " + event.error);
+      };
+
+      const speakMoodButton = document.getElementById("speak-mood");
+
+      if (!speakMoodButton) {
+        console.log('Could not find the "Speak Mood" button');
+      }
+
+      speakMoodButton.addEventListener("click", function () {
+        console.log("Speak Mood button clicked");
+        userPromptSection.style.display = "none";
+        listeningSection.style.display = "block";
+        recognition.start();
+      });
     </script>
   </body>
 </html>
