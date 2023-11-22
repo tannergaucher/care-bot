@@ -7,15 +7,24 @@
   </head>
   <body>
     <h1>Care Bot</h1>
-    <form method="post">
-      <fieldset>
-        <legend>How are you feeling right now?</legend>
-        <textarea name="feelings" id="feelings" cols="30" rows="10"></textarea>
-        <br />
-        <button type="submit">Submit</button>
-      </fieldset>
-    </form>
+    <section id="user-prompt-section">
+      <form id="user-prompt-form" method="post">
+        <fieldset>
+          <legend id="user-prompt-legend">How are you feeling today?</legend>
+          <button aria-label="Happy" name="mood" value="happy">
+            🙂 I'm Feeling Positive
+          </button>
+          <button aria-label="Sad" type="submit" name="mood" value="sad">
+            🙁 I'm Feeling Negative
+          </button>
+        </fieldset>
+      </form>
+    </section>
     <section id="program-container"></section>
+    <audio controls id="audio-source">
+      <source src="./synthesis.wav" type="audio/mp3" />
+      Your browser does not support the audio element.
+    </audio>
     <script src="./index.ts" type="module"></script>
   </body>
 </html>

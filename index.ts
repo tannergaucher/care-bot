@@ -1,8 +1,8 @@
-import {
-  CareProgramResponse,
-  Day,
-} from "./server/create-program/careProgramSchema";
-import { CreateCareProgramBody } from "./server/create-program";
+import { ProgramResponse } from "./server/create-program/programSchema";
+
+import "./highlight-text";
+
+import "./index.css";
 
 import { SERVER_BASE_URL } from "./utils";
 
@@ -18,6 +18,14 @@ if (!fieldset) {
   throw new Error("Could not find fieldset");
 }
 
+const audioElement = document.getElementById(
+  "audio-source"
+) as HTMLAudioElement | null;
+
+if (audioElement) {
+  audioElement.style.display = "none";
+}
+
 const programContainer = document.getElementById(
   "program-container"
 ) as HTMLDivElement | null;
@@ -26,85 +34,141 @@ if (!programContainer) {
   throw new Error("Could not find program container");
 }
 
-// add an event listener to fetch the example program from the server after the document has loaded
-window.addEventListener("load", function () {
-  fetch(`${SERVER_BASE_URL}/example-program`)
-    .then((response) => response.json())
-    .then((data: CareProgramResponse) => {
-      Object.values(data.program).forEach((day) => {
-        const dayCard = createDayCard(day);
-        programContainer.appendChild(dayCard);
-      });
-    })
-    .catch((error) => console.error("Error:", error));
+let selectedMood: string | null = null;
+
+if (selectedMood === null) {
+  programContainer.style.display = "none";
+}
+
+const buttons = document.querySelectorAll('button[name="mood"]');
+
+buttons.forEach((button) => {
+  button.addEventListener("click", (event) => {
+    selectedMood = (event.target as HTMLButtonElement)
+      .value as ProgramResponse["currentUserMood"];
+  });
 });
 
-// add an event listener to the form to fetch the user's program from the server
-form.addEventListener("submit", function (event) {
+form.addEventListener("submit", async function (event) {
   event.preventDefault();
 
-  const formData = new FormData(form);
+  if (!event.target) {
+    throw new Error("Could not find event target");
+  }
 
-  const feelings = formData.get("feelings") as string | null;
+  if (!selectedMood) {
+    throw new Error("No mood selected");
+  }
 
   fieldset.disabled = true;
 
-  fetch(`${SERVER_BASE_URL}/create-program`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      userInput: feelings,
-    } as CreateCareProgramBody),
-  })
-    .then((response) => response.json())
-    .then((data: CareProgramResponse) => {
-      Object.values(data.program).forEach((day) => {
-        const dayCard = createDayCard(day);
-        programContainer.appendChild(dayCard);
-      });
+  // fetching the example program for the first time as a demo, because the actual generation takes a long time.
+  const res = await fetch(`${SERVER_BASE_URL}/example-program`);
 
-      fieldset.disabled = false;
-    })
-    .catch((error) => console.error("Error:", error));
+  const data = (await res.json()) as ProgramResponse;
+  renderProgram(data);
+
+  // fetch(`${SERVER_BASE_URL}/create-program`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     mood: selectedMood,
+  //   } as CreateProgramBody),
+  // })
+  //   .then((response) => response.json())
+  //   .then((data: ProgramResponse) => {
+  //     console.log(data);
+  //     renderProgram(data);
+  //     fieldset.disabled = false;
+  //   })
+  //   .catch((error) => console.error("Error:", error));
 });
 
-function createDayCard(day: Day) {
-  const dayCard = document.createElement("article");
-  dayCard.classList.add("day-container");
+let wordId = 0;
 
-  const dayHeader = document.createElement("h2");
-  dayHeader.innerText = day.day;
-  dayCard.appendChild(dayHeader);
+function renderProgram(data: ProgramResponse) {
+  const programContainer = document.getElementById("program-container");
 
-  const themeHeader = document.createElement("h3");
-  themeHeader.innerText = day.theme;
-  dayCard.appendChild(themeHeader);
+  if (!programContainer) {
+    throw new Error("Could not find program container");
+  }
 
-  const morningCareHeader = document.createElement("h4");
-  morningCareHeader.innerText = "Morning";
-  dayCard.appendChild(morningCareHeader);
+  // We want to wrap each word in a span so we can highlight it
+  function wrapWordsInSpans(text: string) {
+    return text.split(" ").map((word) => {
+      const span = document.createElement("span");
+      span.id = `${wordId++}`;
+      span.textContent = word;
+      return span;
+    });
+  }
 
-  const morningCareStep = document.createElement("p");
-  morningCareStep.innerText = day.morning.text;
-  dayCard.appendChild(morningCareStep);
+  function appendSpansToContainer(
+    container: HTMLElement,
+    spans: HTMLElement[]
+  ) {
+    spans.forEach((span) => {
+      container.appendChild(span);
+      container.appendChild(document.createTextNode(" ")); // Add space between words
+    });
+  }
 
-  const afternoonCareHeader = document.createElement("h4");
-  afternoonCareHeader.innerText = "Afternoon/Evening";
-  dayCard.appendChild(afternoonCareHeader);
+  programContainer.innerHTML = "";
+  programContainer.style.display = "block";
 
-  const afternoonCareStep = document.createElement("p");
-  afternoonCareStep.innerText = day.afternoonEvening.text;
-  dayCard.appendChild(afternoonCareStep);
+  if (form) {
+    form.style.display = "none";
+  }
 
-  const nightCareHeader = document.createElement("h4");
-  nightCareHeader.innerText = "Night";
-  dayCard.appendChild(nightCareHeader);
+  if (audioElement) {
+    audioElement.style.display = "block";
+  }
 
-  const nightCareStep = document.createElement("p");
-  nightCareStep.innerText = day.night.text;
-  dayCard.appendChild(nightCareStep);
+  const programIntro = document.createElement("p");
+  appendSpansToContainer(programIntro, wrapWordsInSpans(data.intro));
+  programContainer.appendChild(programIntro);
 
-  return dayCard;
+  programContainer.appendChild(document.createElement("hr"));
+
+  const morningTitle = document.createElement("h2");
+  appendSpansToContainer(morningTitle, wrapWordsInSpans(data.morningTitle));
+  programContainer.appendChild(morningTitle);
+
+  const morningText = document.createElement("p");
+  appendSpansToContainer(morningText, wrapWordsInSpans(data.morningText));
+  programContainer.appendChild(morningText);
+
+  programContainer.appendChild(document.createElement("hr"));
+
+  const afternoonEveningTitle = document.createElement("h2");
+  appendSpansToContainer(
+    afternoonEveningTitle,
+    wrapWordsInSpans(data.afternoonEveningTitle)
+  );
+  programContainer.appendChild(afternoonEveningTitle);
+
+  const afternoonEveningText = document.createElement("p");
+  appendSpansToContainer(
+    afternoonEveningText,
+    wrapWordsInSpans(data.afternoonEveningText)
+  );
+  programContainer.appendChild(afternoonEveningText);
+
+  programContainer.appendChild(document.createElement("hr"));
+
+  const nightTitle = document.createElement("h2");
+  appendSpansToContainer(nightTitle, wrapWordsInSpans(data.nightTitle));
+  programContainer.appendChild(nightTitle);
+
+  const nightText = document.createElement("p");
+  appendSpansToContainer(nightText, wrapWordsInSpans(data.nightText));
+  programContainer.appendChild(nightText);
+
+  programContainer.appendChild(document.createElement("hr"));
+
+  const programOutro = document.createElement("p");
+  appendSpansToContainer(programOutro, wrapWordsInSpans(data.outro));
+  programContainer.appendChild(programOutro);
 }

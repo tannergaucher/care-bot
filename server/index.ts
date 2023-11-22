@@ -1,11 +1,14 @@
-import type { Request } from "express";
+import type { Request, Response } from "express";
 import express, { json } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import { createCareProgram } from "./create-program";
-import { MOCK_CARE_PROGRAM_RESPONSE } from "./mocks";
+import { createProgram } from "./create-program";
+import { MOCK_PROGRAM_RESPONSE } from "./mocks";
+
 import { CLIENT_BASE_URL } from "../utils";
+
+import { CreateProgramBody } from "./create-program";
 
 dotenv.config();
 
@@ -20,26 +23,27 @@ app.use(
 );
 
 app.get("/example-program", (req: Request, res) => {
-  return res.json(MOCK_CARE_PROGRAM_RESPONSE);
+  return res.json(MOCK_PROGRAM_RESPONSE);
 });
 
-app.post("/create-program", async (req: Request, res) => {
-  const { feelings } = req.body;
+app.post(
+  "/create-program",
+  async (req: Request<{}, {}, CreateProgramBody>, res: Response) => {
+    const { mood } = req.body;
 
-  if (!feelings) {
-    console.log("missing user input!");
+    if (!mood) {
+      return res.status(400).json({
+        message: "No mood provided",
+      });
+    }
 
-    return res.status(400).json({
-      message: "missing user input",
+    const response = await createProgram({
+      mood,
     });
+
+    return res.json(response);
   }
-
-  const response = await createCareProgram({
-    userInput: feelings,
-  });
-
-  return res.json(response);
-});
+);
 
 const port = parseInt(process.env.PORT ?? "8080");
 

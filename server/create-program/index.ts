@@ -1,29 +1,29 @@
 import fs from "fs";
 import path from "path";
 import { createLanguageModel, createJsonTranslator } from "typechat";
-import { CareProgramResponse } from "./careProgramSchema";
+import { ProgramResponse } from "./programSchema";
 
-export type CreateCareProgramBody = {
-  userInput: string;
+export type CreateProgramBody = {
+  mood: "positive" | "negative" | string;
 };
 
-export async function createCareProgram({
-  userInput,
-}: CreateCareProgramBody): Promise<CareProgramResponse> {
+export async function createProgram({
+  mood,
+}: CreateProgramBody): Promise<ProgramResponse> {
   const model = createLanguageModel(process.env);
 
   const schema = fs.readFileSync(
-    path.join(__dirname, "careProgramSchema.ts"),
+    path.join(__dirname, "programSchema.ts"),
     "utf8"
   );
 
-  const translator = createJsonTranslator<CareProgramResponse>(
+  const translator = createJsonTranslator<ProgramResponse>(
     model,
     schema,
-    "CareProgramResponse"
+    "ProgramResponse"
   );
 
-  const response = await translator.translate(userInput);
+  const response = await translator.translate(mood);
 
   if (!response.success) {
     console.log(response.message);
