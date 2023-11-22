@@ -19,6 +19,10 @@ export async function createProgram({
 }: CreateProgramBody): Promise<CareResponse> {
   const model = createLanguageModel(process.env);
 
+  const storage = new Storage({
+    projectId: "homerice",
+  });
+
   const schema = fs.readFileSync(
     path.join(__dirname, "programSchema.ts"),
     "utf8"
@@ -45,16 +49,16 @@ export async function createProgram({
 
   const { speechGcsUri } = await textToSpeech({
     text,
+    storage,
     client: new TextToSpeechClient(),
-    storage: new Storage(),
   });
 
   console.log(speechGcsUri, "created speech at gcsUri");
 
   const { transcriptionUri } = await transcribeSpeech({
     gcsUri: speechGcsUri,
+    storage,
     client: new SpeechClient(),
-    storage: new Storage(),
   });
 
   console.log(transcriptionUri, "created transcription at gcsUri");
