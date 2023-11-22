@@ -57,7 +57,9 @@ button {
   justify-content: center;
   margin: 2rem;
   border: 5px solid #ffffff;
-  font-family: monospace;
+  font-family: "Press Start 2P", cursive;
+  filter: invert();
+  background: url("./bg.png");
 }
 
 button:hover,
