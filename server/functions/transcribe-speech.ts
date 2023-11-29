@@ -6,18 +6,18 @@ import fs from "fs";
 import { BUCKET_NAME } from "../utils";
 
 type TranscribeSpeech = {
-  speechGcsUri: string;
+  speechUri: string;
   client: CloudSpeech.v1.SpeechClient;
   storage: Storage;
 };
 
 export async function transcribeSpeech({
-  speechGcsUri,
+  speechUri,
   client,
   storage,
 }: TranscribeSpeech) {
   const [response] = await client.recognize({
-    audio: { uri: speechGcsUri },
+    audio: { uri: speechUri },
     config: {
       encoding:
         CloudSpeech.protos.google.cloud.speech.v1.RecognitionConfig
@@ -32,7 +32,7 @@ export async function transcribeSpeech({
     throw new Error("No response");
   }
 
-  const timestamp = speechGcsUri.split("/speech-")[1]?.split(`.wav`)[0];
+  const timestamp = speechUri.split("/speech-")[1]?.split(`.wav`)[0];
 
   const filename = `transcription-${timestamp}.json`;
 

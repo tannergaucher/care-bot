@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPlainTextResponse = exports.SERVER_BASE_URL = exports.CLIENT_BASE_URL = exports.BUCKET_NAME = void 0;
+exports.getPlainTextResponse = exports.BUCKET_NAME = void 0;
 exports.BUCKET_NAME = "carebot-text-to-speech";
-exports.CLIENT_BASE_URL = "https://care-bot.netlify.app";
-exports.SERVER_BASE_URL = process.env.NODE_ENV === "production"
-    ? "https://server-yzmezs2csa-ue.a.run.app"
-    : "http://localhost:8080";
+// export const CLIENT_BASE_URL = "https://care-bot.netlify.app";
+// export const SERVER_BASE_URL =
+//   process.env.NODE_ENV === "production"
+//     ? "https://server-yzmezs2csa-ue.a.run.app"
+//     : "http://localhost:8080";
 function getPlainTextResponse(response) {
     let text = "";
     text += `${response.intro}.`;

@@ -9,7 +9,7 @@ import {
   createProgram,
   type CreateProgramBody,
 } from "./functions/create-program";
-import { CLIENT_BASE_URL } from "./utils";
+import { CLIENT_BASE_URL } from "./config";
 
 dotenv.config();
 

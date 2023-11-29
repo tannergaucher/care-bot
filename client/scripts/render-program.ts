@@ -1,8 +1,8 @@
-import { CareResponse } from "../../server/functions/programSchema";
+import { CreateProgramResponse } from "../../server/functions/create-program";
 
 import { form, audio, programContainer } from "../selectors";
 
-export function renderProgram(data: CareResponse) {
+export function renderProgram(data: CreateProgramResponse) {
   let wordId = 0;
 
   // We want to wrap each word in a span so we can highlight it
@@ -84,4 +84,11 @@ export function renderProgram(data: CareResponse) {
   const programOutro = document.createElement("p");
   appendSpansToContainer(programOutro, wrapWordsInSpans(data.outro));
   programContainer.appendChild(programOutro);
+
+  console.log(data.speechUrl);
+
+  audio.src = data.speechUrl;
+
+  audio.load();
+  audio.play();
 }

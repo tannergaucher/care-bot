@@ -50,6 +50,7 @@ export async function textToSpeech({
     });
 
   return {
-    speechGcsUri: `gs://${BUCKET_NAME}/${filename}`,
+    speechUri: `gs://${BUCKET_NAME}/${filename}`,
+    speechUrl: `https://storage.googleapis.com/${BUCKET_NAME}/${filename}`,
   };
 }

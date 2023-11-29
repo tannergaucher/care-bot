@@ -1,6 +1,8 @@
-import { SERVER_BASE_URL } from "../utils";
-import { CreateProgramBody } from "../../server/functions/create-program";
-import { CareResponse } from "../../server/functions/programSchema";
+import { SERVER_BASE_URL } from "../config";
+import {
+  CreateProgramBody,
+  CreateProgramResponse,
+} from "../../server/functions/create-program";
 import { renderProgram } from "./render-program";
 
 import { form, fieldset, loadingIndicator, spokenMoodText } from "../selectors";
@@ -37,7 +39,7 @@ export async function handleFormSubmit({
     } as CreateProgramBody),
   })
     .then((response) => response.json())
-    .then((data: CareResponse) => {
+    .then((data: CreateProgramResponse) => {
       renderProgram(data);
     })
     .catch((error) => console.error("Error:", error))

@@ -42,7 +42,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const typechat_1 = require("typechat");
 const storage_1 = require("@google-cloud/storage");
 const create_program_1 = require("./functions/create-program");
-const utils_1 = require("./utils");
+const config_1 = require("./config");
 dotenv_1.default.config();
 const storage = new storage_1.Storage({
     projectId: process.env.GCP_PROJECT_ID,
@@ -51,7 +51,7 @@ const model = (0, typechat_1.createLanguageModel)(process.env);
 const app = (0, express_1.default)();
 app.use((0, express_1.json)());
 app.use((0, cors_1.default)({
-    origin: utils_1.CLIENT_BASE_URL,
+    origin: config_1.CLIENT_BASE_URL,
 }));
 app.post("/create-program", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { mood } = req.body;

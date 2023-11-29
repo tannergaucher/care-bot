@@ -31,19 +31,19 @@ function createProgram({ mood, model, storage, }) {
             throw new Error("Failed to translate user input");
         }
         const text = (0, utils_1.getPlainTextResponse)(response.data);
-        const { speechGcsUri } = yield (0, text_to_speech_2.textToSpeech)({
+        const { speechUri, speechUrl } = yield (0, text_to_speech_2.textToSpeech)({
             text,
             storage,
             client: new text_to_speech_1.TextToSpeechClient(),
         });
-        console.log(speechGcsUri, "created speech at gcsUri");
+        console.log(speechUri, "created speech at gcsUri");
         const { transcriptionUri } = yield (0, transcribe_speech_1.transcribeSpeech)({
-            speechGcsUri,
+            speechUri,
             storage,
             client: new speech_1.SpeechClient(),
         });
         console.log(transcriptionUri, "created transcription at gcsUri");
-        return response.data;
+        return Object.assign({ speechUrl }, response.data);
     });
 }
 exports.createProgram = createProgram;

@@ -10,5 +10,3 @@ export function querySelectorOrThrow<T extends Element>(
 
   return element as T;
 }
-
-export const SERVER_BASE_URL = "https://server-yzmezs2csa-ue.a.run.app";

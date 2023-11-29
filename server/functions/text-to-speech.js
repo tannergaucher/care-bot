@@ -68,7 +68,8 @@ function textToSpeech({ text, client, storage, }) {
             console.log(err);
         });
         return {
-            speechGcsUri: `gs://${utils_1.BUCKET_NAME}/${filename}`,
+            speechUri: `gs://${utils_1.BUCKET_NAME}/${filename}`,
+            speechUrl: `https://storage.googleapis.com/${utils_1.BUCKET_NAME}/${filename}`,
         };
     });
 }

@@ -16,11 +16,15 @@ export type CreateProgramBody = {
   storage: Storage;
 };
 
+export interface CreateProgramResponse extends CareResponse {
+  speechUrl: string;
+}
+
 export async function createProgram({
   mood,
   model,
   storage,
-}: CreateProgramBody): Promise<CareResponse> {
+}: CreateProgramBody): Promise<CreateProgramResponse> {
   const schema = fs.readFileSync(
     path.join(__dirname, "programSchema.ts"),
     "utf8"
@@ -41,21 +45,24 @@ export async function createProgram({
 
   const text = getPlainTextResponse(response.data);
 
-  const { speechGcsUri } = await textToSpeech({
+  const { speechUri, speechUrl } = await textToSpeech({
     text,
     storage,
     client: new TextToSpeechClient(),
   });
 
-  console.log(speechGcsUri, "created speech at gcsUri");
+  console.log(speechUri, "created speech at gcsUri");
 
   const { transcriptionUri } = await transcribeSpeech({
-    speechGcsUri,
+    speechUri,
     storage,
     client: new TranscribeSpeechClient(),
   });
 
   console.log(transcriptionUri, "created transcription at gcsUri");
 
-  return response.data;
+  return {
+    speechUrl,
+    ...response.data,
+  };
 }

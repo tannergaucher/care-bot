@@ -2,12 +2,12 @@ import { CareResponse } from "./functions/programSchema";
 
 export const BUCKET_NAME = "carebot-text-to-speech";
 
-export const CLIENT_BASE_URL = "https://care-bot.netlify.app";
+// export const CLIENT_BASE_URL = "https://care-bot.netlify.app";
 
-export const SERVER_BASE_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://server-yzmezs2csa-ue.a.run.app"
-    : "http://localhost:8080";
+// export const SERVER_BASE_URL =
+//   process.env.NODE_ENV === "production"
+//     ? "https://server-yzmezs2csa-ue.a.run.app"
+//     : "http://localhost:8080";
 
 export function getPlainTextResponse(response: CareResponse) {
   let text = "";

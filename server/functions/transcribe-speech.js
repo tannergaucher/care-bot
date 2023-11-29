@@ -40,11 +40,11 @@ const CloudSpeech = __importStar(require("@google-cloud/speech"));
 const util_1 = require("util");
 const fs_1 = __importDefault(require("fs"));
 const utils_1 = require("../utils");
-function transcribeSpeech({ speechGcsUri, client, storage, }) {
+function transcribeSpeech({ speechUri, client, storage, }) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const [response] = yield client.recognize({
-            audio: { uri: speechGcsUri },
+            audio: { uri: speechUri },
             config: {
                 encoding: CloudSpeech.protos.google.cloud.speech.v1.RecognitionConfig
                     .AudioEncoding.LINEAR16,
@@ -56,7 +56,7 @@ function transcribeSpeech({ speechGcsUri, client, storage, }) {
         if (!(response === null || response === void 0 ? void 0 : response.results)) {
             throw new Error("No response");
         }
-        const timestamp = (_a = speechGcsUri.split("/speech-")[1]) === null || _a === void 0 ? void 0 : _a.split(`.wav`)[0];
+        const timestamp = (_a = speechUri.split("/speech-")[1]) === null || _a === void 0 ? void 0 : _a.split(`.wav`)[0];
         const filename = `transcription-${timestamp}.json`;
         const writeFile = (0, util_1.promisify)(fs_1.default.writeFile);
         writeFile(filename, JSON.stringify(response.results), "binary");
