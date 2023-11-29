@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Care Bot</title>
+  </head>
+  <body>
+    <h1>Care Bot</h1>
+    <section id="user-prompt-section">
+      <form id="user-prompt-form" method="post">
+        <fieldset>
+          <legend id="user-prompt-legend">How are you feeling today?</legend>
+          <button
+            id="happy-button"
+            aria-label="Happy"
+            name="mood"
+            value="happy"
+          >
+            🙂 I'm Feeling Positive
+          </button>
+          <button
+            id="sad-button"
+            aria-label="Sad"
+            type="submit"
+            name="mood"
+            value="sad"
+          >
+            🙁 I'm Feeling Negative
+          </button>
+          <textarea id="spoken-mood-text" name="mood" id=""></textarea>
+          <button id="spoken-mood-submit-button" type="submit">
+            📨 Submit Mood
+          </button>
+          <button id="speak-mood-button" type="button">
+            🎤 I'll Speak My Mood
+          </button>
+        </fieldset>
+      </form>
+    </section>
+    <div id="loading-indicator">Loading...</div>
+    <div id="im-listening">I'm listening...</div>
+    <section id="program-container"></section>
+    <audio controls>
+      <source src="./synthesis.wav" type="audio/mp3" />
+      Your browser does not support the audio element.
+    </audio>
+    <script src="./index.ts" type="module"></script>
+  </body>
+</html>

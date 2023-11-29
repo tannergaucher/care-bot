@@ -1,15 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-@keyframes loadingShuffle {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-}
-
 body[loading] {
   animation: loadingShuffle 2s infinite;
 }
@@ -18,7 +8,7 @@ body {
   font-family: "Press Start 2P", cursive;
   background-color: #ff6600;
   color: #ffffff;
-  background-image: url("./bg.png");
+  background-image: url("./assets/bg.png");
   background-repeat: repeat;
   display: flex;
   flex-direction: column;
@@ -58,8 +48,8 @@ button {
   margin: 2rem;
   border: 5px solid #ffffff;
   font-family: "Press Start 2P", cursive;
+  background: url("./assets/bg.png");
   filter: invert();
-  background: url("./bg.png");
 }
 
 button:hover,
@@ -90,14 +80,8 @@ textarea {
   outline: none;
 }
 
-#user-prompt {
-  position: sticky;
-  top: 2rem;
-  z-index: 1;
-}
-
 #program-container {
-  background: url("./bg.png");
+  background: url("./assets/bg.png");
   filter: invert();
   color: #ffffff;
   font-family: Press Start 2P, cursive;
@@ -126,12 +110,6 @@ textarea {
   color: #ffffff;
 }
 
-#user-prompt-legend {
-  position: sticky;
-  top: 7rem;
-  z-index: 2;
-}
-
 span[current="true"] {
   background-color: #ff0;
   color: lime;
@@ -140,10 +118,20 @@ span[current="true"] {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
-span[spoken] {
+/* span[spoken] {
   opacity: 1;
-}
+} */
 
 /* span:not([spoken]) {
   opacity: 0;
 } */
+
+@keyframes loadingShuffle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}

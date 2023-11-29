@@ -1,22 +1,15 @@
-// import { CLOUD_TRANSCRIPTION_RESPONSE } from "./server/text-to-speech/utils";
+// import { audio } from "../selectors";
 
-// const words = CLOUD_TRANSCRIPTION_RESPONSE.results[0].alternatives[0].words;
-
-// let currentWordIndex = 0;
-
-// const audioSource = document.getElementById(
-//   "audio-source"
-// ) as HTMLAudioElement | null;
-
-// if (!audioSource) {
-//   throw new Error("Audio source not found");
-// }
+// // get words from transcription response
+// const words = [];
 
 // let interval;
 
-// audioSource.addEventListener("play", () => {
+// audio.addEventListener("play", () => {
+//   let currentWordIndex = 0;
+
 //   interval = setInterval(() => {
-//     const currentTime = audioSource.currentTime;
+//     const currentTime = audio.currentTime;
 //     const currentWord = words[currentWordIndex];
 
 //     if (currentTime >= parseInt(currentWord.startTime)) {
@@ -36,8 +29,6 @@
 //     const wordSpan = document.getElementById(
 //       `${currentWordIndex}`
 //     ) as HTMLSpanElement | null;
-
-//     console.log(wordSpan);
 
 //     if (wordSpan?.getAttribute("current")) {
 //       return;
@@ -61,6 +52,6 @@
 //   }
 // });
 
-// audioSource.addEventListener("pause", () => {
+// audio.addEventListener("pause", () => {
 //   clearInterval(interval);
 // });
