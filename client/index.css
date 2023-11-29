@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
+a {
+  color: #ffffff;
+}
+
 body[loading] {
   animation: loadingShuffle 2s infinite;
 }
@@ -17,10 +21,14 @@ body {
   min-height: 100vh;
 }
 
+audio {
+  margin-block-end: 4rem;
+}
+
 h1 {
   text-shadow: 2px 2px #ff0000;
   font-size: 5vw;
-  margin: 2rem;
+  margin: 4rem;
 }
 
 h2 {
@@ -87,12 +95,10 @@ textarea {
   font-family: Press Start 2P, cursive;
   padding: 1em;
   border-radius: 5px;
-  margin: 1em 0;
   /* height: 30vh;
   overflow: scroll; */
   max-width: 60%;
-  margin: 0 auto;
-  margin-block: 3rem;
+  margin-block-end: 4rem;
 }
 
 #page-views,
