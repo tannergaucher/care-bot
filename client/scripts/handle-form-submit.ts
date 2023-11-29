@@ -1,4 +1,4 @@
-import { SERVER_BASE_URL } from "../../server/utils";
+import { SERVER_BASE_URL } from "../utils";
 import { CreateProgramBody } from "../../server/functions/create-program";
 import { CareResponse } from "../../server/functions/programSchema";
 import { renderProgram } from "./render-program";
