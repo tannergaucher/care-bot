@@ -2,14 +2,22 @@ import type { Request, Response } from "express";
 import express, { json } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { createLanguageModel } from "typechat";
+import { Storage } from "@google-cloud/storage";
 
-import { createProgram } from "./create-program";
-
-import { CLIENT_BASE_URL } from "../utils";
-
-import { CreateProgramBody } from "./create-program";
+import {
+  createProgram,
+  type CreateProgramBody,
+} from "./functions/create-program";
+import { CLIENT_BASE_URL } from "../client/utils";
 
 dotenv.config();
+
+const storage = new Storage({
+  projectId: process.env.GCP_PROJECT_ID,
+});
+
+const model = createLanguageModel(process.env);
 
 const app = express();
 
@@ -34,6 +42,8 @@ app.post(
 
     const response = await createProgram({
       mood,
+      model,
+      storage,
     });
 
     return res.json(response);

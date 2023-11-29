@@ -1,28 +1,26 @@
 import fs from "fs";
 import path from "path";
-import { createLanguageModel, createJsonTranslator } from "typechat";
+import { createJsonTranslator, TypeChatLanguageModel } from "typechat";
 import { TextToSpeechClient } from "@google-cloud/text-to-speech";
-import { SpeechClient } from "@google-cloud/speech";
+import { SpeechClient as TranscribeSpeechClient } from "@google-cloud/speech";
 import { Storage } from "@google-cloud/storage";
 
 import { CareResponse } from "./programSchema";
-import { textToSpeech } from "../text-to-speech";
-import { getPlainTextResponse } from "../text-to-speech/utils";
-import { transcribeSpeech } from "../transcribe-speech";
+import { textToSpeech } from "./text-to-speech";
+import { getPlainTextResponse } from "../utils";
+import { transcribeSpeech } from "./transcribe-speech";
 
 export type CreateProgramBody = {
   mood: "positive" | "negative" | string;
+  model: TypeChatLanguageModel;
+  storage: Storage;
 };
 
 export async function createProgram({
   mood,
+  model,
+  storage,
 }: CreateProgramBody): Promise<CareResponse> {
-  const model = createLanguageModel(process.env);
-
-  const storage = new Storage({
-    projectId: "homerice",
-  });
-
   const schema = fs.readFileSync(
     path.join(__dirname, "programSchema.ts"),
     "utf8"
@@ -37,13 +35,9 @@ export async function createProgram({
   const response = await translator.translate(mood);
 
   if (!response.success) {
-    console.log(response.message);
+    console.log(response);
     throw new Error("Failed to translate user input");
   }
-
-  response.data;
-
-  console.log(JSON.stringify(response.data, null, 2));
 
   const text = getPlainTextResponse(response.data);
 
@@ -56,9 +50,9 @@ export async function createProgram({
   console.log(speechGcsUri, "created speech at gcsUri");
 
   const { transcriptionUri } = await transcribeSpeech({
-    gcsUri: speechGcsUri,
+    speechGcsUri,
     storage,
-    client: new SpeechClient(),
+    client: new TranscribeSpeechClient(),
   });
 
   console.log(transcriptionUri, "created transcription at gcsUri");

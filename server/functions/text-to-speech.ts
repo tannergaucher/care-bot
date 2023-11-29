@@ -16,7 +16,7 @@ export async function textToSpeech({
   client,
   storage,
 }: TextToSpeechParams) {
-  const request = {
+  const [response] = await client.synthesizeSpeech({
     input: { text },
     voice: {
       languageCode: "en-US",
@@ -25,21 +25,19 @@ export async function textToSpeech({
     },
     audioConfig: {
       audioEncoding:
-        TextToSpeech.protos.google.cloud.texttospeech.v1.AudioEncoding.MP3,
+        TextToSpeech.protos.google.cloud.texttospeech.v1.AudioEncoding.LINEAR16,
     },
-  };
-
-  const [response] = await client.synthesizeSpeech(request);
+  });
 
   if (!response.audioContent) {
     throw new Error("No audio content");
   }
 
   const timestamp = new Date().getTime();
-  const filename = `speech-${timestamp}.mp3`;
+  const filename = `speech-${timestamp}.wav`;
 
-  // save to local file , use promisify
   const writeFile = promisify(fs.writeFile);
+
   writeFile(filename, response.audioContent, "binary");
 
   await storage
@@ -50,8 +48,6 @@ export async function textToSpeech({
     .catch((err) => {
       console.log(err);
     });
-
-  console.log(`${filename} uploaded to ${BUCKET_NAME}.`);
 
   return {
     speechGcsUri: `gs://${BUCKET_NAME}/${filename}`,
