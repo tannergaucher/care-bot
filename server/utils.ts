@@ -1,7 +1,13 @@
 import { CareResponse } from "./functions/programSchema";
 
 export const BUCKET_NAME = "carebot-text-to-speech";
-export const SERVER_BASE_URL = "http://localhost:8080";
+
+export const CLIENT_BASE_URL = "http://localhost:5173";
+
+export const SERVER_BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://server-yzmezs2csa-ue.a.run.app"
+    : "http://localhost:8080";
 
 export function getPlainTextResponse(response: CareResponse) {
   let text = "";

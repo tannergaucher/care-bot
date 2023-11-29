@@ -29,3 +29,12 @@ OPENAI_MODEL="The OpenAI model name (e.g. gpt-3.5-turbo or gpt-4)"
 3. Run client: `npm install && npm start`
 4. Run server: `cd server && npm install && npm start`
 5. Go to `localhost:3000` in your browser
+
+## Deploy Server
+
+From server root directory using gcloud CLI:
+
+```
+npm run build && gcloud run deploy server  --source .
+
+```
