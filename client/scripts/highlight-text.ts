@@ -1,57 +1,57 @@
-import { audio } from "../selectors";
+// import { audio } from "../selectors";
 
-// get words from transcription response
-const words = [];
+// // get words from transcription response
+// const words = [];
 
-let interval;
+// let interval;
 
-audio.addEventListener("play", () => {
-  let currentWordIndex = 0;
+// audio.addEventListener("play", () => {
+//   let currentWordIndex = 0;
 
-  interval = setInterval(() => {
-    const currentTime = audio.currentTime;
-    const currentWord = words[currentWordIndex];
+//   interval = setInterval(() => {
+//     const currentTime = audio.currentTime;
+//     const currentWord = words[currentWordIndex];
 
-    if (currentTime >= parseInt(currentWord.startTime)) {
-      highlightWord(currentWordIndex);
-    }
+//     if (currentTime >= parseInt(currentWord.startTime)) {
+//       highlightWord(currentWordIndex);
+//     }
 
-    if (currentTime >= parseInt(currentWord.endTime)) {
-      currentWordIndex++;
-    }
+//     if (currentTime >= parseInt(currentWord.endTime)) {
+//       currentWordIndex++;
+//     }
 
-    if (currentWordIndex >= words.length) {
-      clearInterval(interval);
-    }
-  }, 50);
+//     if (currentWordIndex >= words.length) {
+//       clearInterval(interval);
+//     }
+//   }, 50);
 
-  function highlightWord(currentWordIndex: number) {
-    const wordSpan = document.getElementById(
-      `${currentWordIndex}`
-    ) as HTMLSpanElement | null;
+//   function highlightWord(currentWordIndex: number) {
+//     const wordSpan = document.getElementById(
+//       `${currentWordIndex}`
+//     ) as HTMLSpanElement | null;
 
-    if (wordSpan?.getAttribute("current")) {
-      return;
-    }
+//     if (wordSpan?.getAttribute("current")) {
+//       return;
+//     }
 
-    const previousWordSpan = document.getElementById(
-      `${currentWordIndex - 1}`
-    ) as HTMLSpanElement | null;
+//     const previousWordSpan = document.getElementById(
+//       `${currentWordIndex - 1}`
+//     ) as HTMLSpanElement | null;
 
-    if (previousWordSpan) {
-      previousWordSpan.removeAttribute("current");
-      previousWordSpan.setAttribute("spoken", "true");
-    }
+//     if (previousWordSpan) {
+//       previousWordSpan.removeAttribute("current");
+//       previousWordSpan.setAttribute("spoken", "true");
+//     }
 
-    wordSpan?.setAttribute("current", "true");
-    wordSpan?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-      inline: "center",
-    });
-  }
-});
+//     wordSpan?.setAttribute("current", "true");
+//     wordSpan?.scrollIntoView({
+//       behavior: "smooth",
+//       block: "center",
+//       inline: "center",
+//     });
+//   }
+// });
 
-audio.addEventListener("pause", () => {
-  clearInterval(interval);
-});
+// audio.addEventListener("pause", () => {
+//   clearInterval(interval);
+// });
