@@ -2,7 +2,7 @@ import { CareResponse } from "./functions/programSchema";
 
 export const BUCKET_NAME = "carebot-text-to-speech";
 
-export const CLIENT_BASE_URL = "http://localhost:5173";
+export const CLIENT_BASE_URL = "https://care-bot.netlify.app";
 
 export const SERVER_BASE_URL =
   process.env.NODE_ENV === "production"
