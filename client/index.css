@@ -88,8 +88,8 @@ textarea {
   padding: 1em;
   border-radius: 5px;
   margin: 1em 0;
-  height: 30vh;
-  overflow: scroll;
+  /* height: 30vh;
+  overflow: scroll; */
   max-width: 60%;
   margin: 0 auto;
   margin-block: 3rem;
@@ -102,12 +102,6 @@ textarea {
   overflow: auto;
   white-space: nowrap;
   margin-top: 3rem;
-}
-
-#page-views marquee,
-#last-visited marquee {
-  font-size: 1.5em;
-  color: #ffffff;
 }
 
 span[current="true"] {
