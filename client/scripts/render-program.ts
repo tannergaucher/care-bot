@@ -4,6 +4,8 @@ import { audio, form, programContainer } from "../selectors";
 export function renderProgram(data: CreateProgramResponse) {
   let wordId = 0;
 
+  let interval: NodeJS.Timeout | null = null;
+
   // We want to wrap each word in a span so we can highlight it
   function wrapWordsInSpans(text: string) {
     return text.split(" ").map((word) => {
@@ -88,6 +90,79 @@ export function renderProgram(data: CreateProgramResponse) {
 
   audio.src = data.speechUrl;
 
+  const words: {
+    startTime: number;
+    endTime: number;
+    word: string;
+  }[] = [];
+
+  data.transcriptionResults.forEach((result) => {
+    result.alternatives?.forEach((alternative) => {
+      alternative.words?.forEach((word) => {
+        if (!word.startTime || !word.endTime || !word.word) return;
+
+        console.log(word, "word");
+
+        words.push({
+          startTime: parseFloat(
+            `${word.startTime.seconds}.${word.startTime.nanos}`.replace("s", "")
+          ),
+          endTime: parseFloat(
+            `${word.endTime.seconds}.${word.endTime.nanos}`.replace("s", "")
+          ),
+          word: word.word,
+        });
+      });
+    });
+  });
+
   audio.load();
   audio.play();
+
+  audio.addEventListener("play", () => {
+    let currentWordIndex = 0;
+
+    interval = setInterval(() => {
+      const currentTime = audio.currentTime;
+      const currentWord = words[currentWordIndex];
+
+      if (currentTime >= currentWord.startTime) {
+        highlightWord(currentWordIndex);
+      }
+
+      if (currentTime >= currentWord.endTime) {
+        currentWordIndex++;
+      }
+
+      if (currentWordIndex >= words.length) {
+        clearInterval(interval!);
+      }
+    }, 50);
+
+    function highlightWord(currentWordIndex: number) {
+      const wordSpan = document.getElementById(
+        `${currentWordIndex}`
+      ) as HTMLSpanElement | null;
+
+      if (wordSpan?.getAttribute("current")) {
+        return;
+      }
+
+      const previousWordSpan = document.getElementById(
+        `${currentWordIndex - 1}`
+      ) as HTMLSpanElement | null;
+
+      if (previousWordSpan) {
+        previousWordSpan.removeAttribute("current");
+        previousWordSpan.setAttribute("spoken", "true");
+      }
+
+      wordSpan?.setAttribute("current", "true");
+      wordSpan?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
+    }
+  });
 }
