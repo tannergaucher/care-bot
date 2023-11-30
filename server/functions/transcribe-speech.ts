@@ -1,14 +1,13 @@
-import * as CloudSpeech from "@google-cloud/speech";
-import { Storage } from "@google-cloud/storage";
 import fs from "fs";
 import { promisify } from "util";
 
+import { CloudSpeech, CloudStorage } from "../index";
 import { BUCKET_NAME } from "../utils";
 
 type TranscribeSpeech = {
   speechUri: string;
   client: CloudSpeech.v1.SpeechClient;
-  storage: Storage;
+  storage: CloudStorage.Storage;
 };
 
 export async function transcribeSpeech({

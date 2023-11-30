@@ -2,11 +2,7 @@ import fs from "fs";
 import path from "path";
 import { createJsonTranslator, TypeChatLanguageModel } from "typechat";
 
-import {
-  StorageType,
-  TextToSpeechClientType,
-  TranscribeSpeechClientType,
-} from "../index";
+import { CloudSpeech, CloudStorage, TextToSpeech } from "../index";
 import { getPlainTextResponse } from "../utils";
 import { CareResponse } from "./programSchema";
 import { textToSpeech } from "./text-to-speech";
@@ -15,9 +11,9 @@ import { transcribeSpeech } from "./transcribe-speech";
 export type CreateProgramBody = {
   mood: "positive" | "negative" | string;
   model: TypeChatLanguageModel;
-  storage: StorageType;
-  textToSpeechClient: TextToSpeechClientType;
-  transcribeSpeechClient: TranscribeSpeechClientType;
+  storage: CloudStorage.Storage;
+  textToSpeechClient: TextToSpeech.v1.TextToSpeechClient;
+  transcribeSpeechClient: CloudSpeech.v1.SpeechClient;
 };
 
 export interface CreateProgramResponse extends CareResponse {

@@ -1,16 +1,13 @@
-import type { SpeechClient as TranscribeSpeechClientType } from "@google-cloud/speech";
-import { SpeechClient as TranscribeSpeechClient } from "@google-cloud/speech";
-import type { Storage as StorageType } from "@google-cloud/storage";
-import { Storage } from "@google-cloud/storage";
-import type { TextToSpeechClient as TextToSpeechClientType } from "@google-cloud/text-to-speech";
-import { TextToSpeechClient } from "@google-cloud/text-to-speech";
+import * as CloudSpeech from "@google-cloud/speech";
+import * as CloudStorage from "@google-cloud/storage";
+import * as TextToSpeech from "@google-cloud/text-to-speech";
 import cors from "cors";
 import dotenv from "dotenv";
 import type { Request, Response } from "express";
 import express, { json } from "express";
 import { createLanguageModel } from "typechat";
 
-export { TranscribeSpeechClientType, TextToSpeechClientType, StorageType };
+export { CloudSpeech, TextToSpeech, CloudStorage };
 
 import { CLIENT_BASE_URL } from "./config";
 import {
@@ -32,11 +29,11 @@ app.use(
 
 const model = createLanguageModel(process.env);
 
-const storage = new Storage();
+const storage = new CloudStorage.Storage();
 
-const transcribeSpeechClient = new TranscribeSpeechClient();
+const transcribeSpeechClient = new CloudSpeech.v1.SpeechClient();
 
-const textToSpeechClient = new TextToSpeechClient();
+const textToSpeechClient = new TextToSpeech.v1.TextToSpeechClient();
 
 app.post(
   "/create-program",

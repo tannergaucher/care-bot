@@ -1,13 +1,12 @@
-import { Storage } from "@google-cloud/storage";
-import * as TextToSpeech from "@google-cloud/text-to-speech";
 import fs from "fs";
 import { promisify } from "util";
 
+import { CloudStorage, TextToSpeech } from "../index";
 import { BUCKET_NAME } from "../utils";
 
 interface TextToSpeechParams {
-  client: TextToSpeech.TextToSpeechClient;
-  storage: Storage;
+  client: TextToSpeech.v1.TextToSpeechClient;
+  storage: CloudStorage.Storage;
   text: string;
 }
 
