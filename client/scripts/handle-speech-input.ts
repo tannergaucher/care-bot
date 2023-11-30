@@ -1,10 +1,10 @@
 import {
   happyButton,
-  sadButton,
-  userPromptSection,
-  spokenMoodText,
-  spokenMoodSubmitButton,
   imListeningSection,
+  sadButton,
+  spokenMoodSubmitButton,
+  spokenMoodText,
+  userPromptSection,
 } from "../selectors";
 
 export interface HandleSpeechInputEvent {

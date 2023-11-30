@@ -1,23 +1,22 @@
-import { CareResponse } from "../server/functions/programSchema";
+import "./index.css";
 
+import { CareResponse } from "../server/functions/programSchema";
 import { handleFormSubmit } from "./scripts/handle-form-submit";
 import {
-  HandleSpeechInputEvent,
   handleSpeechInput,
+  HandleSpeechInputEvent,
 } from "./scripts/handle-speech-input";
 import {
-  form,
   audio,
-  spokenMoodText,
+  form,
+  imListeningSection,
+  loadingIndicator,
+  programContainer,
   speakMoodButton,
   spokenMoodSubmitButton,
-  programContainer,
-  loadingIndicator,
+  spokenMoodText,
   userPromptSection,
-  imListeningSection,
 } from "./selectors";
-
-import "./index.css";
 
 let mood: string | null = null;
 

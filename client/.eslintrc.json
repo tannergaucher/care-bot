@@ -7,7 +7,7 @@
     "plugin:import/warnings",
     "prettier"
   ],
-  "plugins": ["import"],
+  "plugins": ["simple-import-sort"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -16,20 +16,7 @@
     }
   },
   "rules": {
-    "import/order": [
-      "error",
-      {
-        "newlines-between": "always",
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index"
-        ]
-      }
-    ]
+    "simple-import-sort/imports": "error"
   },
   "env": {
     "browser": true,
