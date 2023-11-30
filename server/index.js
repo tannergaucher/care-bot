@@ -66,14 +66,13 @@ app.post("/create-program", (req, res) => __awaiter(void 0, void 0, void 0, func
             message: "No mood provided",
         });
     }
-    const response = yield (0, create_program_1.createProgram)({
+    return res.json(yield (0, create_program_1.createProgram)({
         mood,
         model,
         storage,
         transcribeSpeechClient,
         textToSpeechClient,
-    });
-    return res.json(response);
+    }));
 }));
 const port = parseInt((_a = process.env.PORT) !== null && _a !== void 0 ? _a : "8080");
 app.listen(port, () => {

@@ -46,15 +46,15 @@ app.post(
       });
     }
 
-    const response = await createProgram({
-      mood,
-      model,
-      storage,
-      transcribeSpeechClient,
-      textToSpeechClient,
-    });
-
-    return res.json(response);
+    return res.json(
+      await createProgram({
+        mood,
+        model,
+        storage,
+        transcribeSpeechClient,
+        textToSpeechClient,
+      })
+    );
   }
 );
 
