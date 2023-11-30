@@ -3,8 +3,7 @@ import * as CloudStorage from "@google-cloud/storage";
 import * as TextToSpeech from "@google-cloud/text-to-speech";
 import cors from "cors";
 import dotenv from "dotenv";
-import type { Request, Response } from "express";
-import express, { json } from "express";
+import express, { json, type Request, type Response } from "express";
 import { createLanguageModel } from "typechat";
 
 export { CloudSpeech, TextToSpeech, CloudStorage };
