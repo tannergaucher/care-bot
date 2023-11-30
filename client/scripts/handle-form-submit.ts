@@ -1,11 +1,10 @@
-import { SERVER_BASE_URL } from "../config";
 import {
   CreateProgramBody,
   CreateProgramResponse,
 } from "../../server/functions/create-program";
+import { SERVER_BASE_URL } from "../config";
+import { fieldset, form, loadingIndicator, spokenMoodText } from "../selectors";
 import { renderProgram } from "./render-program";
-
-import { form, fieldset, loadingIndicator, spokenMoodText } from "../selectors";
 
 export async function handleFormSubmit({
   event,

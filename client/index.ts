@@ -1,21 +1,18 @@
+import "./index.css";
+
 import { CareResponse } from "../server/functions/programSchema";
 import { handleFormSubmit } from "./scripts/handle-form-submit";
+import { handleSpeechInput } from "./scripts/handle-speech-input";
 import {
-  HandleSpeechInputEvent,
-  handleSpeechInput,
-} from "./scripts/handle-speech-input";
-
-import "./index.css";
-import {
-  form,
   audio,
-  spokenMoodText,
+  form,
+  imListeningSection,
+  loadingIndicator,
+  programContainer,
   speakMoodButton,
   spokenMoodSubmitButton,
-  programContainer,
-  loadingIndicator,
+  spokenMoodText,
   userPromptSection,
-  imListeningSection,
 } from "./selectors";
 
 let mood: string | null = null;
@@ -50,12 +47,10 @@ form.addEventListener("submit", (event) => {
 });
 
 if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
-  console.log("Speech recognition is supported");
+  const recognition =
+    new window.SpeechRecognition() || new window.webkitSpeechRecognition();
 
-  const recognition = new ((window as any).SpeechRecognition ||
-    (window as any).webkitSpeechRecognition)();
-
-  recognition.onresult = function (event: HandleSpeechInputEvent) {
+  recognition.onresult = function (event) {
     handleSpeechInput(event);
   };
 

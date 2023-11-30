@@ -1,19 +1,13 @@
 import {
   happyButton,
-  sadButton,
-  userPromptSection,
-  spokenMoodText,
-  spokenMoodSubmitButton,
   imListeningSection,
+  sadButton,
+  spokenMoodSubmitButton,
+  spokenMoodText,
+  userPromptSection,
 } from "../selectors";
 
-export interface HandleSpeechInputEvent {
-  results: { [key: number]: { [key: number]: { transcript: string } } };
-}
-
-export function handleSpeechInput(event: {
-  results: { [key: number]: { [key: number]: { transcript: string } } };
-}) {
+export function handleSpeechInput(event: SpeechRecognitionEvent) {
   imListeningSection.style.display = "none";
   happyButton.style.display = "none";
   sadButton.style.display = "none";

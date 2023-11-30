@@ -81,9 +81,6 @@ textarea {
   min-height: 27vh;
   font-family: "Press Start 2P", cursive;
   padding: 3rem;
-}
-
-textarea {
   border-color: #ff00ff;
   outline: none;
 }
@@ -92,7 +89,7 @@ textarea {
   background: url("./assets/bg.png");
   filter: invert();
   color: #ffffff;
-  font-family: Press Start 2P, cursive;
+  font-family: "Press Start 2P", cursive;
   padding: 1em;
   border-radius: 5px;
   /* height: 30vh;

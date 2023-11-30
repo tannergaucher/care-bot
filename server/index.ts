@@ -1,15 +1,15 @@
-import type { Request, Response } from "express";
-import express, { json } from "express";
+import { Storage } from "@google-cloud/storage";
 import cors from "cors";
 import dotenv from "dotenv";
+import type { Request, Response } from "express";
+import express, { json } from "express";
 import { createLanguageModel } from "typechat";
-import { Storage } from "@google-cloud/storage";
 
+import { CLIENT_BASE_URL } from "./config";
 import {
   createProgram,
   type CreateProgramBody,
 } from "./functions/create-program";
-import { CLIENT_BASE_URL } from "./config";
 
 dotenv.config();
 
@@ -31,7 +31,7 @@ app.use(
 
 app.post(
   "/create-program",
-  async (req: Request<{}, {}, CreateProgramBody>, res: Response) => {
+  async (req: Request<object, object, CreateProgramBody>, res: Response) => {
     const { mood } = req.body;
 
     if (!mood) {

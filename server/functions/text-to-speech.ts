@@ -1,7 +1,7 @@
-import * as TextToSpeech from "@google-cloud/text-to-speech";
 import { Storage } from "@google-cloud/storage";
-import { promisify } from "util";
+import * as TextToSpeech from "@google-cloud/text-to-speech";
 import fs from "fs";
+import { promisify } from "util";
 
 import { BUCKET_NAME } from "../utils";
 
