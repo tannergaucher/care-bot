@@ -35,6 +35,6 @@ OPENAI_MODEL="The OpenAI model name (e.g. gpt-3.5-turbo or gpt-4)"
 From server root directory using gcloud CLI:
 
 ```
-npm run build && gcloud run deploy server  --source .
+npm run build && gcloud run deploy server  --source . --set-env-vars=NODE_ENV=production
 
 ```
