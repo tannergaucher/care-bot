@@ -17,7 +17,7 @@ You must have an OpenAI account and API key to run CareBot locally. Additionally
 ## Run CareBot Locally
 
 1. Clone this repo
-2. Update `.env.sample` to `.env` in `/server` and add the following variables:
+2. Update `.env.sample` to `.env` in `/server` and update the following variable values with your own:
 
 ```
 OPENAI_API_KEY="<Your OpenAI API key>"
@@ -25,9 +25,9 @@ OPENAI_MODEL="<The OpenAI model name (e.g. gpt-3.5-turbo or gpt-4)>"
 GCP_PROJECT_ID="<Your Google Cloud Project ID>"
 ```
 
-3. Run client: `cd client && npm install && npm run dev`
-4. Run server: `cd server && npm run build && npm start`
-5. View client on `http://localhost:5173`
+3. Run the client: `cd client && npm install && npm run dev`
+4. Run the server: `cd server && npm run build && npm start`
+5. View client on `http://localhost:5173` and make a request
 
 ## Deploy Server to Google Cloud Run
 
