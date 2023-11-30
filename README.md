@@ -1,38 +1,37 @@
-# Care Bot
+# CareBot - TypeChat / LLM Application
 
-## Create a Week of Self-Care Activities with Care Bot
+## Create a self care plan for the day by checking in with CareBot
 
 ## Uses
 
-- TypeScript
 - TypeChat
 - OpenAI API
+- Vanilla TypeScript / HTML / CSS
+- Google Cloud Run
+- Google Cloud Storage
 
 ## Prerequisites
 
-You must have an OpenAI account and API key to run this app. Additionally, requests use tokens. You must have credits on your OpenAI account to use the API, otherwise you will get a `429` error.
+You must have an OpenAI account and API key to run CareBot locally. Additionally, OpenAI API requests use tokens. You must have active credits available on your OpenAI account, otherwise you will get a `429` error. To create an OpenAI account, get an API key (and free credits for new accounts) see here: https://beta.openai.com/
 
-- 1. Create an OpenAI account to get an API key (and free credits for new accounts): https://beta.openai.com/
-
-## Get Started
-
-### Run Application Locally
+## Run CareBot Locally
 
 1. Clone this repo
-2. Update `.env.sample` to `.env` and add the following variables:
+2. Update `.env.sample` to `.env` in `/server` and update the following variable values with your own:
 
 ```
-OPENAI_API_KEY="Your OpenAI API key"
-OPENAI_MODEL="The OpenAI model name (e.g. gpt-3.5-turbo or gpt-4)"
+OPENAI_API_KEY="<Your OpenAI API key>"
+OPENAI_MODEL="<The OpenAI model name (e.g. gpt-3.5-turbo or gpt-4)>"
+GCP_PROJECT_ID="<Your Google Cloud Project ID>"
 ```
 
-3. Run client: `npm install && npm start`
-4. Run server: `cd server && npm install && npm start`
-5. Go to `localhost:3000` in your browser
+3. Run the client: `cd client && npm install && npm run dev`
+4. Run the server: `cd server && npm run build && npm start`
+5. View client on `http://localhost:5173` and make a request
 
-## Deploy Server
+## Deploy Server to Google Cloud Run
 
-From server root directory using gcloud CLI:
+From server root directory while authed with gcloud CLI:
 
 ```
 npm run build && gcloud run deploy server  --source . --set-env-vars=NODE_ENV=production
