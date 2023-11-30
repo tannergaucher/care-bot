@@ -13,15 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createProgram = void 0;
-const speech_1 = require("@google-cloud/speech");
-const text_to_speech_1 = require("@google-cloud/text-to-speech");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const typechat_1 = require("typechat");
 const utils_1 = require("../utils");
-const text_to_speech_2 = require("./text-to-speech");
+const text_to_speech_1 = require("./text-to-speech");
 const transcribe_speech_1 = require("./transcribe-speech");
-function createProgram({ mood, model, storage, }) {
+function createProgram({ mood, model, storage, textToSpeechClient, transcribeSpeechClient, }) {
     return __awaiter(this, void 0, void 0, function* () {
         const schema = fs_1.default.readFileSync(path_1.default.join(__dirname, "programSchema.ts"), "utf8");
         const translator = (0, typechat_1.createJsonTranslator)(model, schema, "CareResponse");
@@ -31,19 +29,19 @@ function createProgram({ mood, model, storage, }) {
             throw new Error("Failed to translate user input");
         }
         const text = (0, utils_1.getPlainTextResponse)(response.data);
-        const { speechUri, speechUrl } = yield (0, text_to_speech_2.textToSpeech)({
-            text,
+        const { speechUri, speechUrl } = yield (0, text_to_speech_1.textToSpeech)({
+            client: textToSpeechClient,
             storage,
-            client: new text_to_speech_1.TextToSpeechClient(),
+            text,
         });
         console.log(speechUri, "created speech at gcsUri");
-        const { transcriptionUri } = yield (0, transcribe_speech_1.transcribeSpeech)({
-            speechUri,
+        const { transcriptionUri, results } = yield (0, transcribe_speech_1.transcribeSpeech)({
+            client: transcribeSpeechClient,
             storage,
-            client: new speech_1.SpeechClient(),
+            speechUri,
         });
         console.log(transcriptionUri, "created transcription at gcsUri");
-        return Object.assign({ speechUrl }, response.data);
+        return Object.assign({ speechUrl, transcriptionResults: results }, response.data);
     });
 }
 exports.createProgram = createProgram;

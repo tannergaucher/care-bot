@@ -1,9 +1,13 @@
-import { Storage } from "@google-cloud/storage";
+import * as CloudSpeech from "@google-cloud/speech";
+import * as CloudStorage from "@google-cloud/storage";
+import * as TextToSpeech from "@google-cloud/text-to-speech";
 import cors from "cors";
 import dotenv from "dotenv";
 import type { Request, Response } from "express";
 import express, { json } from "express";
 import { createLanguageModel } from "typechat";
+
+export { CloudSpeech, TextToSpeech, CloudStorage };
 
 import { CLIENT_BASE_URL } from "./config";
 import {
@@ -12,12 +16,6 @@ import {
 } from "./functions/create-program";
 
 dotenv.config();
-
-const storage = new Storage({
-  projectId: process.env.GCP_PROJECT_ID,
-});
-
-const model = createLanguageModel(process.env);
 
 const app = express();
 
@@ -28,6 +26,14 @@ app.use(
     origin: CLIENT_BASE_URL,
   })
 );
+
+const model = createLanguageModel(process.env);
+
+const storage = new CloudStorage.Storage();
+
+const transcribeSpeechClient = new CloudSpeech.v1.SpeechClient();
+
+const textToSpeechClient = new TextToSpeech.v1.TextToSpeechClient();
 
 app.post(
   "/create-program",
@@ -44,6 +50,8 @@ app.post(
       mood,
       model,
       storage,
+      transcribeSpeechClient,
+      textToSpeechClient,
     });
 
     return res.json(response);

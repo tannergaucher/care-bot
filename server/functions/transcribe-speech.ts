@@ -1,14 +1,13 @@
-import * as CloudSpeech from "@google-cloud/speech";
-import { Storage } from "@google-cloud/storage";
 import fs from "fs";
 import { promisify } from "util";
 
+import { CloudSpeech, CloudStorage } from "../index";
 import { BUCKET_NAME } from "../utils";
 
 type TranscribeSpeech = {
   speechUri: string;
   client: CloudSpeech.v1.SpeechClient;
-  storage: Storage;
+  storage: CloudStorage.Storage;
 };
 
 export async function transcribeSpeech({
@@ -19,12 +18,13 @@ export async function transcribeSpeech({
   const [response] = await client.recognize({
     audio: { uri: speechUri },
     config: {
+      enableWordTimeOffsets: true,
       encoding:
         CloudSpeech.protos.google.cloud.speech.v1.RecognitionConfig
           .AudioEncoding.LINEAR16,
       languageCode: "en-US",
       sampleRateHertz: 24000,
-      useEnhanced: true,
+      model: "latest_long",
     },
   });
 
@@ -57,6 +57,7 @@ export async function transcribeSpeech({
     });
 
   return {
+    results: response.results,
     transcriptionUri: `gs://${BUCKET_NAME}/${filename}`,
   };
 }

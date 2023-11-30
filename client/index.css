@@ -90,8 +90,8 @@ textarea {
   font-family: "Press Start 2P", cursive;
   padding: 1em;
   border-radius: 5px;
-  /* height: 30vh;
-  overflow: scroll; */
+  height: 30vh;
+  overflow: scroll;
   max-width: 60%;
   margin-block-end: 4rem;
 }
@@ -113,13 +113,13 @@ span[current="true"] {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
-/* span[spoken] {
+span[spoken] {
   opacity: 1;
-} */
+}
 
-/* span:not([spoken]) {
+span:not([spoken]) {
   opacity: 0;
-} */
+}
 
 @keyframes loadingShuffle {
   0%,

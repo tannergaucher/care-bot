@@ -1,10 +1,8 @@
-import { SpeechClient as TranscribeSpeechClient } from "@google-cloud/speech";
-import { Storage } from "@google-cloud/storage";
-import { TextToSpeechClient } from "@google-cloud/text-to-speech";
 import fs from "fs";
 import path from "path";
 import { createJsonTranslator, TypeChatLanguageModel } from "typechat";
 
+import { CloudSpeech, CloudStorage, TextToSpeech } from "../index";
 import { getPlainTextResponse } from "../utils";
 import { CareResponse } from "./programSchema";
 import { textToSpeech } from "./text-to-speech";
@@ -13,17 +11,22 @@ import { transcribeSpeech } from "./transcribe-speech";
 export type CreateProgramBody = {
   mood: "positive" | "negative" | string;
   model: TypeChatLanguageModel;
-  storage: Storage;
+  storage: CloudStorage.Storage;
+  textToSpeechClient: TextToSpeech.v1.TextToSpeechClient;
+  transcribeSpeechClient: CloudSpeech.v1.SpeechClient;
 };
 
 export interface CreateProgramResponse extends CareResponse {
   speechUrl: string;
+  transcriptionResults: CloudSpeech.protos.google.cloud.speech.v1.ISpeechRecognitionResult[];
 }
 
 export async function createProgram({
   mood,
   model,
   storage,
+  textToSpeechClient,
+  transcribeSpeechClient,
 }: CreateProgramBody): Promise<CreateProgramResponse> {
   const schema = fs.readFileSync(
     path.join(__dirname, "programSchema.ts"),
@@ -46,23 +49,24 @@ export async function createProgram({
   const text = getPlainTextResponse(response.data);
 
   const { speechUri, speechUrl } = await textToSpeech({
-    text,
+    client: textToSpeechClient,
     storage,
-    client: new TextToSpeechClient(),
+    text,
   });
 
   console.log(speechUri, "created speech at gcsUri");
 
-  const { transcriptionUri } = await transcribeSpeech({
-    speechUri,
+  const { transcriptionUri, results } = await transcribeSpeech({
+    client: transcribeSpeechClient,
     storage,
-    client: new TranscribeSpeechClient(),
+    speechUri,
   });
 
   console.log(transcriptionUri, "created transcription at gcsUri");
 
   return {
     speechUrl,
+    transcriptionResults: results,
     ...response.data,
   };
 }
