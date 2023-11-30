@@ -1,10 +1,12 @@
-import { SpeechClient as TranscribeSpeechClient } from "@google-cloud/speech";
-import { Storage } from "@google-cloud/storage";
-import { TextToSpeechClient } from "@google-cloud/text-to-speech";
 import fs from "fs";
 import path from "path";
 import { createJsonTranslator, TypeChatLanguageModel } from "typechat";
 
+import {
+  StorageType,
+  TextToSpeechClientType,
+  TranscribeSpeechClientType,
+} from "../index";
 import { getPlainTextResponse } from "../utils";
 import { CareResponse } from "./programSchema";
 import { textToSpeech } from "./text-to-speech";
@@ -13,7 +15,9 @@ import { transcribeSpeech } from "./transcribe-speech";
 export type CreateProgramBody = {
   mood: "positive" | "negative" | string;
   model: TypeChatLanguageModel;
-  storage: Storage;
+  storage: StorageType;
+  textToSpeechClient: TextToSpeechClientType;
+  transcribeSpeechClient: TranscribeSpeechClientType;
 };
 
 export interface CreateProgramResponse extends CareResponse {
@@ -24,6 +28,8 @@ export async function createProgram({
   mood,
   model,
   storage,
+  textToSpeechClient,
+  transcribeSpeechClient,
 }: CreateProgramBody): Promise<CreateProgramResponse> {
   const schema = fs.readFileSync(
     path.join(__dirname, "programSchema.ts"),
@@ -46,17 +52,17 @@ export async function createProgram({
   const text = getPlainTextResponse(response.data);
 
   const { speechUri, speechUrl } = await textToSpeech({
-    text,
+    client: textToSpeechClient,
     storage,
-    client: new TextToSpeechClient(),
+    text,
   });
 
   console.log(speechUri, "created speech at gcsUri");
 
   const { transcriptionUri } = await transcribeSpeech({
-    speechUri,
+    client: transcribeSpeechClient,
     storage,
-    client: new TranscribeSpeechClient(),
+    speechUri,
   });
 
   console.log(transcriptionUri, "created transcription at gcsUri");

@@ -36,7 +36,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
+const speech_1 = require("@google-cloud/speech");
 const storage_1 = require("@google-cloud/storage");
+const text_to_speech_1 = require("@google-cloud/text-to-speech");
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importStar(require("express"));
@@ -44,15 +46,15 @@ const typechat_1 = require("typechat");
 const config_1 = require("./config");
 const create_program_1 = require("./functions/create-program");
 dotenv_1.default.config();
-const storage = new storage_1.Storage({
-    projectId: process.env.GCP_PROJECT_ID,
-});
-const model = (0, typechat_1.createLanguageModel)(process.env);
 const app = (0, express_1.default)();
 app.use((0, express_1.json)());
 app.use((0, cors_1.default)({
     origin: config_1.CLIENT_BASE_URL,
 }));
+const model = (0, typechat_1.createLanguageModel)(process.env);
+const storage = new storage_1.Storage();
+const transcribeSpeechClient = new speech_1.SpeechClient();
+const textToSpeechClient = new text_to_speech_1.TextToSpeechClient();
 app.post("/create-program", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { mood } = req.body;
     if (!mood) {
@@ -64,6 +66,8 @@ app.post("/create-program", (req, res) => __awaiter(void 0, void 0, void 0, func
         mood,
         model,
         storage,
+        transcribeSpeechClient,
+        textToSpeechClient,
     });
     return res.json(response);
 }));

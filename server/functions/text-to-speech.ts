@@ -24,6 +24,7 @@ export async function textToSpeech({
         TextToSpeech.protos.google.cloud.texttospeech.v1.SsmlVoiceGender.MALE,
     },
     audioConfig: {
+      sampleRateHertz: 24000,
       audioEncoding:
         TextToSpeech.protos.google.cloud.texttospeech.v1.AudioEncoding.LINEAR16,
     },

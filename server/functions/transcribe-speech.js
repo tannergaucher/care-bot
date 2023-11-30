@@ -46,11 +46,12 @@ function transcribeSpeech({ speechUri, client, storage, }) {
         const [response] = yield client.recognize({
             audio: { uri: speechUri },
             config: {
+                enableWordTimeOffsets: true,
                 encoding: CloudSpeech.protos.google.cloud.speech.v1.RecognitionConfig
                     .AudioEncoding.LINEAR16,
                 languageCode: "en-US",
                 sampleRateHertz: 24000,
-                useEnhanced: true,
+                model: "latest_long",
             },
         });
         if (!(response === null || response === void 0 ? void 0 : response.results)) {
@@ -77,6 +78,7 @@ function transcribeSpeech({ speechUri, client, storage, }) {
         });
         return {
             transcriptionUri: `gs://${utils_1.BUCKET_NAME}/${filename}`,
+            results: response.results,
         };
     });
 }
