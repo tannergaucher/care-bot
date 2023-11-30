@@ -8,6 +8,8 @@
 - OpenAI API
 - Vanilla TypeScript / HTML / CSS
 - Google Cloud Run
+- Google Cloud Text-to-Speech
+- Google Cloud Speech
 - Google Cloud Storage
 
 ## Prerequisites
