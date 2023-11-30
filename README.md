@@ -31,7 +31,7 @@ GCP_PROJECT_ID="<Your Google Cloud Project ID>"
 
 ## Deploy Server to Google Cloud Run
 
-From server root directory while authed with gcloud CLI:
+From server root directory while authorized with the gcloud CLI:
 
 ```
 npm run build && gcloud run deploy server  --source . --set-env-vars=NODE_ENV=production
