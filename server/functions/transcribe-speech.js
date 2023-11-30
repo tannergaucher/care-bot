@@ -37,8 +37,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.transcribeSpeech = void 0;
 const CloudSpeech = __importStar(require("@google-cloud/speech"));
-const util_1 = require("util");
 const fs_1 = __importDefault(require("fs"));
+const util_1 = require("util");
 const utils_1 = require("../utils");
 function transcribeSpeech({ speechUri, client, storage, }) {
     var _a;
@@ -67,6 +67,13 @@ function transcribeSpeech({ speechUri, client, storage, }) {
         })
             .catch((err) => {
             console.log(err, "error uploading file");
+        })
+            .finally(() => {
+            fs_1.default.unlink(filename, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
         });
         return {
             transcriptionUri: `gs://${utils_1.BUCKET_NAME}/${filename}`,

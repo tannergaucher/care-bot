@@ -47,6 +47,13 @@ export async function transcribeSpeech({
     })
     .catch((err) => {
       console.log(err, "error uploading file");
+    })
+    .finally(() => {
+      fs.unlink(filename, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
     });
 
   return {
