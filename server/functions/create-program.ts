@@ -1,13 +1,13 @@
+import { SpeechClient as TranscribeSpeechClient } from "@google-cloud/speech";
+import { Storage } from "@google-cloud/storage";
+import { TextToSpeechClient } from "@google-cloud/text-to-speech";
 import fs from "fs";
 import path from "path";
 import { createJsonTranslator, TypeChatLanguageModel } from "typechat";
-import { TextToSpeechClient } from "@google-cloud/text-to-speech";
-import { SpeechClient as TranscribeSpeechClient } from "@google-cloud/speech";
-import { Storage } from "@google-cloud/storage";
 
+import { getPlainTextResponse } from "../utils";
 import { CareResponse } from "./programSchema";
 import { textToSpeech } from "./text-to-speech";
-import { getPlainTextResponse } from "../utils";
 import { transcribeSpeech } from "./transcribe-speech";
 
 export type CreateProgramBody = {

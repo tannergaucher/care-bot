@@ -1,7 +1,7 @@
 import * as CloudSpeech from "@google-cloud/speech";
 import { Storage } from "@google-cloud/storage";
-import { promisify } from "util";
 import fs from "fs";
+import { promisify } from "util";
 
 import { BUCKET_NAME } from "../utils";
 
