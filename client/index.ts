@@ -1,11 +1,10 @@
 import { CareResponse } from "../server/functions/programSchema";
+
 import { handleFormSubmit } from "./scripts/handle-form-submit";
 import {
   HandleSpeechInputEvent,
   handleSpeechInput,
 } from "./scripts/handle-speech-input";
-
-import "./index.css";
 import {
   form,
   audio,
@@ -17,6 +16,8 @@ import {
   userPromptSection,
   imListeningSection,
 } from "./selectors";
+
+import "./index.css";
 
 let mood: string | null = null;
 

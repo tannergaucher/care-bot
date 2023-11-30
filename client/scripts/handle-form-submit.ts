@@ -3,9 +3,10 @@ import {
   CreateProgramBody,
   CreateProgramResponse,
 } from "../../server/functions/create-program";
+import { form, fieldset, loadingIndicator, spokenMoodText } from "../selectors";
+
 import { renderProgram } from "./render-program";
 
-import { form, fieldset, loadingIndicator, spokenMoodText } from "../selectors";
 
 export async function handleFormSubmit({
   event,
