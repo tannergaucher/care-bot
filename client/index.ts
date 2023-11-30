@@ -2,10 +2,7 @@ import "./index.css";
 
 import { CareResponse } from "../server/functions/programSchema";
 import { handleFormSubmit } from "./scripts/handle-form-submit";
-import {
-  handleSpeechInput,
-  HandleSpeechInputEvent,
-} from "./scripts/handle-speech-input";
+import { handleSpeechInput } from "./scripts/handle-speech-input";
 import {
   audio,
   form,
@@ -50,12 +47,10 @@ form.addEventListener("submit", (event) => {
 });
 
 if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
-  console.log("Speech recognition is supported");
+  const recognition =
+    new window.SpeechRecognition() || new window.webkitSpeechRecognition();
 
-  const recognition = new ((window as any).SpeechRecognition ||
-    (window as any).webkitSpeechRecognition)();
-
-  recognition.onresult = function (event: HandleSpeechInputEvent) {
+  recognition.onresult = function (event) {
     handleSpeechInput(event);
   };
 
