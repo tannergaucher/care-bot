@@ -13,13 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createProgram = void 0;
+const speech_1 = require("@google-cloud/speech");
+const text_to_speech_1 = require("@google-cloud/text-to-speech");
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const typechat_1 = require("typechat");
-const text_to_speech_1 = require("@google-cloud/text-to-speech");
-const speech_1 = require("@google-cloud/speech");
-const text_to_speech_2 = require("./text-to-speech");
 const utils_1 = require("../utils");
+const text_to_speech_2 = require("./text-to-speech");
 const transcribe_speech_1 = require("./transcribe-speech");
 function createProgram({ mood, model, storage, }) {
     return __awaiter(this, void 0, void 0, function* () {

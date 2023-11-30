@@ -37,8 +37,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.textToSpeech = void 0;
 const TextToSpeech = __importStar(require("@google-cloud/text-to-speech"));
-const util_1 = require("util");
 const fs_1 = __importDefault(require("fs"));
+const util_1 = require("util");
 const utils_1 = require("../utils");
 function textToSpeech({ text, client, storage, }) {
     return __awaiter(this, void 0, void 0, function* () {

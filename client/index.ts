@@ -46,10 +46,17 @@ form.addEventListener("submit", (event) => {
   });
 });
 
-if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
-  const recognition =
-    new window.SpeechRecognition() || new window.webkitSpeechRecognition();
+let recognition: SpeechRecognition | null = null;
 
+if ("SpeechRecognition" in window) {
+  recognition = new window.SpeechRecognition();
+}
+
+if ("webkitSpeechRecognition" in window) {
+  recognition = new window.webkitSpeechRecognition();
+}
+
+if (recognition) {
   recognition.onresult = function (event) {
     handleSpeechInput(event);
   };
@@ -57,6 +64,6 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
   speakMoodButton.addEventListener("click", () => {
     userPromptSection.style.display = "none";
     imListeningSection.style.display = "block";
-    recognition.start();
+    recognition?.start();
   });
 }
