@@ -1,6 +1,6 @@
 # CareBot - TypeChat / LLM Application
 
-## Create a self care plan for the day by checking in with CareBot
+## Create an AI generated self care plan for the day by checking in with CareBot
 
 ## Uses
 
