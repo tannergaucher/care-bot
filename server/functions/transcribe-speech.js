@@ -67,6 +67,13 @@ function transcribeSpeech({ speechUri, client, storage, }) {
         })
             .catch((err) => {
             console.log(err, "error uploading file");
+        })
+            .finally(() => {
+            fs_1.default.unlink(filename, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
         });
         return {
             transcriptionUri: `gs://${utils_1.BUCKET_NAME}/${filename}`,

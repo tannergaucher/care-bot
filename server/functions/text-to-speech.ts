@@ -47,6 +47,13 @@ export async function textToSpeech({
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      fs.unlink(filename, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
     });
 
   return {

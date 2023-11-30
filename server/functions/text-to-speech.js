@@ -66,6 +66,13 @@ function textToSpeech({ text, client, storage, }) {
         })
             .catch((err) => {
             console.log(err);
+        })
+            .finally(() => {
+            fs_1.default.unlink(filename, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
         });
         return {
             speechUri: `gs://${utils_1.BUCKET_NAME}/${filename}`,
