@@ -1,10 +1,54 @@
 import { CreateProgramResponse } from "../../server/functions/create-program";
 import { audio, form, programContainer } from "../selectors";
 
-export function renderProgram(data: CreateProgramResponse) {
-  let wordId = 0;
+interface TranscriptWord {
+  startTime: number;
+  endTime: number;
+  word: string;
+}
 
-  let interval: NodeJS.Timeout | null = null;
+export function renderProgram(data: CreateProgramResponse) {
+  const transcriptWords = getWordsFromTranscriptionResult(
+    data.transcriptionResult
+  );
+
+  createElements({ data });
+
+  audio.src = data.speechUrl;
+  audio.load();
+  audio.play();
+  audio.addEventListener("play", () => handlePlay({ transcriptWords }));
+}
+
+function getWordsFromTranscriptionResult(
+  transcriptionResult: CreateProgramResponse["transcriptionResult"]
+): TranscriptWord[] {
+  const words: TranscriptWord[] = [];
+
+  transcriptionResult.forEach((result) => {
+    result.alternatives?.forEach((alternative) => {
+      alternative.words?.forEach((word) => {
+        if (!word.startTime || !word.endTime || !word.word) {
+          return;
+        }
+        words.push({
+          startTime: parseFloat(
+            `${word.startTime.seconds}.${word.startTime.nanos}`.replace("s", "")
+          ),
+          endTime: parseFloat(
+            `${word.endTime.seconds}.${word.endTime.nanos}`.replace("s", "")
+          ),
+          word: word.word,
+        });
+      });
+    });
+  });
+
+  return words;
+}
+
+function createElements({ data }: { data: CreateProgramResponse }) {
+  let wordId = 0;
 
   // We want to wrap each word in a span so we can highlight it
   function wrapWordsInSpans(text: string) {
@@ -85,84 +129,56 @@ export function renderProgram(data: CreateProgramResponse) {
   const programOutro = document.createElement("p");
   appendSpansToContainer(programOutro, wrapWordsInSpans(data.outro));
   programContainer.appendChild(programOutro);
+}
 
-  console.log(data.speechUrl);
+function handlePlay({
+  transcriptWords,
+}: {
+  transcriptWords: TranscriptWord[];
+}) {
+  let currentWordIndex = 0;
+  let interval: NodeJS.Timeout | null = null;
 
-  audio.src = data.speechUrl;
+  interval = setInterval(() => {
+    const currentTime = audio.currentTime;
+    const currentWord = transcriptWords[currentWordIndex];
 
-  const words: {
-    startTime: number;
-    endTime: number;
-    word: string;
-  }[] = [];
-
-  data.transcriptionResults.forEach((result) => {
-    result.alternatives?.forEach((alternative) => {
-      alternative.words?.forEach((word) => {
-        if (!word.startTime || !word.endTime || !word.word) return;
-
-        console.log(word, "word");
-
-        words.push({
-          startTime: parseFloat(
-            `${word.startTime.seconds}.${word.startTime.nanos}`.replace("s", "")
-          ),
-          endTime: parseFloat(
-            `${word.endTime.seconds}.${word.endTime.nanos}`.replace("s", "")
-          ),
-          word: word.word,
-        });
-      });
-    });
-  });
-
-  audio.load();
-  audio.play();
-
-  audio.addEventListener("play", () => {
-    let currentWordIndex = 0;
-
-    interval = setInterval(() => {
-      const currentTime = audio.currentTime;
-      const currentWord = words[currentWordIndex];
-
-      if (currentTime >= currentWord.startTime) {
-        highlightWord(currentWordIndex);
-      }
-
-      if (currentTime >= currentWord.endTime) {
-        currentWordIndex++;
-      }
-
-      if (currentWordIndex >= words.length) {
-        clearInterval(interval!);
-      }
-    }, 50);
-
-    function highlightWord(currentWordIndex: number) {
-      const wordSpan = document.getElementById(
-        `${currentWordIndex}`
-      ) as HTMLSpanElement | null;
-
-      if (wordSpan?.getAttribute("current")) {
-        return;
-      }
-
-      const previousWordSpan = document.getElementById(
-        `${currentWordIndex - 1}`
-      ) as HTMLSpanElement | null;
-
-      if (previousWordSpan) {
-        previousWordSpan.removeAttribute("current");
-        previousWordSpan.setAttribute("spoken", "true");
-      }
-
-      wordSpan?.setAttribute("current", "true");
-      wordSpan?.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "center",
-      });
+    if (currentTime >= currentWord.startTime) {
+      highlightWord(currentWordIndex);
     }
+
+    if (currentTime >= currentWord.endTime) {
+      currentWordIndex++;
+    }
+
+    if (currentWordIndex >= transcriptWords.length) {
+      clearInterval(interval!);
+    }
+  }, 50);
+}
+
+function highlightWord(currentWordIndex: number) {
+  const wordSpan = document.getElementById(
+    `${currentWordIndex}`
+  ) as HTMLSpanElement | null;
+
+  if (wordSpan?.getAttribute("current")) {
+    return;
+  }
+
+  const previousWordSpan = document.getElementById(
+    `${currentWordIndex - 1}`
+  ) as HTMLSpanElement | null;
+
+  if (previousWordSpan) {
+    previousWordSpan.removeAttribute("current");
+    previousWordSpan.setAttribute("spoken", "true");
+  }
+
+  wordSpan?.setAttribute("current", "true");
+  wordSpan?.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+    inline: "center",
   });
 }
