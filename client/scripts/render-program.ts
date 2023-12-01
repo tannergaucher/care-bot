@@ -8,46 +8,27 @@ interface TranscriptWord {
 }
 
 export function renderProgram(data: CreateProgramResponse) {
-  const transcriptWords = getWordsFromTranscriptionResult(
-    data.transcriptionResult
-  );
-
   createElements({ data });
 
   audio.src = data.speechUrl;
   audio.load();
   audio.play();
-  audio.addEventListener("play", () => handlePlay({ transcriptWords }));
-}
-
-function getWordsFromTranscriptionResult(
-  transcriptionResult: CreateProgramResponse["transcriptionResult"]
-): TranscriptWord[] {
-  const words: TranscriptWord[] = [];
-
-  transcriptionResult.forEach((result) => {
-    result.alternatives?.forEach((alternative) => {
-      alternative.words?.forEach((word) => {
-        if (!word.startTime || !word.endTime || !word.word) {
-          return;
-        }
-        words.push({
-          startTime: parseFloat(
-            `${word.startTime.seconds}.${word.startTime.nanos}`.replace("s", "")
-          ),
-          endTime: parseFloat(
-            `${word.endTime.seconds}.${word.endTime.nanos}`.replace("s", "")
-          ),
-          word: word.word,
-        });
-      });
-    });
-  });
-
-  return words;
+  audio.addEventListener("play", () =>
+    handlePlay({
+      transcriptWords: getWordsFromTranscriptionResult(
+        data.transcriptionResult
+      ),
+    })
+  );
 }
 
 function createElements({ data }: { data: CreateProgramResponse }) {
+  form.style.display = "none";
+  programContainer.innerHTML = "";
+
+  audio.style.display = "block";
+  programContainer.style.display = "block";
+
   let wordId = 0;
 
   // We want to wrap each word in a span so we can highlight it
@@ -66,15 +47,10 @@ function createElements({ data }: { data: CreateProgramResponse }) {
   ) {
     spans.forEach((span) => {
       container.appendChild(span);
-      container.appendChild(document.createTextNode(" ")); // Add space between words
+      // Add space between words
+      container.appendChild(document.createTextNode(" "));
     });
   }
-
-  form.style.display = "none";
-  programContainer.innerHTML = "";
-
-  audio.style.display = "block";
-  programContainer.style.display = "block";
 
   const programIntro = document.createElement("p");
   appendSpansToContainer(programIntro, wrapWordsInSpans(data.intro));
@@ -129,6 +105,33 @@ function createElements({ data }: { data: CreateProgramResponse }) {
   const programOutro = document.createElement("p");
   appendSpansToContainer(programOutro, wrapWordsInSpans(data.outro));
   programContainer.appendChild(programOutro);
+}
+
+function getWordsFromTranscriptionResult(
+  transcriptionResult: CreateProgramResponse["transcriptionResult"]
+): TranscriptWord[] {
+  const words: TranscriptWord[] = [];
+
+  transcriptionResult.forEach((result) => {
+    result.alternatives?.forEach((alternative) => {
+      alternative.words?.forEach((word) => {
+        if (!word.startTime || !word.endTime || !word.word) {
+          return;
+        }
+        words.push({
+          startTime: parseFloat(
+            `${word.startTime.seconds}.${word.startTime.nanos}`.replace("s", "")
+          ),
+          endTime: parseFloat(
+            `${word.endTime.seconds}.${word.endTime.nanos}`.replace("s", "")
+          ),
+          word: word.word,
+        });
+      });
+    });
+  });
+
+  return words;
 }
 
 function handlePlay({
