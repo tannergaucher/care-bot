@@ -94,27 +94,27 @@ textarea {
   overflow: scroll;
   max-width: 60%;
   margin-block-end: 4rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-#page-views,
-#last-visited {
-  position: sticky;
-  width: 100%;
-  overflow: auto;
-  white-space: nowrap;
-  margin-top: 3rem;
+#program-container::-webkit-scrollbar {
+  display: none;
+}
+
+span {
+  transition: all 0.1s ease-in-out;
+  border-radius: 3px;
+  padding: 2px;
 }
 
 span[current="true"] {
-  background-color: #ff0;
-  color: lime;
-  border-radius: 3px;
-  padding: 2px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  color: lawngreen;
 }
 
 span[spoken] {
   opacity: 1;
+  transform: scale(1);
 }
 
 span:not([spoken]) {
