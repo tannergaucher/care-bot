@@ -6,7 +6,7 @@
 
 - TypeChat
 - OpenAI API
-- Vanilla TypeScript / HTML / CSS
+- TypeScript / HTML / CSS
 - Google Cloud Run
 - Google Cloud Text-to-Speech
 - Google Cloud Speech
