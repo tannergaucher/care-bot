@@ -41,7 +41,7 @@ function createProgram({ mood, model, storage, textToSpeechClient, transcribeSpe
             speechUri,
         });
         console.log(transcriptionUri, "created transcription at gcsUri");
-        return Object.assign({ speechUrl, transcriptionResults: results }, response.data);
+        return Object.assign({ speechUrl, transcriptionResult: results }, response.data);
     });
 }
 exports.createProgram = createProgram;

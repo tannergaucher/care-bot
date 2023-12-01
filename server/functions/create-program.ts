@@ -18,7 +18,7 @@ export type CreateProgramBody = {
 
 export interface CreateProgramResponse extends CareResponse {
   speechUrl: string;
-  transcriptionResults: CloudSpeech.protos.google.cloud.speech.v1.ISpeechRecognitionResult[];
+  transcriptionResult: CloudSpeech.protos.google.cloud.speech.v1.ISpeechRecognitionResult[];
 }
 
 export async function createProgram({
@@ -66,7 +66,7 @@ export async function createProgram({
 
   return {
     speechUrl,
-    transcriptionResults: results,
+    transcriptionResult: results,
     ...response.data,
   };
 }
