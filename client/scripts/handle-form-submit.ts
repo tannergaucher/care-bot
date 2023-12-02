@@ -3,23 +3,11 @@ import {
   CreateProgramResponse,
 } from "../../server/functions/create-program";
 import { SERVER_BASE_URL } from "../config";
-import { fieldset, form, loadingIndicator, spokenMoodText } from "../selectors";
+import { spokenMoodText } from "../selectors";
 import { renderProgram } from "./render-program";
+import { toggleLoadingProgram } from "./toggle-loading-program";
 
-export async function handleFormSubmit({
-  event,
-  mood,
-}: {
-  event: SubmitEvent;
-  mood: string | null;
-}) {
-  event.preventDefault();
-
-  fieldset.disabled = true;
-  document.body.setAttribute("loading", "true");
-  form.style.display = "none";
-  loadingIndicator.style.display = "block";
-
+export async function handleFormSubmit({ mood }: { mood: string | null }) {
   if (spokenMoodText.value) {
     mood = spokenMoodText.value;
   }
@@ -43,8 +31,6 @@ export async function handleFormSubmit({
     })
     .catch((error) => console.error("Error:", error))
     .finally(() => {
-      fieldset.disabled = false;
-      document.body.removeAttribute("loading");
-      loadingIndicator.style.display = "none";
+      toggleLoadingProgram(false);
     });
 }

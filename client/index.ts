@@ -3,6 +3,7 @@ import "./index.css";
 import { CareResponse } from "../server/functions/programSchema";
 import { handleFormSubmit } from "./scripts/handle-form-submit";
 import { handleSpeechInput } from "./scripts/handle-speech-input";
+import { toggleLoadingProgram } from "./scripts/toggle-loading-program";
 import {
   audio,
   form,
@@ -39,9 +40,11 @@ buttons.forEach((button) => {
   });
 });
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  toggleLoadingProgram(true);
   handleFormSubmit({
-    event,
     mood,
   });
 });
@@ -60,10 +63,12 @@ if (recognition) {
   recognition.onresult = function (event) {
     handleSpeechInput(event);
   };
-
-  speakMoodButton.addEventListener("click", () => {
-    userPromptSection.style.display = "none";
-    imListeningSection.style.display = "block";
-    recognition?.start();
-  });
 }
+
+speakMoodButton.addEventListener("click", () => {
+  if (!recognition) return;
+
+  userPromptSection.style.display = "none";
+  imListeningSection.style.display = "block";
+  recognition.start();
+});
