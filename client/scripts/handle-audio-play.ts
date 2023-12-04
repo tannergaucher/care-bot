@@ -41,9 +41,9 @@ function highlightWord(currentWordIndex: number) {
 
   if (previousWordSpan) {
     previousWordSpan.removeAttribute("current");
-    previousWordSpan.setAttribute("spoken", "true");
   }
 
+  wordSpan.setAttribute("spoken", "true");
   wordSpan.setAttribute("current", "true");
   wordSpan.scrollIntoView({
     behavior: "smooth",
