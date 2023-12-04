@@ -42,7 +42,6 @@ buttons.forEach((button) => {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-
   toggleLoadingProgram(true);
   handleFormSubmit({
     mood,
