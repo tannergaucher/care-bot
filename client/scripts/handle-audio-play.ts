@@ -7,7 +7,7 @@ export function handleAudioPlay({
   transcriptWords: TranscriptWord[];
 }) {
   let currentWordIndex = 0;
-  let interval: NodeJS.Timeout | null = null;
+  let interval: NodeJS.Timeout | undefined = undefined;
 
   interval = setInterval(() => {
     const currentTime = audio.currentTime;
@@ -23,7 +23,7 @@ export function handleAudioPlay({
 
     if (currentWordIndex >= transcriptWords.length) {
       highlightWord(currentWordIndex);
-      clearInterval(interval!);
+      clearInterval(interval);
     }
   }, 30);
 }
