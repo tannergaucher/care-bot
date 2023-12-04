@@ -22,6 +22,7 @@ export function handleAudioPlay({
     }
 
     if (currentWordIndex >= transcriptWords.length) {
+      highlightWord(currentWordIndex);
       clearInterval(interval!);
     }
   }, 50);
@@ -31,10 +32,6 @@ function highlightWord(currentWordIndex: number) {
   const wordSpan = document.getElementById(
     `${currentWordIndex}`
   ) as HTMLSpanElement | null;
-
-  if (wordSpan?.getAttribute("current")) {
-    return;
-  }
 
   const previousWordSpan = document.getElementById(
     `${currentWordIndex - 1}`
