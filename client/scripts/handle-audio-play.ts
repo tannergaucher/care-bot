@@ -33,6 +33,8 @@ function highlightWord(currentWordIndex: number) {
     `${currentWordIndex}`
   ) as HTMLSpanElement | null;
 
+  if (!wordSpan) return;
+
   const previousWordSpan = document.getElementById(
     `${currentWordIndex - 1}`
   ) as HTMLSpanElement | null;
@@ -42,8 +44,8 @@ function highlightWord(currentWordIndex: number) {
     previousWordSpan.setAttribute("spoken", "true");
   }
 
-  wordSpan?.setAttribute("current", "true");
-  wordSpan?.scrollIntoView({
+  wordSpan.setAttribute("current", "true");
+  wordSpan.scrollIntoView({
     behavior: "smooth",
     block: "center",
     inline: "center",
