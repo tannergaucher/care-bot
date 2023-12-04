@@ -29,11 +29,11 @@ export function handleAudioPlay({
 }
 
 function highlightWord(currentWordIndex: number) {
-  const wordSpan = document.getElementById(
+  const currentWordSpan = document.getElementById(
     `${currentWordIndex}`
   ) as HTMLSpanElement | null;
 
-  if (!wordSpan) return;
+  if (!currentWordSpan) return;
 
   const previousWordSpan = document.getElementById(
     `${currentWordIndex - 1}`
@@ -43,9 +43,10 @@ function highlightWord(currentWordIndex: number) {
     previousWordSpan.removeAttribute("current");
   }
 
-  wordSpan.setAttribute("spoken", "true");
-  wordSpan.setAttribute("current", "true");
-  wordSpan.scrollIntoView({
+  currentWordSpan.setAttribute("spoken", "true");
+  currentWordSpan.setAttribute("current", "true");
+
+  currentWordSpan.scrollIntoView({
     behavior: "smooth",
     block: "center",
     inline: "center",
