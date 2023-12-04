@@ -94,12 +94,6 @@ textarea {
   overflow: scroll;
   max-width: 60%;
   margin-block-end: 4rem;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-#program-container::-webkit-scrollbar {
-  display: none;
 }
 
 span {
