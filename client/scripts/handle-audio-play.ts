@@ -33,22 +33,23 @@ function highlightWord(currentWordIndex: number) {
     `${currentWordIndex}`
   ) as HTMLSpanElement | null;
 
-  if (!currentWordSpan) return;
-
   const previousWordSpan = document.getElementById(
     `${currentWordIndex - 1}`
   ) as HTMLSpanElement | null;
 
-  if (previousWordSpan) {
-    previousWordSpan.removeAttribute("current");
+  if (!currentWordSpan) {
+    throw new Error("Could not find current word span");
   }
 
-  currentWordSpan.setAttribute("spoken", "true");
-  currentWordSpan.setAttribute("current", "true");
+  if (!previousWordSpan) {
+    throw new Error("Could not find previous word span");
+  }
 
+  previousWordSpan.removeAttribute("current");
+
+  currentWordSpan.setAttribute("current", "true");
+  currentWordSpan.setAttribute("spoken", "true");
   currentWordSpan.scrollIntoView({
     behavior: "smooth",
-    block: "center",
-    inline: "center",
   });
 }
