@@ -1,9 +1,11 @@
 const config = {
   local: {
-    SERVER_BASE_URL: "http://localhost:8080",
+    // wrangler dev
+    SERVER_BASE_URL: "http://localhost:8787",
   },
   production: {
-    SERVER_BASE_URL: "https://server-yzmezs2csa-ue.a.run.app",
+    SERVER_BASE_URL:
+      "https://llm-cache-worker.tannermichaelgaucher.workers.dev",
   },
 };
 

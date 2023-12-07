@@ -1,9 +1,11 @@
 const config = {
   local: {
-    CLIENT_BASE_URL: "http://localhost:5173",
+    // update to WORKER_BASE_URL
+    CLIENT_BASE_URL: "http://localhost:8787",
   },
   production: {
-    CLIENT_BASE_URL: "https://care-bot.netlify.app",
+    CLIENT_BASE_URL:
+      "https://llm-cache-worker.tannermichaelgaucher.workers.dev",
   },
 };
 
