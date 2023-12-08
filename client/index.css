@@ -94,12 +94,6 @@ textarea {
   overflow: scroll;
   max-width: 60%;
   margin-block-end: 4rem;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-#program-container::-webkit-scrollbar {
-  display: none;
 }
 
 span {
@@ -112,13 +106,8 @@ span[current="true"] {
   color: lawngreen;
 }
 
-span[spoken] {
-  opacity: 1;
-  transform: scale(1);
-}
-
-span:not([spoken]) {
-  opacity: 0;
+span:not([current="true"]) {
+  color: #ffffff;
 }
 
 @keyframes loadingShuffle {
