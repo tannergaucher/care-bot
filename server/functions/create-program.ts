@@ -2,7 +2,12 @@ import fs from "fs";
 import path from "path";
 import { createJsonTranslator, TypeChatLanguageModel } from "typechat";
 
-import { CloudSpeech, CloudStorage, TextToSpeech } from "../index";
+import {
+  type CloudSpeech,
+  storage,
+  textToSpeechClient,
+  transcribeSpeechClient,
+} from "../index";
 import { getPlainTextResponse } from "../utils";
 import { CareResponse } from "./programSchema";
 import { textToSpeech } from "./text-to-speech";
@@ -11,9 +16,6 @@ import { transcribeSpeech } from "./transcribe-speech";
 export type CreateProgramBody = {
   mood: "positive" | "negative" | string;
   model: TypeChatLanguageModel;
-  storage: CloudStorage.Storage;
-  textToSpeechClient: TextToSpeech.v1.TextToSpeechClient;
-  transcribeSpeechClient: CloudSpeech.v1.SpeechClient;
 };
 
 export interface CreateProgramResponse extends CareResponse {
@@ -24,9 +26,6 @@ export interface CreateProgramResponse extends CareResponse {
 export async function createProgram({
   mood,
   model,
-  storage,
-  textToSpeechClient,
-  transcribeSpeechClient,
 }: CreateProgramBody): Promise<CreateProgramResponse> {
   const schema = fs.readFileSync(
     path.join(__dirname, "programSchema.ts"),
