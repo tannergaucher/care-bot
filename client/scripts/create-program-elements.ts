@@ -1,11 +1,12 @@
 import { CreateProgramResponse } from "../../server/functions/create-program";
+import { programContainer as programContainerSelector } from "../selectors";
 
 export function createProgramElements({
   data,
   programContainer,
 }: {
   data: CreateProgramResponse;
-  programContainer: HTMLDivElement;
+  programContainer: typeof programContainerSelector;
 }) {
   let wordId = 0;
 
@@ -82,5 +83,6 @@ export function createProgramElements({
 
   const programOutro = document.createElement("p");
   appendSpansToContainer(programOutro, wrapWordsInSpans(data.outro));
+
   programContainer.appendChild(programOutro);
 }
