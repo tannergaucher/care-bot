@@ -9,6 +9,8 @@ export function handleAudioPlay({
   let currentWordIndex = 0;
   let interval: NodeJS.Timeout | null = null;
 
+  clearInterval(interval!);
+
   interval = setInterval(() => {
     const currentTime = audio.currentTime;
     const currentWord = transcriptWords[currentWordIndex];
