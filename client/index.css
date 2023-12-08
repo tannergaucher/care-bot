@@ -1,7 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
+:root {
+  --color-white: #ffffff;
+  --color-red: #ff0000;
+  --color-black: #222222;
+  --bg-image: url("./assets/bg.png");
+  --font-family: "Press Start 2P", cursive;
+}
+
 a {
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 body[loading] {
@@ -9,10 +17,10 @@ body[loading] {
 }
 
 body {
-  font-family: "Press Start 2P", cursive;
-  background-color: #ff6600;
-  color: #ffffff;
-  background-image: url("./assets/bg.png");
+  font-family: var(--font-family);
+  background-color: var(--color-red);
+  color: var(--color-white);
+  background-image: var(--bg-image);
   background-repeat: repeat;
   display: flex;
   flex-direction: column;
@@ -26,19 +34,19 @@ audio {
 }
 
 h1 {
-  text-shadow: 2px 2px #ff0000;
+  text-shadow: 2px 2px var(--color-red);
   font-size: 5vw;
   margin: 4rem;
 }
 
 h2 {
-  text-shadow: 2px 2px #ff0000;
+  text-shadow: 2px 2px var(--color-red);
   font-size: 3vw;
   margin: rem;
 }
 
 fieldset {
-  border: 5px solid #ffffff;
+  border: 5px solid var(--color-white);
   margin-block-end: 4rem;
 }
 
@@ -46,9 +54,9 @@ button {
   width: 100%;
   font-size: 3vw;
   min-height: 27vh;
-  color: #ffffff;
-  background-color: #222222;
-  text-shadow: 2px 2px #ff0000;
+  color: var(--color-white);
+  background-color: var(--color-black);
+  text-shadow: 2px 2px var(--color-red);
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease-in-out;
   display: flex;
@@ -56,12 +64,12 @@ button {
   align-items: center;
   justify-content: center;
   margin: 2rem;
-  font-family: "Press Start 2P", cursive;
+  font-family: var(--font-family);
 }
 
 button:hover,
 button:focus {
-  background-color: #222222;
+  background-color: var(--color-black);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
   transform: translateY(-2px);
 }
@@ -74,32 +82,26 @@ textarea {
   width: 100%;
   margin: 2rem;
   box-sizing: border-box;
-  border: 5px solid #ffffff;
+  border: 5px solid var(--color-white);
   color: black;
   font-size: 3rem;
   min-height: 27vh;
-  font-family: "Press Start 2P", cursive;
+  font-family: var(--font-family);
   padding: 3rem;
   outline: none;
 }
 
 #program-container {
-  background: url("./assets/bg.png");
+  background: var(--bg-image);
   filter: invert();
-  color: #ffffff;
-  font-family: "Press Start 2P", cursive;
+  color: var(--color-white);
+  font-family: var(--font-family);
   padding: 1em;
   border-radius: 5px;
-  height: 30vh;
+  height: 40vh;
   overflow: scroll;
   max-width: 60%;
   margin-block-end: 4rem;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-#program-container::-webkit-scrollbar {
-  display: none;
 }
 
 span {
@@ -112,13 +114,8 @@ span[current="true"] {
   color: lawngreen;
 }
 
-span[spoken] {
-  opacity: 1;
-  transform: scale(1);
-}
-
-span:not([spoken]) {
-  opacity: 0;
+span:not([current="true"]) {
+  color: #ffffff;
 }
 
 @keyframes loadingShuffle {

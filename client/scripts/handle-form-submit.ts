@@ -3,20 +3,13 @@ import {
   CreateProgramResponse,
 } from "../../server/functions/create-program";
 import { SERVER_BASE_URL } from "../config";
-import { spokenMoodText } from "../selectors";
 import { renderProgram } from "./render-program";
-import { toggleLoadingProgram } from "./toggle-loading-program";
+import { setLoadingProgramResponse } from "./set-loading-program-response";
 
-export async function handleFormSubmit({ mood }: { mood: string | null }) {
-  if (spokenMoodText.value) {
-    mood = spokenMoodText.value;
-  }
+export async function handleFormSubmit({ mood }: { mood: string }) {
+  setLoadingProgramResponse(true);
 
-  if (!mood) {
-    throw new Error("No mood selected");
-  }
-
-  fetch(`${SERVER_BASE_URL}/create-program`, {
+  await fetch(`${SERVER_BASE_URL}/create-program`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -29,8 +22,7 @@ export async function handleFormSubmit({ mood }: { mood: string | null }) {
     .then((data: CreateProgramResponse) => {
       renderProgram(data);
     })
-    .catch((error) => console.error("Error:", error))
-    .finally(() => {
-      toggleLoadingProgram(false);
-    });
+    .catch((error) => console.error("Error:", error));
+
+  setLoadingProgramResponse(false);
 }

@@ -3,7 +3,6 @@ import "./index.css";
 import { CareResponse } from "../server/functions/programSchema";
 import { handleFormSubmit } from "./scripts/handle-form-submit";
 import { handleSpeechInput } from "./scripts/handle-speech-input";
-import { toggleLoadingProgram } from "./scripts/toggle-loading-program";
 import {
   audio,
   form,
@@ -16,7 +15,7 @@ import {
   userPromptSection,
 } from "./selectors";
 
-let mood: string | null = null;
+let mood: string | null = spokenMoodText.value || null;
 
 if (mood === null) {
   [
@@ -43,7 +42,10 @@ buttons.forEach((button) => {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  toggleLoadingProgram(true);
+  if (!mood) {
+    throw new Error("No user mood selected.");
+  }
+
   handleFormSubmit({
     mood,
   });

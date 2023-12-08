@@ -1,5 +1,10 @@
 import { CreateProgramResponse } from "../../server/functions/create-program";
-import { TranscriptWord } from "./types";
+
+export interface TranscriptWord {
+  startTime: number;
+  endTime: number;
+  word: string;
+}
 
 export function getWordsFromTranscriptionResult(
   transcriptionResult: CreateProgramResponse["transcriptionResult"]

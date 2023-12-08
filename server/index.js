@@ -36,7 +36,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CloudStorage = exports.TextToSpeech = exports.CloudSpeech = void 0;
+exports.textToSpeechClient = exports.transcribeSpeechClient = exports.storage = exports.CloudStorage = exports.TextToSpeech = exports.CloudSpeech = void 0;
 const CloudSpeech = __importStar(require("@google-cloud/speech"));
 exports.CloudSpeech = CloudSpeech;
 const CloudStorage = __importStar(require("@google-cloud/storage"));
@@ -50,15 +50,15 @@ const typechat_1 = require("typechat");
 const config_1 = require("./config");
 const create_program_1 = require("./functions/create-program");
 dotenv_1.default.config();
+exports.storage = new CloudStorage.Storage();
+exports.transcribeSpeechClient = new CloudSpeech.v1.SpeechClient();
+exports.textToSpeechClient = new TextToSpeech.v1.TextToSpeechClient();
+const model = (0, typechat_1.createLanguageModel)(process.env);
 const app = (0, express_1.default)();
 app.use((0, express_1.json)());
 app.use((0, cors_1.default)({
     origin: config_1.CLIENT_BASE_URL,
 }));
-const model = (0, typechat_1.createLanguageModel)(process.env);
-const storage = new CloudStorage.Storage();
-const transcribeSpeechClient = new CloudSpeech.v1.SpeechClient();
-const textToSpeechClient = new TextToSpeech.v1.TextToSpeechClient();
 app.post("/create-program", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { mood } = req.body;
     if (!mood) {
@@ -69,9 +69,6 @@ app.post("/create-program", (req, res) => __awaiter(void 0, void 0, void 0, func
     return res.json(yield (0, create_program_1.createProgram)({
         mood,
         model,
-        storage,
-        transcribeSpeechClient,
-        textToSpeechClient,
     }));
 }));
 const port = parseInt((_a = process.env.PORT) !== null && _a !== void 0 ? _a : "8080");

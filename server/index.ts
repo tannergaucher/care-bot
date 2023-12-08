@@ -16,6 +16,14 @@ import {
 
 dotenv.config();
 
+export const storage = new CloudStorage.Storage();
+
+export const transcribeSpeechClient = new CloudSpeech.v1.SpeechClient();
+
+export const textToSpeechClient = new TextToSpeech.v1.TextToSpeechClient();
+
+const model = createLanguageModel(process.env);
+
 const app = express();
 
 app.use(json());
@@ -25,14 +33,6 @@ app.use(
     origin: CLIENT_BASE_URL,
   })
 );
-
-const model = createLanguageModel(process.env);
-
-const storage = new CloudStorage.Storage();
-
-const transcribeSpeechClient = new CloudSpeech.v1.SpeechClient();
-
-const textToSpeechClient = new TextToSpeech.v1.TextToSpeechClient();
 
 app.post(
   "/create-program",
@@ -49,9 +49,6 @@ app.post(
       await createProgram({
         mood,
         model,
-        storage,
-        transcribeSpeechClient,
-        textToSpeechClient,
       })
     );
   }
