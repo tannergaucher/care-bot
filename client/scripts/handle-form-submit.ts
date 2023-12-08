@@ -5,7 +5,7 @@ import {
 import { SERVER_BASE_URL } from "../config";
 import { spokenMoodText } from "../selectors";
 import { renderProgram } from "./render-program";
-import { setLoadingProgramResponse } from "./toggle-loading-program";
+import { setLoadingProgramResponse } from "./set-loading-program-response";
 
 export async function handleFormSubmit({
   mood,
@@ -20,7 +20,7 @@ export async function handleFormSubmit({
 
   setLoadingProgramResponse(true);
 
-  fetch(`${SERVER_BASE_URL}/create-program`, {
+  await fetch(`${SERVER_BASE_URL}/create-program`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -33,8 +33,7 @@ export async function handleFormSubmit({
     .then((data: CreateProgramResponse) => {
       renderProgram(data);
     })
-    .catch((error) => console.error("Error:", error))
-    .finally(() => {
-      setLoadingProgramResponse(false);
-    });
+    .catch((error) => console.error("Error:", error));
+
+  setLoadingProgramResponse(false);
 }
