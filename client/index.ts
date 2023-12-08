@@ -15,7 +15,7 @@ import {
   userPromptSection,
 } from "./selectors";
 
-let mood: string | null = null;
+let mood: string | null = spokenMoodText.value || null;
 
 if (mood === null) {
   [
@@ -48,7 +48,6 @@ form.addEventListener("submit", async (event) => {
 
   handleFormSubmit({
     mood,
-    spokenMoodTextarea: spokenMoodText,
   });
 });
 
