@@ -18,6 +18,8 @@ export async function handleFormSubmit({
     mood = spokenMoodTextarea.value;
   }
 
+  setLoadingProgramResponse(true);
+
   fetch(`${SERVER_BASE_URL}/create-program`, {
     method: "POST",
     headers: {
