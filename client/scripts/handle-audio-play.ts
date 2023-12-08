@@ -1,10 +1,5 @@
 import { audio } from "../selectors";
-
-interface TranscriptWord {
-  startTime: number;
-  endTime: number;
-  word: string;
-}
+import { TranscriptWord } from "./get-words-from-transcription-result";
 
 export function handleAudioPlay({
   transcriptWords,
