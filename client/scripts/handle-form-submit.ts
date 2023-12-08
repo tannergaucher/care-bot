@@ -5,15 +5,17 @@ import {
 import { SERVER_BASE_URL } from "../config";
 import { spokenMoodText } from "../selectors";
 import { renderProgram } from "./render-program";
-import { toggleLoadingProgram } from "./toggle-loading-program";
+import { setLoadingProgramResponse } from "./toggle-loading-program";
 
-export async function handleFormSubmit({ mood }: { mood: string | null }) {
-  if (spokenMoodText.value) {
-    mood = spokenMoodText.value;
-  }
-
-  if (!mood) {
-    throw new Error("No mood selected");
+export async function handleFormSubmit({
+  mood,
+  spokenMoodTextarea,
+}: {
+  mood: string;
+  spokenMoodTextarea: typeof spokenMoodText;
+}) {
+  if (spokenMoodTextarea.value) {
+    mood = spokenMoodTextarea.value;
   }
 
   fetch(`${SERVER_BASE_URL}/create-program`, {
@@ -31,6 +33,6 @@ export async function handleFormSubmit({ mood }: { mood: string | null }) {
     })
     .catch((error) => console.error("Error:", error))
     .finally(() => {
-      toggleLoadingProgram(false);
+      setLoadingProgramResponse(false);
     });
 }

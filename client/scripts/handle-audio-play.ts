@@ -1,5 +1,10 @@
 import { audio } from "../selectors";
-import { TranscriptWord } from "./types";
+
+interface TranscriptWord {
+  startTime: number;
+  endTime: number;
+  word: string;
+}
 
 export function handleAudioPlay({
   transcriptWords,
@@ -22,9 +27,10 @@ export function handleAudioPlay({
     }
 
     if (currentWordIndex >= transcriptWords.length) {
+      highlightWord(currentWordIndex);
       clearInterval(interval!);
     }
-  }, 50);
+  }, 40);
 }
 
 function highlightWord(currentWordIndex: number) {
@@ -32,18 +38,12 @@ function highlightWord(currentWordIndex: number) {
     `${currentWordIndex}`
   ) as HTMLSpanElement | null;
 
-  if (wordSpan?.getAttribute("current")) {
-    return;
-  }
-
   const previousWordSpan = document.getElementById(
     `${currentWordIndex - 1}`
   ) as HTMLSpanElement | null;
 
-  if (previousWordSpan) {
-    previousWordSpan.removeAttribute("current");
-    previousWordSpan.setAttribute("spoken", "true");
-  }
+  previousWordSpan?.removeAttribute("current");
+  previousWordSpan?.setAttribute("spoken", "true");
 
   wordSpan?.setAttribute("current", "true");
   wordSpan?.scrollIntoView({

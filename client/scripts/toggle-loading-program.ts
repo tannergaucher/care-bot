@@ -6,7 +6,7 @@ import {
   programContainer,
 } from "../selectors";
 
-export function toggleLoadingProgram(loading: boolean) {
+export function setLoadingProgramResponse(loading: boolean) {
   if (loading) {
     fieldset.disabled = true;
     document.body.setAttribute("loading", "true");
