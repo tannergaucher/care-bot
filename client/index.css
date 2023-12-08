@@ -98,7 +98,7 @@ textarea {
   font-family: var(--font-family);
   padding: 1em;
   border-radius: 5px;
-  height: 30vh;
+  height: 40vh;
   overflow: scroll;
   max-width: 60%;
   margin-block-end: 4rem;
