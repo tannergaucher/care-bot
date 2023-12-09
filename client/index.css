@@ -51,7 +51,7 @@ fieldset {
 }
 
 button {
-  width: 100%;
+  width: calc(100% - 4rem);
   font-size: 3vw;
   min-height: 27vh;
   color: var(--color-white);
