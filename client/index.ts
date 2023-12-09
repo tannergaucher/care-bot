@@ -1,6 +1,5 @@
 import "./index.css";
 
-import { CareResponse } from "../server/functions/programSchema";
 import { handleFormSubmit } from "./scripts/handle-form-submit";
 import { handleSpeechInput } from "./scripts/handle-speech-input";
 import {
@@ -31,9 +30,7 @@ if (mood === null) {
 }
 
 const buttons = document.querySelectorAll('button[name="mood"]') as NodeListOf<
-  HTMLButtonElement & {
-    value: CareResponse["currentUserMood"];
-  }
+  typeof spokenMoodSubmitButton
 >;
 
 buttons.forEach((button) => {
