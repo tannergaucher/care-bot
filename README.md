@@ -1,6 +1,6 @@
 # CareBot - LLM Application
 
-## Create an AI generated self care plan for the day by checking in with CareBot
+## Check in with CareBot and get an LLM generated self care plan for the day
 
 ## Uses
 
