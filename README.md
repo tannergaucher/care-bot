@@ -20,7 +20,7 @@ You must have an OpenAI account and API key to run CareBot locally. Additionally
 ## Run CareBot Locally
 
 1. Clone this repo
-2. Update `.env.sample` to `.env` in `/server` and update the following variable values with your own:
+2. Update `.env.sample` to `.env` in `~/server` and update the following variable values with your own:
 
 ```
 OPENAI_API_KEY="<Your OpenAI API key>"
