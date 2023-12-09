@@ -30,7 +30,7 @@ GCP_PROJECT_ID="<Your Google Cloud Project ID>"
 
 3. Run the client: `cd client && npm install && npm run dev`
 4. Run the server: `cd server && npm install && npm run build && npm start`
-5. View client on `http://localhost:5173` and make a request
+5. View client on `http://localhost:5173` and use CareBot!
 
 ## Deploy Server to Google Cloud Run
 
