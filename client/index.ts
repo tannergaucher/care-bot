@@ -30,47 +30,50 @@ if (mood === null) {
   });
 }
 
-const buttons = document.querySelectorAll('button[name="mood"]');
+const buttons = document.querySelectorAll('button[name="mood"]') as NodeListOf<
+  HTMLButtonElement & {
+    value: CareResponse["currentUserMood"];
+  }
+>;
 
 buttons.forEach((button) => {
-  button.addEventListener("click", (event) => {
-    mood = (event.target as HTMLButtonElement)
-      .value as CareResponse["currentUserMood"];
+  button.addEventListener("click", () => {
+    mood = button.value;
   });
-});
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  if (!mood) {
-    throw new Error("No user mood selected.");
+    if (!mood) {
+      throw new Error("No user mood selected.");
+    }
+
+    handleFormSubmit({
+      mood,
+    });
+  });
+
+  let recognition: SpeechRecognition | null = null;
+
+  if ("SpeechRecognition" in window) {
+    recognition = new window.SpeechRecognition();
   }
 
-  handleFormSubmit({
-    mood,
+  if ("webkitSpeechRecognition" in window) {
+    recognition = new window.webkitSpeechRecognition();
+  }
+
+  if (recognition) {
+    recognition.onresult = function (event) {
+      handleSpeechInput(event);
+    };
+  }
+
+  speakMoodButton.addEventListener("click", () => {
+    if (!recognition) return;
+
+    userPromptSection.style.display = "none";
+    imListeningSection.style.display = "block";
+    recognition.start();
   });
-});
-
-let recognition: SpeechRecognition | null = null;
-
-if ("SpeechRecognition" in window) {
-  recognition = new window.SpeechRecognition();
-}
-
-if ("webkitSpeechRecognition" in window) {
-  recognition = new window.webkitSpeechRecognition();
-}
-
-if (recognition) {
-  recognition.onresult = function (event) {
-    handleSpeechInput(event);
-  };
-}
-
-speakMoodButton.addEventListener("click", () => {
-  if (!recognition) return;
-
-  userPromptSection.style.display = "none";
-  imListeningSection.style.display = "block";
-  recognition.start();
 });
