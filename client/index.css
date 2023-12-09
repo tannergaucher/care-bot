@@ -65,6 +65,7 @@ button {
   justify-content: center;
   margin: 2rem;
   font-family: var(--font-family);
+  padding: 3rem;
 }
 
 button:hover,
