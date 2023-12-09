@@ -1,4 +1,4 @@
-# CareBot - LLM / TypeChat Natural Language Application
+# CareBot - LLM Application
 
 ## Create an AI generated self care plan for the day by checking in with CareBot
 
@@ -9,7 +9,6 @@
 - TypeScript / HTML / CSS
 - Google Cloud Run
 - Google Cloud Text-to-Speech
-- Google Cloud Speech
 - Google Cloud Storage
 - Cloudflare Workers
 - Cloudflare KV
