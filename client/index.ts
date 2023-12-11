@@ -14,7 +14,7 @@ import {
   userPromptSection,
 } from "./selectors";
 
-let mood: string | null = spokenMoodText.value || null;
+let mood: string | null = null;
 
 if (mood === null) {
   [
@@ -65,6 +65,10 @@ speakMoodButton.addEventListener("click", () => {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+
+  if (spokenMoodText.value) {
+    mood = spokenMoodText.value;
+  }
 
   if (!mood) {
     throw new Error("No user mood selected.");
