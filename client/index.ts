@@ -29,48 +29,48 @@ if (mood === null) {
   });
 }
 
-const buttons = document.querySelectorAll('button[name="mood"]') as NodeListOf<
-  typeof spokenMoodSubmitButton
->;
+const moodButtons = document.querySelectorAll(
+  'button[name="mood"]'
+) as NodeListOf<typeof spokenMoodSubmitButton>;
 
-buttons.forEach((button) => {
+moodButtons.forEach((button) => {
   button.addEventListener("click", () => {
     mood = button.value;
   });
+});
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
+let recognition: SpeechRecognition | null = null;
 
-    if (!mood) {
-      throw new Error("No user mood selected.");
-    }
+if ("SpeechRecognition" in window) {
+  recognition = new window.SpeechRecognition();
+}
 
-    handleFormSubmit({
-      mood,
-    });
-  });
+if ("webkitSpeechRecognition" in window) {
+  recognition = new window.webkitSpeechRecognition();
+}
 
-  let recognition: SpeechRecognition | null = null;
+if (recognition) {
+  recognition.onresult = function (event) {
+    handleSpeechInput(event);
+  };
+}
 
-  if ("SpeechRecognition" in window) {
-    recognition = new window.SpeechRecognition();
+speakMoodButton.addEventListener("click", () => {
+  if (!recognition) return;
+
+  userPromptSection.style.display = "none";
+  imListeningSection.style.display = "block";
+  recognition.start();
+});
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (!mood) {
+    throw new Error("No user mood selected.");
   }
 
-  if ("webkitSpeechRecognition" in window) {
-    recognition = new window.webkitSpeechRecognition();
-  }
-
-  if (recognition) {
-    recognition.onresult = function (event) {
-      handleSpeechInput(event);
-    };
-  }
-
-  speakMoodButton.addEventListener("click", () => {
-    if (!recognition) return;
-
-    userPromptSection.style.display = "none";
-    imListeningSection.style.display = "block";
-    recognition.start();
+  handleFormSubmit({
+    mood,
   });
 });
