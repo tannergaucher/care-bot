@@ -27,7 +27,7 @@ export function handleAudioPlay({
       highlightWord(currentWordIndex);
       clearInterval(interval!);
     }
-  }, 40);
+  }, 30);
 }
 
 function highlightWord(currentWordIndex: number) {
