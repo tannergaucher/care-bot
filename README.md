@@ -13,6 +13,10 @@
 - Cloudflare Workers
 - Cloudflare KV
 
+## System Design
+
+[![](https://mermaid.ink/img/pako:eNpNkMFugzAMhl_F8rl9ATRNGtCt08qlsO4QeoiIW6JBgpJQbSK8-9LQSfhkW9__-5cnbLQgTPBq-NBCldcKQr2wT0vmDNvtsy-0Fh5SlnWSlIs7yNiXNt934imMOfs4Qem0ofMizyLkM960BHvp4Eh20FZR8FmIdE0U0loPO1aSuf17wis7HIqH3y7Sb6yiHwdOw0nLhpYk71PW6VHE8_xK81qwZxGEynBlGyMHJ7V6yNacj_GUJZ_iBnsyPZci_GS6QzW6lnqqMQmtoAsfO1djreaA8tHp8lc1mDgz0gbHQXBHueThmz0mF95Zmv8Ai2pvOg?type=png)](https://mermaid.live/edit#pako:eNpNkMFugzAMhl_F8rl9ATRNGtCt08qlsO4QeoiIW6JBgpJQbSK8-9LQSfhkW9__-5cnbLQgTPBq-NBCldcKQr2wT0vmDNvtsy-0Fh5SlnWSlIs7yNiXNt934imMOfs4Qem0ofMizyLkM960BHvp4Eh20FZR8FmIdE0U0loPO1aSuf17wis7HIqH3y7Sb6yiHwdOw0nLhpYk71PW6VHE8_xK81qwZxGEynBlGyMHJ7V6yNacj_GUJZ_iBnsyPZci_GS6QzW6lnqqMQmtoAsfO1djreaA8tHp8lc1mDgz0gbHQXBHueThmz0mF95Zmv8Ai2pvOg)
+
 ## Prerequisites
 
 You must have an OpenAI account and API key to run CareBot locally. Additionally, OpenAI API requests use tokens. You must have active credits available on your OpenAI account, otherwise you will get a `429` error. To create an OpenAI account, get an API key (and free credits for new accounts) see here: https://beta.openai.com/
