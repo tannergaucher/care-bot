@@ -17,5 +17,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+        # install types node
+      - name: Install types node
+        run: npm install --save-dev @types/node
+
       - name: Run typecheck
         run: npm run typecheck
