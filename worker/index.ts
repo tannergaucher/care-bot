@@ -57,7 +57,6 @@ export default {
       })
     } catch (error) {
       console.error(error)
-
       return new Response(error.toString(), { status: 500 })
     }
   },
