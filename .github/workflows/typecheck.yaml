@@ -14,20 +14,14 @@ jobs:
         with:
           node-version: "14"
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install client dependencies
+        run: cd client && npm install
 
-        # install types node
-      - name: Install types node
-        run: npm install --save-dev @types/node
+      - name: Install worker dependencies
+        run: cd worker && npm install
 
-        # install speech recognition types
-      - name: Install speech recognition types
-        run: npm install --save-dev @types/dom-speech-recognition
-
-        # install vitest
-      - name: Install vitest
-        run: npm install --save-dev vitest
+      - name: Install server dependencies
+        run: cd server && npm install
 
       - name: Run typecheck
         run: npm run typecheck
