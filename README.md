@@ -1,6 +1,6 @@
-# CareBot - LLM / TypeChat Natural Language Application
+# CareBot - LLM Application
 
-## Create an AI generated self care plan for the day by checking in with CareBot
+## Check in with CareBot and get an LLM generated self care plan for the day
 
 ## Uses
 
@@ -9,10 +9,13 @@
 - TypeScript / HTML / CSS
 - Google Cloud Run
 - Google Cloud Text-to-Speech
-- Google Cloud Speech
 - Google Cloud Storage
 - Cloudflare Workers
 - Cloudflare KV
+
+## System Design
+
+[![](https://mermaid.ink/img/pako:eNpNkNtugzAMhl_F8nX7AmiaNKA7aOWmsO4i9CIibokGMUpCtQl496XQTfjKh-__bXnAihVhhBcruxqKtDQQ4kl8OLIn2G4fx4xZjRCLpNFk_NyDRHyy_boRD6FMxfsRcs-WTos8maExkVVNCg7kOjaOgskyjldjyLRzI-xETvb6ZwjPYr_P7ma7mX4RBX178AxH1hUtZ7wNScO9mnfLC01rwauYQSisNK6yuvOazV225sb_82LcYEu2lVqFhww3qERfU0slRiFVdJZ940sszRRQ2XvOf0yFkbc9bbDvlPSUahle2WJ0lo2j6RdRLm5Z?type=png)](https://mermaid.live/edit#pako:eNpNkNtugzAMhl_F8nX7AmiaNKA7aOWmsO4i9CIibokGMUpCtQl496XQTfjKh-__bXnAihVhhBcruxqKtDQQ4kl8OLIn2G4fx4xZjRCLpNFk_NyDRHyy_boRD6FMxfsRcs-WTos8maExkVVNCg7kOjaOgskyjldjyLRzI-xETvb6ZwjPYr_P7ma7mX4RBX178AxH1hUtZ7wNScO9mnfLC01rwauYQSisNK6yuvOazV225sb_82LcYEu2lVqFhww3qERfU0slRiFVdJZ940sszRRQ2XvOf0yFkbc9bbDvlPSUahle2WJ0lo2j6RdRLm5Z)
 
 ## Prerequisites
 
@@ -21,7 +24,7 @@ You must have an OpenAI account and API key to run CareBot locally. Additionally
 ## Run CareBot Locally
 
 1. Clone this repo
-2. Update `.env.sample` to `.env` in `/server` and update the following variable values with your own:
+2. Update `.env.sample` to `.env` in `~/server` and add your values to:
 
 ```
 OPENAI_API_KEY="<Your OpenAI API key>"
@@ -30,8 +33,8 @@ GCP_PROJECT_ID="<Your Google Cloud Project ID>"
 ```
 
 3. Run the client: `cd client && npm install && npm run dev`
-4. Run the server: `cd server && npm run build && npm start`
-5. View client on `http://localhost:5173` and make a request
+4. Run the server: `cd server && npm install && npm run build && npm start`
+5. View client on `http://localhost:5173` and use CareBot!
 
 ## Deploy Server to Google Cloud Run
 

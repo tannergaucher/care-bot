@@ -35,13 +35,11 @@ function createProgram({ mood, model, }) {
             storage: index_1.storage,
             text,
         });
-        console.log(speechUri, "created speech at gcsUri");
-        const { transcriptionUri, results } = yield (0, transcribe_speech_1.transcribeSpeech)({
+        const { results } = yield (0, transcribe_speech_1.transcribeSpeech)({
             client: index_1.transcribeSpeechClient,
             storage: index_1.storage,
             speechUri,
         });
-        console.log(transcriptionUri, "created transcription at gcsUri");
         return Object.assign({ speechUrl, transcriptionResult: results }, response.data);
     });
 }

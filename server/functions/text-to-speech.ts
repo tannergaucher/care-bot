@@ -34,6 +34,7 @@ export async function textToSpeech({
   }
 
   const timestamp = new Date().getTime();
+
   const filename = `speech-${timestamp}.wav`;
 
   const writeFile = promisify(fs.writeFile);

@@ -8,6 +8,9 @@ export function createProgramElements({
   data: CreateProgramResponse;
   programContainer: typeof programContainerSelector;
 }) {
+  // Handle clearing prev program
+  programContainer.innerHTML = "";
+
   let wordId = 0;
 
   // We want to wrap each word in a span so we can highlight it

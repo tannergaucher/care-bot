@@ -1,6 +1,5 @@
 import "./index.css";
 
-import { CareResponse } from "../server/functions/programSchema";
 import { handleFormSubmit } from "./scripts/handle-form-submit";
 import { handleSpeechInput } from "./scripts/handle-speech-input";
 import {
@@ -15,7 +14,7 @@ import {
   userPromptSection,
 } from "./selectors";
 
-let mood: string | null = spokenMoodText.value || null;
+let mood: string | null = null;
 
 if (mood === null) {
   [
@@ -30,24 +29,13 @@ if (mood === null) {
   });
 }
 
-const buttons = document.querySelectorAll('button[name="mood"]');
+const moodButtons = document.querySelectorAll(
+  'button[name="mood"]'
+) as NodeListOf<typeof spokenMoodSubmitButton>;
 
-buttons.forEach((button) => {
-  button.addEventListener("click", (event) => {
-    mood = (event.target as HTMLButtonElement)
-      .value as CareResponse["currentUserMood"];
-  });
-});
-
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  if (!mood) {
-    throw new Error("No user mood selected.");
-  }
-
-  handleFormSubmit({
-    mood: spea,
+moodButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    mood = button.value;
   });
 });
 
@@ -71,4 +59,20 @@ speakMoodButton.addEventListener("click", () => {
   userPromptSection.style.display = "none";
   imListeningSection.style.display = "block";
   recognition?.start();
+});
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (spokenMoodText.value) {
+    mood = spokenMoodText.value;
+  }
+
+  if (!mood) {
+    throw new Error("No user mood selected.");
+  }
+
+  handleFormSubmit({
+    mood,
+  });
 });

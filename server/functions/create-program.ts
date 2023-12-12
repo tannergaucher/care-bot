@@ -53,15 +53,11 @@ export async function createProgram({
     text,
   });
 
-  console.log(speechUri, "created speech at gcsUri");
-
-  const { transcriptionUri, results } = await transcribeSpeech({
+  const { results } = await transcribeSpeech({
     client: transcribeSpeechClient,
     storage,
     speechUri,
   });
-
-  console.log(transcriptionUri, "created transcription at gcsUri");
 
   return {
     speechUrl,
