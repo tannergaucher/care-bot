@@ -56,11 +56,9 @@ if (recognition) {
 }
 
 speakMoodButton.addEventListener("click", () => {
-  if (!recognition) return;
-
   userPromptSection.style.display = "none";
   imListeningSection.style.display = "block";
-  recognition.start();
+  recognition?.start();
 });
 
 form.addEventListener("submit", async (event) => {

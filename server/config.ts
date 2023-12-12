@@ -1,13 +1,14 @@
 const config = {
   local: {
-    CLIENT_BASE_URL: "http://localhost:5173",
+    WORKER_BASE_URL: "http://localhost:8787",
   },
   production: {
-    CLIENT_BASE_URL: "https://care-bot.netlify.app",
+    WORKER_BASE_URL:
+      "https://llm-cache-worker.tannermichaelgaucher.workers.dev",
   },
 };
 
 const environment =
   process.env.NODE_ENV === "production" ? "production" : "local";
 
-export const { CLIENT_BASE_URL } = config[environment];
+export const { WORKER_BASE_URL } = config[environment];

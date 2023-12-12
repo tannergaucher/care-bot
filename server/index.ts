@@ -8,7 +8,7 @@ import { createLanguageModel } from "typechat";
 
 export { CloudSpeech, TextToSpeech, CloudStorage };
 
-import { CLIENT_BASE_URL } from "./config";
+import { WORKER_BASE_URL } from "./config";
 import {
   createProgram,
   type CreateProgramBody,
@@ -30,7 +30,7 @@ app.use(json());
 
 app.use(
   cors({
-    origin: CLIENT_BASE_URL,
+    origin: WORKER_BASE_URL,
   })
 );
 

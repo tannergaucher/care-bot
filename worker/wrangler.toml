@@ -1,0 +1,12 @@
+name = "llm-cache-worker"
+type = "typescript"
+
+account_id = "7b107f3b348adbaf296afbff9802037a"
+workers_dev = true
+route = ""
+zone_id = ""
+compatibility_date = "2023-12-07"
+
+kv_namespaces = [
+{ binding = "CAREBOT_CACHE", id = "06b1b8a9ec7a4902933036849430be2e" }
+]

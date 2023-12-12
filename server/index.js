@@ -57,7 +57,7 @@ const model = (0, typechat_1.createLanguageModel)(process.env);
 const app = (0, express_1.default)();
 app.use((0, express_1.json)());
 app.use((0, cors_1.default)({
-    origin: config_1.CLIENT_BASE_URL,
+    origin: config_1.WORKER_BASE_URL,
 }));
 app.post("/create-program", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { mood } = req.body;
