@@ -23,13 +23,7 @@ export default {
 
       const cacheResponse = await env.CAREBOT_CACHE.get(body.mood)
 
-      console.log('cacheResponse', cacheResponse)
-
-      console.log(env.SERVER_BASE_URL, 'env server base url')
-
       if (cacheResponse === null) {
-        console.log('calling server')
-
         const serverResponse = await fetch(
           env.SERVER_BASE_URL + '/create-program',
           {
@@ -54,8 +48,6 @@ export default {
           },
         })
       }
-
-      console.log('returning from cache')
 
       return new Response(cacheResponse, {
         headers: {
