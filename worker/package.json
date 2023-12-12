@@ -5,12 +5,17 @@
   "description": "A template for kick starting a Cloudflare Workers project",
   "main": "index.js",
   "scripts": {
+    "dev": "wrangler dev ./index.ts --port 8787",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write '**/*.{js,css,json,md}'"
   },
   "author": "Tanner Gaucher <tannermichaelgaucher@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "wrangler": "^3.20.0"
+  },
+  "dependencies": {
+    "@cloudflare/workers-types": "^4.20231121.0"
   }
 }

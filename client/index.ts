@@ -47,7 +47,7 @@ form.addEventListener("submit", async (event) => {
   }
 
   handleFormSubmit({
-    mood,
+    mood: spea,
   });
 });
 
@@ -68,9 +68,7 @@ if (recognition) {
 }
 
 speakMoodButton.addEventListener("click", () => {
-  if (!recognition) return;
-
   userPromptSection.style.display = "none";
   imListeningSection.style.display = "block";
-  recognition.start();
+  recognition?.start();
 });

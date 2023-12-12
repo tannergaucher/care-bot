@@ -8,6 +8,5 @@ zone_id = ""
 compatibility_date = "2023-12-07"
 
 kv_namespaces = [
-  { binding = "carebot_cache", id = "f74b667a82914244893d7dca35564777" }
+{ binding = "CAREBOT_CACHE", id = "06b1b8a9ec7a4902933036849430be2e" }
 ]
-
