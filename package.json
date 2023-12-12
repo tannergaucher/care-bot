@@ -6,5 +6,8 @@
     "typecheck": "(cd client && npm run typecheck) && (cd worker && npm run typecheck) &&  (cd server && npm run typecheck)"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
 }
