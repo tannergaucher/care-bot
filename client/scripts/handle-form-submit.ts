@@ -20,7 +20,6 @@ export async function handleFormSubmit({ mood }: { mood: string }) {
   })
     .then((response) => response.json())
     .then((data: CreateProgramResponse) => {
-      console.log("data", data);
       renderProgram(data);
     })
     .catch((error) => console.error("Error:", error));
