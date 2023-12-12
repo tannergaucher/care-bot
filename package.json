@@ -1,0 +1,13 @@
+{
+  "name": "care-bot",
+  "version": "1.0.0",
+  "description": "## Check in with CareBot and create an LLM generated self care plan for the day",
+  "scripts": {
+    "typecheck": "(cd client && npm run typecheck) && (cd worker && npm run typecheck) &&  (cd server && npm run typecheck)"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
