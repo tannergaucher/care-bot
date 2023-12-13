@@ -1,5 +1,5 @@
 import { CreateProgramResponse } from "../../server/functions/create-program";
-import { audio, programContainer } from "../selectors";
+import { audio, programContainer } from "../selectors/program-page";
 import { createProgramElements } from "./create-program-elements";
 import { getWordsFromTranscriptionResult } from "./get-words-from-transcription-result";
 import { handleAudioPlay } from "./handle-audio-play";

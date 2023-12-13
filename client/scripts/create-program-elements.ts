@@ -1,5 +1,5 @@
 import { CreateProgramResponse } from "../../server/functions/create-program";
-import { programContainer as programContainerSelector } from "../selectors";
+import { programContainer as programContainerSelector } from "../selectors/program-page";
 
 export function createProgramElements({
   data,

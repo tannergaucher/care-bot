@@ -5,7 +5,7 @@ import {
   spokenMoodSubmitButton,
   spokenMoodText,
   userPromptSection,
-} from "../selectors";
+} from "../selectors/index-page";
 
 export function handleSpeechInput(event: SpeechRecognitionEvent) {
   imListeningSection.style.display = "none";
