@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Care Bot</title>
+    <script type="module" crossorigin src="/assets/modulepreload-polyfill-3cfb730f.js"></script>
+    <script type="module" crossorigin src="/assets/utils-687b3132.js"></script>
+    <script type="module" crossorigin src="/assets/index-ts-88cf4c9d.js"></script>
+    <link rel="stylesheet" href="/assets/index-ff597cc8.css">
+  </head>
+  <body>
+    <a href="/">
+      <h1>Care Bot</h1>
+    </a>
+    <section id="user-prompt-section">
+      <form id="user-prompt-form" method="post">
+        <fieldset>
+          <legend id="user-prompt-legend">How are you?</legend>
+          <button
+            id="happy-button"
+            aria-label="Happy"
+            name="mood"
+            value="happy"
+          >
+            🙂 I'm Positive
+          </button>
+          <button
+            id="sad-button"
+            aria-label="Sad"
+            type="submit"
+            name="mood"
+            value="sad"
+          >
+            🙁 I'm Negative
+          </button>
+          <textarea id="spoken-mood-text" name="mood" id=""></textarea>
+          <button id="spoken-mood-submit-button" type="submit">
+            📨 Submit
+          </button>
+          <button id="speak-mood-button" type="button">🎤 I'll Speak</button>
+        </fieldset>
+      </form>
+    </section>
+    <div id="im-listening">I'm listening...</div>
+    
+  </body>
+</html>
