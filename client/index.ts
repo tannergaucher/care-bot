@@ -1,32 +1,21 @@
 import "./index.css";
 
-import { handleFormSubmit } from "./scripts/handle-form-submit";
 import { handleSpeechInput } from "./scripts/handle-speech-input";
 import {
-  audio,
   form,
   imListeningSection,
-  loadingIndicator,
-  programContainer,
   speakMoodButton,
   spokenMoodSubmitButton,
   spokenMoodText,
   userPromptSection,
-} from "./selectors";
+} from "./selectors/index-page";
 
 let mood: string | null = null;
 
-if (mood === null) {
-  [
-    programContainer,
-    loadingIndicator,
-    audio,
-    spokenMoodText,
-    spokenMoodSubmitButton,
-    imListeningSection,
-  ].forEach((element) => {
-    element.style.display = "none";
-  });
+if (mood == null) {
+  spokenMoodText.style.display = "none";
+  spokenMoodSubmitButton.style.display = "none";
+  imListeningSection.style.display = "none";
 }
 
 const moodButtons = document.querySelectorAll(
@@ -72,7 +61,5 @@ form.addEventListener("submit", async (event) => {
     throw new Error("No user mood selected.");
   }
 
-  handleFormSubmit({
-    mood,
-  });
+  window.location.href = `/program.html?mood=${encodeURIComponent(mood)}`;
 });

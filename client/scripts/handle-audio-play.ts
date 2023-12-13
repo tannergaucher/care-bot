@@ -1,4 +1,4 @@
-import { audio } from "../selectors";
+import { audio } from "../selectors/program-page";
 import { TranscriptWord } from "./get-words-from-transcription-result";
 
 export function handleAudioPlay({
@@ -10,6 +10,12 @@ export function handleAudioPlay({
   let interval: NodeJS.Timeout | null = null;
 
   clearInterval(interval!);
+
+  const spokenWords = document.querySelectorAll('span[spoken="true"]');
+
+  spokenWords.forEach((word) => {
+    word.removeAttribute("spoken");
+  });
 
   interval = setInterval(() => {
     const currentTime = audio.currentTime;
@@ -25,6 +31,8 @@ export function handleAudioPlay({
 
     if (currentWordIndex >= transcriptWords.length) {
       highlightWord(currentWordIndex);
+      highlightWord(currentWordIndex + 1);
+
       clearInterval(interval!);
     }
   }, 30);
@@ -42,6 +50,8 @@ function highlightWord(currentWordIndex: number) {
   previousCurrentWordSpan?.removeAttribute("current");
 
   currentWordSpan?.setAttribute("current", "true");
+  currentWordSpan?.setAttribute("spoken", "true");
+
   currentWordSpan?.scrollIntoView({
     behavior: "auto",
     block: "center",
